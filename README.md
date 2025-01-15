@@ -1,2 +1,4 @@
 # HerringData
- Wrangle Pacific Herring data
+
+Load and wrangle Pacific Herring data.
+Input and output.
