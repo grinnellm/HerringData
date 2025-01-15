@@ -1,0 +1,82 @@
+---
+title: "Introduction"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r options, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include = FALSE}
+library(HerringData)
+library(SpawnIndex)
+library(tidyverse)
+library(DBI)
+```
+
+```{r data, include = FALSE}
+# Data
+data(regions)
+# data(pars)
+data(codes_group)
+data(conv_factors)
+# Herring DB connection details
+herring_conn <- list(
+  driver = "SQL Server Native Client 11.0",
+  server = "DFBCV9TWVASP001\\SQLEXPRESS16",
+  database = "Herring",
+  trusted = "Yes"
+)
+# Location of location tables and column names
+area_loc <- list(
+  schema = "Location",
+  tables = list(sections = "Sections", locations = "Location"),
+  columns = list(
+    sections = c("SAR", "Section"),
+    locations = c(
+      "Loc_Code", "Location", "StatArea", "Section", "Bed",
+       "Location_Latitude", "Location_Longitude")
+  )
+)
+# Location of catch tables and column names
+catch_loc <- list(
+  schema = "Catch",
+  tables = list(
+    tCatch = "tCatchData", hCatch = "HailCatch", sokCatch = "SpawnOnKelp"
+  ),
+  columns = list(
+    tCatch = c(
+      "Season", "LocationCode","GearCode", "DisposalCode", "Catch", "Date"
+    ),
+    hCatch = c(
+      "Active", "Season", "Section", "GearCode", "DisposalCode", "CatchTons"
+    ),
+    sokCatch = c(
+      "Season", "Section", "GearCode", "DisposalCode", "ProductLanded"
+    )
+  )
+)
+```
+
+```{r areas}
+areas <- load_area_data(
+  db = herring_conn, where = area_loc, reg = "CC", sec_sub = NULL,
+  groups = codes_group
+)
+areas
+```
+
+```{r get_catch}
+catch_raw <- load_catch(
+  db_conn = herring_conn, db_location = catch_loc, area_table = areas
+)
+catch_raw
+```
+
