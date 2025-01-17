@@ -3,6 +3,6 @@ utils::globalVariables(
     "Active", "Catch", "CatchTons", "Date", "DisposalCode", "GearCode", "Group",
     "LocationCode", "LocationName", "ProductLanded", "Region", "RegionName",
     "SAR", "Season", "Section", "Source", "StatArea", "Year", "conv_factors",
-    "sum_na"
+    "sum_na", "Area", "Gear", "Period", "Stock", "Type", "Value"
   )
 )
