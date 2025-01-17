@@ -1,2 +1,2 @@
-#' @param structure Character. Column name indicating stock structure; must be
-#'   present in `catch`. Default is "Region".
+#' @param structure Character. Column name indicating stock structure. Use
+#'   backticks. Default is `Region`.

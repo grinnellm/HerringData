@@ -15,6 +15,9 @@ load_catch(db_conn, db_location, area_table, quiet = FALSE)
 
 \item{quiet}{Logical. Suppress messages; default is FALSE.}
 }
+\value{
+Tibble with catch data including spatial and temporal information.
+}
 \description{
 Load and wrangle catch data from the database.
 }
@@ -59,7 +62,7 @@ catch_loc <- list(
   )
 )
 areas <- load_area_data(
-  db = herring_conn, where = area_loc, reg = "CC", sec_sub = NULL,
+  db = herring_conn, where = area_loc, reg = "PRD", sec_sub = NULL,
   groups = codes_group
 )
 catch_raw <- load_catch(
