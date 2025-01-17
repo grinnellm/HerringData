@@ -4,17 +4,27 @@
 \alias{siscah_catch}
 \title{Input file for SISCAH: catch data.}
 \usage{
-siscah_catch(catch, structure = "Region", file)
+siscah_catch(catch, structure = Region, kilo = TRUE, n_digits = 3)
 }
 \arguments{
 \item{catch}{Tibble. Catch data from \code{\link{load_catch}}.}
 
-\item{structure}{Character. Column name indicating stock structure; must be
-present in \code{catch}. Default is "Region".}
+\item{structure}{Character. Column name indicating stock structure. Use
+backticks. Default is \code{Region}.}
 
-\item{file}{Character. Output path and file name.}
+\item{kilo}{Logical. Return values in thousands. Default TRUE.}
+
+\item{n_digits}{Numeric. Number of decimal places for values. Default 3.}
+}
+\value{
+Tibble with catch data in thousands aggregated by Year, Period, and
+\code{structure}, including spatial and temporal information.
 }
 \description{
 Make the input file for SISCAH: catch data.
+}
+\seealso{
+Other SISCAH: 
+\code{\link{siscah_spawn}()}
 }
 \concept{SISCAH}

@@ -14,6 +14,7 @@
 #' @importFrom DBI dbConnect dbGetQuery dbDisconnect
 #' @importFrom odbc odbc
 #' @importFrom lubridate date
+#' @return Tibble with catch data including spatial and temporal information.
 #' @family loaders
 #' @export
 #' @examples
@@ -57,7 +58,7 @@
 #'   )
 #' )
 #' areas <- load_area_data(
-#'   db = herring_conn, where = area_loc, reg = "CC", sec_sub = NULL,
+#'   db = herring_conn, where = area_loc, reg = "PRD", sec_sub = NULL,
 #'   groups = codes_group
 #' )
 #' catch_raw <- load_catch(
@@ -163,12 +164,16 @@ load_catch <- function(
     left_join(y = areasSm, by = "Section") %>%
     mutate(
       Period = 0,
-      Period = ifelse(Source == "Tab" & DisposalCode %in% c(1, 3, 4, 5, 6), 1, Period),
-      Period = ifelse(Source == "Hail" & DisposalCode %in% c(3, 6), 1, Period),
+      Period = ifelse(Source == "Tab" & DisposalCode %in% c(1, 3, 4, 5, 6),
+                      1, Period),
+      Period = ifelse(Source == "Hail" & DisposalCode %in% c(3, 6),
+                      1, Period),
       Period = ifelse(Source == "Tab" & DisposalCode %in% c(7, 8) &
-                        GearCode %in% c(29), 2, Period),
+                        GearCode %in% c(29),
+                      2, Period),
       Period = ifelse(Source == "Tab" & DisposalCode %in% c(7, 8) &
-                        GearCode %in% c(19), 3, Period)
+                        GearCode %in% c(19),
+                      3, Period)
     ) %>%
     filter(Period != 0, !is.na(Region), !is.na(StatArea), !is.na(Section)) %>%
     select(
