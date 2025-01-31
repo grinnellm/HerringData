@@ -17,8 +17,8 @@ backticks. Default is \code{Region}.}
 \item{n_digits}{Numeric. Number of decimal places for values. Default 3.}
 }
 \value{
-Tibble with catch data in thousands aggregated by Year, Period, and
-\code{structure}, including spatial and temporal information.
+Tibble with catch data aggregated by Year, Period, and \code{structure},
+including spatial and temporal information.
 }
 \description{
 Make the input file for SISCAH: catch data.
