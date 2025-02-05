@@ -49,16 +49,17 @@ area_loc <- list(
 catch_loc <- list(
   schema = "Catch",
   tables = list(
-    tCatch = "tCatchData", hCatch = "HailCatch", sokCatch = "SpawnOnKelp"
+    tab_catch = "tCatchData", hail_catch = "HailCatch",
+    sok_catch = "SpawnOnKelp"
   ),
   columns = list(
-    tCatch = c(
+    tab_catch = c(
       "Season", "LocationCode","GearCode", "DisposalCode", "Catch", "Date"
     ),
-    hCatch = c(
+    hail_catch = c(
       "Active", "Season", "Section", "GearCode", "DisposalCode", "CatchTons"
     ),
-    sokCatch = c(
+    sok_catch = c(
       "Season", "Section", "GearCode", "DisposalCode", "ProductLanded"
     )
   )
@@ -79,4 +80,3 @@ catch_raw <- load_catch(
 )
 catch_raw
 ```
-
