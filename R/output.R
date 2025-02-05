@@ -12,17 +12,20 @@
 #'   select
 #' @importFrom tibble tibble
 #' @importFrom tidyr pivot_wider
+#' @importFrom stats na.omit
 #' @return List of tibbles with biological data aggregated by Year, Period, and
 #'   "structure", including spatial and temporal information. List has two
 #'   tibbles: number-at-age and weight-at-age in grams.
 #' @family SISCAH
 #' @export
 #' @examples
-#' require(here)
-#' require(tidyverse)
+#' \dontrun{
 #' bio_raw <- readRDS(file = here("Examples", "bio_raw.rds"))
-#' siscah_bio <- bio_raw %>%
-#'   filter(Region == "PRD") %>% siscah_bio(structure = "StatArea")
+#' }
+#' example(load_bio)
+#' dat <- bio_raw %>%
+#'   filter(Region == "PRD") %>%
+#'   siscah_bio(structure = "StatArea")
 siscah_bio <- function(
     bio,
     structure = "Region",
@@ -105,11 +108,13 @@ siscah_bio <- function(
 #' @family SISCAH
 #' @export
 #' @examples
-#' require(here)
-#' require(tidyverse)
+#' \dontrun{
 #' catch_raw <- readRDS(file = here("Examples", "catch_raw.rds"))
-#' siscah_catch <- catch_raw %>%
-#'   filter(Region == "PRD") %>% siscah_catch(structure = "StatArea")
+#' }
+#' example(load_catch)
+#' dat <- catch_raw %>%
+#'   filter(Region == "PRD") %>%
+#'   siscah_catch(structure = "StatArea")
 siscah_catch <- function(
     catch,
     structure = "Region",
@@ -147,8 +152,8 @@ siscah_catch <- function(
 #'
 #' @template param-spawn
 #' @template param-structure
-#' @param kilo Logical. Return values in thousands. Default TRUE.
-#' @param n_digits Numeric. Number of decimal places for values. Default 3.
+#' @template param-kilo
+#' @template param-n_digits
 #' @importFrom Rdpack reprompt
 #' @importFrom dplyr pull group_by summarise ungroup mutate rename full_join
 #'   select

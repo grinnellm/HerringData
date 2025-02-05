@@ -95,8 +95,8 @@ load_bio <- function(
   # Access the sample worksheet
   sample_dat <- dbGetQuery(conn = db_connection, statement = sql_samples)
   # Error if data was not fetched
-  if (class(sample_dat) != "data.frame") {
-    stop("No data available in MS Access connection")
+  if (!is.data.frame(sample_dat)) {
+    stop("Data not available: sample_dat")
   }
   # # Grab the spatial info and process
   # sampleSP <- sample_dat %>%
@@ -141,8 +141,8 @@ load_bio <- function(
   # Access the fish worksheet
   fish <- dbGetQuery(conn = db_connection, statement = sql_fish)
   # Error if data was not fetched
-  if (class(fish) != "data.frame") {
-    stop("No data available in MS Access connection")
+  if (!is.data.frame(fish)) {
+    stop("Data not available: fish")
   }
   # Wrangle biosamples
   fish <- fish %>%
@@ -368,7 +368,7 @@ load_catch <- function(
   tab_catch <- dbGetQuery(conn = db_connection, statement = sql_tab)
   # Error if data was not fetched
   if (!is.data.frame(tab_catch)) {
-    stop("No data available in MS Access connection: tab_catch")
+    stop("Data not available: tab_catch")
   }
   # Wrangle catch
   tab_catch <- tab_catch %>%
@@ -389,7 +389,7 @@ load_catch <- function(
   hail_catch <- dbGetQuery(conn = db_connection, statement = sql_hail)
   # Error if data was not fetched
   if (!is.data.frame(hail_catch)) {
-    stop("No data available in MS Access connection: hail_catch")
+    stop("Data not available: hail_catch")
   }
   # Wrangle hail catch
   hail_catch <- hail_catch %>%
@@ -411,7 +411,7 @@ load_catch <- function(
   sok_catch <- dbGetQuery(conn = db_connection, statement = sql_sok)
   # Error if data was not fetched
   if (!is.data.frame(sok_catch)) {
-    stop("No data available in MS Access connection: sok_catch")
+    stop("Data not available: sok_catch")
   }
   # Wrangle SOK catch
   sok_catch <- sok_catch %>%
