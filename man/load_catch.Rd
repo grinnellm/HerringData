@@ -4,7 +4,13 @@
 \alias{load_catch}
 \title{Load catch data.}
 \usage{
-load_catch(db_conn, db_location, area_table, quiet = FALSE)
+load_catch(
+  db_conn,
+  db_location,
+  area_table,
+  year_start = SpawnIndex::pars$years$assess,
+  quiet = FALSE
+)
 }
 \arguments{
 \item{db_conn}{Character. Herring database connection; see example.}
@@ -12,6 +18,9 @@ load_catch(db_conn, db_location, area_table, quiet = FALSE)
 \item{db_location}{Character. Herring database location; see example.}
 
 \item{area_table}{Tibble. Area information from \code{\link{load_area_data}}.}
+
+\item{year_start}{Integer. First year to include in time series. Default is
+from \code{\link{SpawnIndex::pars$years$assess}}.}
 
 \item{quiet}{Logical. Suppress messages; default is FALSE.}
 }

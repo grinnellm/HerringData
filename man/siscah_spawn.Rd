@@ -2,15 +2,15 @@
 % Please edit documentation in R/output.R
 \name{siscah_spawn}
 \alias{siscah_spawn}
-\title{Input file for SISCAH: spawn data.}
+\title{SISCAH input: spawn data.}
 \usage{
-siscah_spawn(spawn, structure = Region, kilo = TRUE, n_digits = 3)
+siscah_spawn(spawn, structure = "Region", kilo = TRUE, n_digits = 3)
 }
 \arguments{
 \item{spawn}{Tibble. Spawn index data from \code{\link{load_spawn}}.}
 
-\item{structure}{Character. Column name indicating stock structure. Use
-backticks. Default is \code{Region}.}
+\item{structure}{Character. Column name indicating stock structure. Default
+is "Region".}
 
 \item{kilo}{Logical. Return values in thousands. Default TRUE.}
 
@@ -18,13 +18,14 @@ backticks. Default is \code{Region}.}
 }
 \value{
 Tibble with catch data in thousands aggregated by Year, Period, and
-\code{structure}, including spatial and temporal information.
+"structure", including spatial and temporal information.
 }
 \description{
-Make the input file for SISCAH: spawn data.
+Make input data for SISCAH: spawn index data.
 }
 \seealso{
 Other SISCAH: 
+\code{\link{siscah_bio}()},
 \code{\link{siscah_catch}()}
 }
 \concept{SISCAH}

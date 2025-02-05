@@ -2,29 +2,39 @@
 % Please edit documentation in R/output.R
 \name{siscah_catch}
 \alias{siscah_catch}
-\title{Input file for SISCAH: catch data.}
+\title{SISCAH input: catch data.}
 \usage{
-siscah_catch(catch, structure = Region, kilo = TRUE, n_digits = 3)
+siscah_catch(catch, structure = "Region", kilo = TRUE, n_digits = 3)
 }
 \arguments{
 \item{catch}{Tibble. Catch data from \code{\link{load_catch}}.}
 
-\item{structure}{Character. Column name indicating stock structure. Use
-backticks. Default is \code{Region}.}
+\item{structure}{Character. Column name indicating stock structure. Default
+is "Region".}
 
 \item{kilo}{Logical. Return values in thousands. Default TRUE.}
 
 \item{n_digits}{Numeric. Number of decimal places for values. Default 3.}
 }
 \value{
-Tibble with catch data aggregated by Year, Period, and \code{structure},
+Tibble with catch data aggregated by Year, Period, and "structure",
 including spatial and temporal information.
 }
 \description{
-Make the input file for SISCAH: catch data.
+Make input data for SISCAH: catch data.
+}
+\examples{
+\dontrun{
+catch_raw <- readRDS(file = here("Examples", "catch_raw.rds"))
+}
+example(load_catch)
+dat <- catch_raw \%>\%
+  filter(Region == "PRD") \%>\%
+  siscah_catch(structure = "StatArea")
 }
 \seealso{
 Other SISCAH: 
+\code{\link{siscah_bio}()},
 \code{\link{siscah_spawn}()}
 }
 \concept{SISCAH}

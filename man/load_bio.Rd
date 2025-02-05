@@ -8,6 +8,7 @@ load_bio(
   db_conn,
   db_location,
   area_table,
+  year_start = SpawnIndex::pars$years$assess,
   rep_year_start = 2014,
   quiet = FALSE
 )
@@ -19,7 +20,10 @@ load_bio(
 
 \item{area_table}{Tibble. Area information from \code{\link{load_area_data}}.}
 
-\item{rep_year_start}{Year indicating the start of representative samples}
+\item{year_start}{Integer. First year to include in time series. Default is
+from \code{\link{SpawnIndex::pars$years$assess}}.}
+
+\item{rep_year_start}{Year indicating the start of representative samples. Default 2014.}
 
 \item{quiet}{Logical. Suppress messages; default is FALSE.}
 }
