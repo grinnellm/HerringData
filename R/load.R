@@ -5,7 +5,8 @@
 #' @template param-db_conn
 #' @template param-db_location
 #' @template param-area_table
-#' @param rep_year_start Year indicating the start of representative samples
+#' @template param-year_start
+#' @param rep_year_start Year indicating the start of representative samples. Default 2014.
 #' @template param-quiet
 #' @importFrom Rdpack reprompt
 #' @importFrom SpawnIndex load_area_data
@@ -64,8 +65,13 @@
 #'   db_conn = herring_conn, db_location = bio_loc, area_table = areas
 #' )
 load_bio <- function(
-    db_conn, db_location, area_table, rep_year_start = 2014, quiet = FALSE
-    ) {
+    db_conn,
+    db_location,
+    area_table,
+    year_start = SpawnIndex::pars$years$assess,
+    rep_year_start = 2014,
+    quiet = FALSE
+) {
   # Progress message
   if(!quiet) cat("Loading biological data... ")
   # Establish database connection
@@ -246,10 +252,12 @@ load_bio <- function(
                       3, Period),
       SampWt = 1
     ) %>%
-    # TODO: Need to filter by locations in area table; might not need all this
-    filter(Period != 0) %>% #, !is.na(Region), !is.na(StatArea), !is.na(Section)) %>%
+    filter(Period != 0, Year >= year_start) %>%
+    # TODO: Fix non-representative sampling here
+
     # TODO: Need a better way to do this
-    filter(Year < 2014 | Representative == 1) %>%
+    # Keep all prior to rep_year_start and representative ones since then
+    filter(Year < rep_year_start | Representative == 1) %>%
     select(-Representative)
   # Close the connection
   dbDisconnect(conn = db_connection)
@@ -268,6 +276,7 @@ load_bio <- function(
 #' @template param-db_conn
 #' @template param-db_location
 #' @template param-area_table
+#' @template param-year_start
 #' @template param-quiet
 #' @importFrom Rdpack reprompt
 #' @importFrom SpawnIndex load_area_data
@@ -328,7 +337,13 @@ load_bio <- function(
 #' catch_raw <- load_catch(
 #'   db_conn = herring_conn, db_location = catch_loc, area_table = areas
 #' )
-load_catch <- function(db_conn, db_location, area_table, quiet = FALSE) {
+load_catch <- function(
+    db_conn,
+    db_location,
+    area_table,
+    year_start = SpawnIndex::pars$years$assess,
+    quiet = FALSE
+) {
   # Progress message
   if(!quiet) cat("Loading catch data... ")
   # Establish database connection
@@ -363,7 +378,7 @@ load_catch <- function(db_conn, db_location, area_table, quiet = FALSE) {
     ) %>%
     left_join(y = area_table, by = "LocationCode") %>%
     group_by(Year, Source, Section, GearCode, DisposalCode, Date) %>%
-    summarise(Catch = sum_nA(Catch)) %>%
+    summarise(Catch = sum_na(Catch)) %>%
     ungroup()
   # SQL query: hail catch
   sql_hail <- paste(
@@ -433,8 +448,8 @@ load_catch <- function(db_conn, db_location, area_table, quiet = FALSE) {
                         GearCode %in% c(19),
                       3, Period)
     ) %>%
-    # TODO: Need to filter by locations in area table; might not need all this
-    filter(Period != 0) %>% #, !is.na(Region), !is.na(StatArea), !is.na(Section)) %>%
+    # TODO: Filter by year_start too
+    filter(Period != 0) %>%
     select(
       Year, Period, Region, StatArea, Section, GearCode, DisposalCode, Date,
       Catch

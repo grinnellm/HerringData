@@ -22,10 +22,11 @@ season_to_year <- function(dat) {
 #' Calculate sum.
 #'
 #' Calculate sum if there are non-NA values, return NA if all values are NA.
+#' This does not fail when groups have no values to summarise.
 #'
 #' @param x Numeric. Values to sum.
 #' @param omit_na Logical. Keep or remove NAs.
-sum_nA <- function(x, omit_na = TRUE) {
+sum_na <- function(x, omit_na = TRUE) {
   # An alternate version to sum(x, na.rm=TRUE), which returns 0 if x is all NA.
   # This version retuns NA if x is all NA, otherwise it returns the sum.
   # If all NA, NA; otherwise, sum
