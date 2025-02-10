@@ -9,6 +9,9 @@ season_to_year(dat)
 \arguments{
 \item{dat}{Numeric. Values to transform.}
 }
+\value{
+Numeric year.
+}
 \description{
 Transform season to year. The herring 'season' column is a combination of the
 two fishery years: for example, season '20123' indicates the years 2012 and
@@ -17,3 +20,11 @@ actual year, which we define as the second (i.e., later) year, 2013. This
 function takes in a vector of seasons (dat), and outputs a vector of years
 (res).
 }
+\seealso{
+Other utility: 
+\code{\link{mean_na}()},
+\code{\link{rolling_mean_na}()},
+\code{\link{sum_na}()},
+\code{\link{weighted_mean_na}()}
+}
+\concept{utility}

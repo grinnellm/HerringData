@@ -23,7 +23,8 @@ Other data:
 \code{\link{codes_gear}},
 \code{\link{codes_group}},
 \code{\link{codes_source}},
-\code{\link{conv_factors}}
+\code{\link{conv_factors}},
+\code{\link{database_info}}
 }
 \concept{data}
 \keyword{datasets}

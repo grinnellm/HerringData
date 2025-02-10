@@ -14,7 +14,7 @@ is "Region".}
 
 \item{kilo}{Logical. Return values in thousands. Default TRUE.}
 
-\item{n_digits}{Numeric. Number of decimal places for values. Default 3.}
+\item{n_digits}{Numeric. Number of decimal places for values.}
 }
 \value{
 Tibble with catch data aggregated by Year, Period, and "structure",
@@ -24,13 +24,17 @@ including spatial and temporal information.
 Make input data for SISCAH: catch data.
 }
 \examples{
-\dontrun{
-catch_raw <- readRDS(file = here("Examples", "catch_raw.rds"))
+library(magrittr)
+library(here)
+library(dplyr)
+if(file.exists(here("Examples", "catch_raw.rds"))){
+  catch_raw <- readRDS(file = here("Examples", "catch_raw.rds"))
+} else{
+  example(load_catch)
 }
-example(load_catch)
 dat <- catch_raw \%>\%
   filter(Region == "PRD") \%>\%
-  siscah_catch(structure = "StatArea")
+  siscah_catch(structure = "Region")
 }
 \seealso{
 Other SISCAH: 

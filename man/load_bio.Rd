@@ -5,23 +5,22 @@
 \title{Load biological data.}
 \usage{
 load_bio(
-  db_conn,
-  db_location,
-  area_table,
+  db_info = database_info,
+  groups = codes_group,
   year_start = SpawnIndex::pars$years$assess,
   rep_year_start = 2014,
   quiet = FALSE
 )
 }
 \arguments{
-\item{db_conn}{Character. Herring database connection; see example.}
+\item{db_info}{List. Herring database connection information from
+\code{\link{database_info}}.}
 
-\item{db_location}{Character. Herring database location; see example.}
-
-\item{area_table}{Tibble. Area information from \code{\link{load_area_data}}.}
+\item{groups}{Tibble Spatial groups. Default is from
+\code{\link{codes_group}}.}
 
 \item{year_start}{Integer. First year to include in time series. Default is
-from \code{\link{SpawnIndex::pars$years$assess}}.}
+from \code{SpawnIndex::pars$years$assess}.}
 
 \item{rep_year_start}{Year indicating the start of representative samples. Default 2014.}
 
@@ -37,50 +36,14 @@ Load and wrangle biological data from the database.
 \examples{
 library(SpawnIndex)
 library(DBI)
-data(regions)
 data(pars)
 data(codes_group)
-data(conv_factors)
-herring_conn <- list(
-  driver = "SQL Server Native Client 11.0",
-  server = "DFBCV9TWVASP001\\\\SQLEXPRESS16",
-  database = "Herring",
-  trusted = "Yes"
-)
-area_loc <- list(
-  schema = "Location",
-  tables = list(sections = "Sections", locations = "Location"),
-  columns = list(
-    sections = c("SAR", "Section"),
-    locations = c(
-      "Loc_Code", "Location", "StatArea", "Section", "Bed",
-       "Location_Latitude", "Location_Longitude")
-  )
-)
-bio_loc <- list(
-  schema = "Biosample",
-  tables = list(samples = "sample", fish = "fish"),
-  columns = list(
-    samples = c(
-      "season", "loc_code", "Set_Longitude", "Set_Latitude", "isamp",
-      "month", "Representative_Set", "source_code", "gear_code"
-    ),
-    fish = c(
-      "season", "isamp", "fish", "len", "wgt", "sex_alpha", "mat_code",
-      "age", "dual_age", "gonad_len", "gonad_wgt"
-    )
-  )
-)
-areas <- load_area_data(
-  db = herring_conn, where = area_loc, reg = "All", groups = codes_group,
-  quiet = TRUE
-)
-bio_raw <- load_bio(
-  db_conn = herring_conn, db_location = bio_loc, area_table = areas
-)
+data(database_info)
+bio_raw <- load_bio(db_info = database_info)
 }
 \seealso{
 Other loaders: 
-\code{\link{load_catch}()}
+\code{\link{load_catch}()},
+\code{\link{load_spawn}()}
 }
 \concept{loaders}

@@ -14,7 +14,7 @@ is "Region".}
 
 \item{kilo}{Logical. Return values in thousands. Default TRUE.}
 
-\item{n_digits}{Numeric. Number of decimal places for values. Default 3.}
+\item{n_digits}{Numeric. Number of decimal places for values.}
 }
 \value{
 Tibble with catch data in thousands aggregated by Year, Period, and
@@ -22,6 +22,19 @@ Tibble with catch data in thousands aggregated by Year, Period, and
 }
 \description{
 Make input data for SISCAH: spawn index data.
+}
+\examples{
+library(magrittr)
+library(here)
+library(dplyr)
+if(file.exists(here("Examples", "spawn_raw.rds"))){
+  spawn_raw <- readRDS(file = here("Examples", "spawn_raw.rds"))
+} else{
+  example(load_spawn)
+}
+dat <- spawn_raw \%>\%
+  filter(Region == "PRD") \%>\%
+  siscah_spawn(structure = "Region")
 }
 \seealso{
 Other SISCAH: 

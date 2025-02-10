@@ -4,7 +4,17 @@
 \alias{siscah_bio}
 \title{SISCAH input: biological data.}
 \usage{
-siscah_bio(bio, structure = "Region", age_min = 1, age_max = 10, n_digits = 3)
+siscah_bio(
+  bio,
+  structure = "Region",
+  age_min_number = 1,
+  age_min_weight = 2,
+  age_max = 10,
+  kilo_weight = TRUE,
+  year_start = SpawnIndex::pars$years$assess,
+  year_end = 2024,
+  n_digits = 4
+)
 }
 \arguments{
 \item{bio}{Tibble. Biological data from \code{\link{load_bio}}.}
@@ -12,13 +22,25 @@ siscah_bio(bio, structure = "Region", age_min = 1, age_max = 10, n_digits = 3)
 \item{structure}{Character. Column name indicating stock structure. Default
 is "Region".}
 
-\item{age_min}{Integer. Youngest age to consider: omit younger ages. Default
-1.}
+\item{age_min_number}{Integer. Youngest age to consider for number-at-age:
+omit younger ages. Default 1.}
+
+\item{age_min_weight}{Integer. Youngest age to consider for weight-at-age:
+omit younger ages. Default 2.}
 
 \item{age_max}{Integer. Plus year: aggregate ages that are greater than
 \code{age_max}. Default 10.}
 
-\item{n_digits}{Numeric. Number of decimal places for values. Default 3.}
+\item{kilo_weight}{Logical. Return values in thousands for weight. Default
+TRUE.}
+
+\item{year_start}{Integer. First year to include in time series. Default is
+from \code{SpawnIndex::pars$years$assess}.}
+
+\item{year_end}{Integer. Last year to include in time series. Default is
+2024.}
+
+\item{n_digits}{Numeric. Number of decimal places for values.}
 }
 \value{
 List of tibbles with biological data aggregated by Year, Period, and
@@ -29,13 +51,17 @@ tibbles: number-at-age and weight-at-age in grams.
 Make input data for SISCAH: biological data (number- and weight-at-age).
 }
 \examples{
-\dontrun{
-bio_raw <- readRDS(file = here("Examples", "bio_raw.rds"))
+library(magrittr)
+library(here)
+library(dplyr)
+if(file.exists(here("Examples", "bio_raw.rds"))){
+  bio_raw <- readRDS(file = here("Examples", "bio_raw.rds"))
+} else{
+  example(load_bio)
 }
-example(load_bio)
 dat <- bio_raw \%>\%
   filter(Region == "PRD") \%>\%
-  siscah_bio(structure = "StatArea")
+  siscah_bio(structure = "Region")
 }
 \seealso{
 Other SISCAH: 
