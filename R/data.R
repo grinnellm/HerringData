@@ -69,3 +69,17 @@
 #' data(conv_factors)
 #' conv_factors
 "conv_factors"
+
+#' Database information.
+#'
+#' Database information: connection, schemas, tables, and column names.
+#'
+#' @format List with database information: databaseconnection and information
+#' for tables: location, biosamples, catch, widths, surface spawn, macrocystis
+#' spawn, understory spawn, and all spawn.
+#' @docType data
+#' @family data
+#' @examples
+#' data(database_info)
+#' database_info
+"database_info"
