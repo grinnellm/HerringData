@@ -23,60 +23,33 @@ library(DBI)
 
 ```{r data, include = FALSE}
 # Data
-data(regions)
-# data(pars)
+data(pars)
 data(codes_group)
 data(conv_factors)
-# Herring DB connection details
-herring_conn <- list(
-  driver = "SQL Server Native Client 11.0",
-  server = "DFBCV9TWVASP001\\SQLEXPRESS16",
-  database = "Herring",
-  trusted = "Yes"
-)
-# Location of location tables and column names
-area_loc <- list(
-  schema = "Location",
-  tables = list(sections = "Sections", locations = "Location"),
-  columns = list(
-    sections = c("SAR", "Section"),
-    locations = c(
-      "Loc_Code", "Location", "StatArea", "Section", "Bed",
-       "Location_Latitude", "Location_Longitude")
-  )
-)
-# Location of catch tables and column names
-catch_loc <- list(
-  schema = "Catch",
-  tables = list(
-    tab_catch = "tCatchData", hail_catch = "HailCatch",
-    sok_catch = "SpawnOnKelp"
-  ),
-  columns = list(
-    tab_catch = c(
-      "Season", "LocationCode","GearCode", "DisposalCode", "Catch", "Date"
-    ),
-    hail_catch = c(
-      "Active", "Season", "Section", "GearCode", "DisposalCode", "CatchTons"
-    ),
-    sok_catch = c(
-      "Season", "Section", "GearCode", "DisposalCode", "ProductLanded"
-    )
-  )
-)
+data(database_info)
 ```
 
-```{r areas}
-areas <- load_area_data(
-  db = herring_conn, where = area_loc, reg = "CC", sec_sub = NULL,
-  groups = codes_group
-)
-areas
+```{r bio}
+# Load and wrangle biological data: number- and weight-at-age 
+bio <- load_bio(db_info = database_info) %>%
+  filter(Region == "PRD") %>%
+  siscah_bio(structure = "StatArea")
+bio$number_age
+bio$weight_age
 ```
 
-```{r get_catch}
-catch_raw <- load_catch(
-  db_conn = herring_conn, db_location = catch_loc, area_table = areas
-)
-catch_raw
+```{r catch}
+# Load and wrangle catch data
+catch <- load_catch(db_info = database_info) %>%
+  filter(Region == "PRD") %>%
+  siscah_catch(structure = "StatArea")
+catch
+```
+
+```{r spawn}
+# Load spawn data and calculate spawn index
+spawn <- load_spawn(db_info = database_info) %>%
+  filter(Region == "PRD") %>%
+  siscah_spawn(structure = "StatArea")
+spawn
 ```
