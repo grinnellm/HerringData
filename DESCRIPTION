@@ -16,8 +16,8 @@ ByteCompile: true
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Suggests: knitr, rmarkdown, tidyverse, here
-Imports: DBI, Rdpack, dplyr, tibble, SpawnIndex, lubridate, odbc, tidyr
+Suggests: knitr, rmarkdown, tidyverse, here, magrittr
+Imports: DBI, Rdpack, dplyr, tibble, SpawnIndex, lubridate, odbc, tidyr, zoo, sf
 Note: Requires access to DFO databases.
 VignetteBuilder: knitr
 RdMacros: Rdpack
