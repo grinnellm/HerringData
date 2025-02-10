@@ -9,6 +9,9 @@ utils::globalVariables(
     "Representative_Set", "SampWt", "Sample", "Set_Latitude", "Set_Longitude",
     "Sex", "SourceCode", "Weight", "across", "age", "dual_age", "gear_code",
     "gonad_len", "gonad_wgt", "isamp", "len", "loc_code", "mat_code", "month",
-    "na.omit", "season", "sex_alpha", "source_code", "wgt"
+    "na.omit", "season", "sex_alpha", "source_code", "wgt", "Depth", "Dive",
+    "End", "Macro", "MacroLyrs", "MacroSI", "Method", "SpawnNumber", "Start",
+    "SurfLyrs", "SurfSI", "Surface", "Survey", "Under", "UnderLyrs", "UnderSI",
+    "Width"
   )
 )
