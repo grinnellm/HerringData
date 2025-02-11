@@ -22,7 +22,8 @@ load_bio(
 \item{year_start}{Integer. First year to include in time series. Default is
 from \code{SpawnIndex::pars$years$assess}.}
 
-\item{rep_year_start}{Year indicating the start of representative samples. Default 2014.}
+\item{rep_year_start}{Year indicating the start of representative samples.
+Default 2014.}
 
 \item{quiet}{Logical. Suppress messages; default is FALSE.}
 }

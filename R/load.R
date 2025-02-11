@@ -5,7 +5,8 @@
 #' @template param-db_info
 #' @template param-groups
 #' @template param-year_start
-#' @param rep_year_start Year indicating the start of representative samples. Default 2014.
+#' @param rep_year_start Year indicating the start of representative samples.
+#'   Default 2014.
 #' @template param-quiet
 #' @importFrom Rdpack reprompt
 #' @importFrom SpawnIndex load_area_data

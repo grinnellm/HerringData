@@ -19,8 +19,8 @@
 #' @importFrom stats na.omit
 #' @importFrom zoo na.fill
 #' @return List of tibbles with biological data aggregated by Year, Period, and
-#'   "structure", including spatial and temporal information. List has two
-#'   tibbles: number-at-age and weight-at-age in grams.
+#'   "structure", including spatial and temporal information. List has three
+#'   tibbles: number-at-age and two with weight-at-age in grams.
 #' @family SISCAH
 #' @export
 #' @examples
@@ -116,8 +116,50 @@ siscah_bio <- function(
       names_prefix = "a"
     ) %>%
     arrange(Stock, Area, Gear, Year)
-  # List to return
-  res <- list(number_age = number_age_siscah, weight_age = weight_age_siscah)
+  # Weight-at-age (seine; SampWt fixes unrepresentative sampling if identified)
+  weight_age_seine <- bio %>%
+    filter(Age >= age_min_weight, GearCode == 29) %>%
+    select(Year, {{structure}}, Age, Weight, SampWt) %>%
+    na.omit() %>%
+    group_by(Year, across(structure), Age) %>%
+    summarise(
+      Weight = weighted_mean_na(x = Weight, w = SampWt) /
+        ifelse(kilo_weight, 1000, 1)
+    ) %>%
+    ungroup() %>%
+    rename(Name = {{structure}}) %>%
+    complete(
+      Year = year_start:year_end,
+      Name = stock_info$Name,
+      Age = age_min_weight:age_max
+    ) %>%
+    full_join(y = stock_info, by = "Name") %>%
+    select(Stock, Area, Year, Age, Weight) %>%
+    arrange(Stock, Area, Year, Age)
+  # Weight-at-age (seine): fill in missing values
+  weight_age_seine_fill <- weight_age_seine %>%
+    # pivot_longer(cols = !Year, names_to = "Age", values_to = "Weight",
+    #              names_transform = as.integer) %>%
+    group_by(Stock, Area, Age) %>%
+    # Replace NAs: mean of (up to) previous n years
+    mutate(Weight = rolling_mean_na(x = Weight)) %>%
+    # Replace persistent NAs (i.e., at the beginning of the time series)
+    mutate(Weight = na.fill(Weight, fill = c("extend", NA, NA))) %>%
+    ungroup() %>%
+    mutate(Weight = round(Weight, digits = n_digits))
+  # Weight-at-age (seine): wide format for SISCAH
+  weight_age_seine_siscah <- weight_age_seine_fill %>%
+    pivot_wider(
+      names_from = Age, values_from = Weight, values_fill = 0,
+      names_prefix = "a"
+    ) %>%
+    arrange(Stock, Area, Year)
+  # List of tibbles
+  res <- list(
+    number_age = number_age_siscah,
+    weight_age = weight_age_siscah,
+    weight_age_seine = weight_age_seine_siscah
+  )
   # Return biodata
   return(res)
 } # End siscah_bio function

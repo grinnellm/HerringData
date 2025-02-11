@@ -44,8 +44,8 @@ from \code{SpawnIndex::pars$years$assess}.}
 }
 \value{
 List of tibbles with biological data aggregated by Year, Period, and
-"structure", including spatial and temporal information. List has two
-tibbles: number-at-age and weight-at-age in grams.
+"structure", including spatial and temporal information. List has three
+tibbles: number-at-age and two with weight-at-age in grams.
 }
 \description{
 Make input data for SISCAH: biological data (number- and weight-at-age).

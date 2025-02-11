@@ -36,6 +36,7 @@ bio <- load_bio(db_info = database_info) %>%
   siscah_bio(structure = "StatArea")
 bio$number_age
 bio$weight_age
+bio$weight_age_seine
 ```
 
 ```{r catch}
