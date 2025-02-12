@@ -84,7 +84,7 @@ siscah_bio <- function(
     na.omit() %>%
     group_by(Period, Year, across(structure), Age) %>%
     summarise(
-      Weight = weighted_mean_na(x = Weight, w = SampWt) /
+      Weight = mean_na_weight(x = Weight, w = SampWt) /
         ifelse(kilo_weight, 1000, 1)
     ) %>%
     ungroup() %>%
@@ -104,7 +104,7 @@ siscah_bio <- function(
     #              names_transform = as.integer) %>%
     group_by(Stock, Area, Gear, Age) %>%
     # Replace NAs: mean of (up to) previous n years
-    mutate(Weight = rolling_mean_na(x = Weight)) %>%
+    mutate(Weight = mean_na_roll(x = Weight)) %>%
     # Replace persistent NAs (i.e., at the beginning of the time series)
     mutate(Weight = na.fill(Weight, fill = c("extend", NA, NA))) %>%
     ungroup() %>%
@@ -123,7 +123,7 @@ siscah_bio <- function(
     na.omit() %>%
     group_by(Year, across(structure), Age) %>%
     summarise(
-      Weight = weighted_mean_na(x = Weight, w = SampWt) /
+      Weight = mean_na_weight(x = Weight, w = SampWt) /
         ifelse(kilo_weight, 1000, 1)
     ) %>%
     ungroup() %>%
@@ -142,7 +142,7 @@ siscah_bio <- function(
     #              names_transform = as.integer) %>%
     group_by(Stock, Area, Age) %>%
     # Replace NAs: mean of (up to) previous n years
-    mutate(Weight = rolling_mean_na(x = Weight)) %>%
+    mutate(Weight = mean_na_roll(x = Weight)) %>%
     # Replace persistent NAs (i.e., at the beginning of the time series)
     mutate(Weight = na.fill(Weight, fill = c("extend", NA, NA))) %>%
     ungroup() %>%

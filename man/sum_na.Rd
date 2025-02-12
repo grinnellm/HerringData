@@ -21,8 +21,8 @@ This does not fail when groups have no values to summarise.
 \seealso{
 Other utility: 
 \code{\link{mean_na}()},
-\code{\link{rolling_mean_na}()},
-\code{\link{season_to_year}()},
-\code{\link{weighted_mean_na}()}
+\code{\link{mean_na_roll}()},
+\code{\link{mean_na_weight}()},
+\code{\link{season_to_year}()}
 }
 \concept{utility}

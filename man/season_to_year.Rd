@@ -7,24 +7,22 @@
 season_to_year(dat)
 }
 \arguments{
-\item{dat}{Numeric. Values to transform.}
+\item{dat}{Numeric. Values (seasons) to transform.}
 }
 \value{
 Numeric year.
 }
 \description{
-Transform season to year. The herring 'season' column is a combination of the
-two fishery years: for example, season '20123' indicates the years 2012 and
-2013. The input *.dat file for the analysis using ADMB requires this to be an
-actual year, which we define as the second (i.e., later) year, 2013. This
-function takes in a vector of seasons (dat), and outputs a vector of years
-(res).
+Transform season to year. The herring 'season' is a combination of two
+fishery years. For example, season '20123' indicates 2012 and 2013. The input
+file for the stock assessment requires an actual year which we define as the
+second (i.e., later) year, 2013.
 }
 \seealso{
 Other utility: 
 \code{\link{mean_na}()},
-\code{\link{rolling_mean_na}()},
-\code{\link{sum_na}()},
-\code{\link{weighted_mean_na}()}
+\code{\link{mean_na_roll}()},
+\code{\link{mean_na_weight}()},
+\code{\link{sum_na}()}
 }
 \concept{utility}
