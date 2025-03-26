@@ -5,7 +5,7 @@
 \alias{database_info}
 \title{Database information.}
 \format{
-List with database information: databaseconnection and information
+List with database information: database connection and information
 for tables: location, biosamples, catch, widths, surface spawn, macrocystis
 spawn, understory spawn, and all spawn.
 }

@@ -7,7 +7,7 @@
 season_to_year(dat)
 }
 \arguments{
-\item{dat}{Numeric. Values (seasons) to transform.}
+\item{dat}{Numeric. Seasons to transform.}
 }
 \value{
 Numeric year.

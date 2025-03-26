@@ -12,7 +12,7 @@ mean_na_roll(x, n = 5)
 \item{n}{Numeric. Number of values in rolling window (maximum). Default is 5.}
 }
 \value{
-Numberic rolling mean.
+Numeric rolling mean.
 }
 \description{
 Calculate rolling mean of previous values.

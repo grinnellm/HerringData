@@ -14,7 +14,7 @@ mean_na_weight(x, w, omit_na = TRUE)
 \item{omit_na}{Logical. Keep or remove NAs. Default is TRUE.}
 }
 \value{
-Numberic weighted mean.
+Numeric weighted mean.
 }
 \description{
 Calculate weighted mean if there are non-NA values, return NA if all values
