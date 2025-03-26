@@ -14,43 +14,157 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup, include = FALSE}
+# Set up
+
+Load required packages.
+
+```{r setup, message = FALSE}
 library(HerringData)
 library(SpawnIndex)
 library(tidyverse)
 library(DBI)
 ```
 
-```{r data, include = FALSE}
-# Data
+Load required data.
+
+```{r data}
 data(pars)
 data(codes_group)
 data(conv_factors)
 data(database_info)
 ```
 
+# Data
+
+The following process for the three data types is similar.
+First, load the data and wrangle it into a user-friendly format
+via the respective function in the `loaders` family.
+Then, filter to the Prince Rupert District (PRD) stock assessment region (SAR).
+Finally, aggregate and wrangle the data to use in SISCAH
+via the respective function in the `SISCAH` family.
+
+## Biological data
+
+First, load and wrangle biological data: number- and weight-at-age.
+Then, filter to only include data from the PRD SAR.
+Finally, aggregate the data by year, gear, and stock to input into SISCAH.
+Note that the `structure` argument (set to Statistical Area in this example)
+indicates the implied sub-stock structure.
+
 ```{r bio}
-# Load and wrangle biological data: number- and weight-at-age 
-bio <- load_bio(db_info = database_info) %>%
+bio <- load_bio(db_info = database_info, quiet = TRUE) %>%
   filter(Region == "PRD") %>%
   siscah_bio(structure = "StatArea")
+```
+
+Number-at-age by stock, gear, and year for fish aged
+`r formals(siscah_bio)$age_min_number`
+(i.e., column 'a`r formals(siscah_bio)$age_min_number`') to
+`r formals(siscah_bio)$age_max`.
+The 'Stock' column is the sub-stock name
+and indicates the Statistical Area number (e.g., "StatArea03").
+The 'Area' column is a number that increments from 1
+to the number of sub-stocks.
+<!-- TODO: What is period? -->
+The 'Gear' column indicates the period (see XXX).
+
+```{r bio_num}
 bio$number_age
+```
+
+Weight-at-age in kilograms for fish aged
+`r formals(siscah_bio)$age_min_weight` to
+`r formals(siscah_bio)$age_max`.
+Note that table layout is similar to the number-at-age table.
+There are two weight-at-age tables:
+weight-at-age by year, gear, and stock, as well as
+weight-at-age by year and stock for seine gear only.
+
+```{r bio_wt}
 bio$weight_age
 bio$weight_age_seine
 ```
 
+## Catch data
+
+Like biological data above,
+load and wrangle catch data,
+filter to only include data from the PRD SAR, and
+aggregate the data by year, gear, and stock to input into SISCAH.
+
 ```{r catch}
-# Load and wrangle catch data
-catch <- load_catch(db_info = database_info) %>%
+catch <- load_catch(db_info = database_info, quiet = TRUE) %>%
   filter(Region == "PRD") %>%
   siscah_catch(structure = "StatArea")
+```
+
+Catch by stock, gear, and year in thousands of tonnes.
+Note that table layout is similar to the biological data tables.
+
+```{r catch_catch}
 catch
 ```
 
+## Spawn data
+
+Like biological and catch data above,
+load and wrangle spawn index data,
+filter to only include data from the PRD SAR, and
+aggregate the data by year and stock to input into SISCAH.
+Note that the spawn index is calculated when the data is loaded
+using functions in the `SpawnIndex` package.
+For SISCAH, there are two types of spawn index data:
+data from surface surveys and data from dive surveys.
+
 ```{r spawn}
-# Load spawn data and calculate spawn index
-spawn <- load_spawn(db_info = database_info) %>%
+spawn <- load_spawn(db_info = database_info, quiet = TRUE) %>%
   filter(Region == "PRD") %>%
   siscah_spawn(structure = "StatArea")
+```
+
+Spawn index by stock and year in thousands of tonnes.
+Note that table layout is similar to the biological and catch data tables.
+
+```{r spawn_spawn}
 spawn
+```
+
+# Figures
+
+## Biological data
+
+<!-- TODO: Plots -->
+
+```{r bio_plot}
+# ggplot(data = bio, mapping = aes(x = ))
+```
+
+## Catch data
+
+```{r catch_plot, fig.width = 8, fig.height = 5}
+catch_plot <- catch %>%
+    mutate(Period = as.character(Gear))
+ggplot(data = catch_plot, mapping = aes(x = Year, y = Catch, fill = Period)) +
+  geom_col() +
+  scale_colour_viridis_d() +
+  labs(y = "Catch (1,000 t)") +
+  facet_grid(Stock ~ .) +
+  theme_bw() +
+  theme(legend.position = "top")
+```
+
+## Spawn data
+
+```{r spawn_plot, fig.width = 8, fig.height = 5}
+spawn_plot <- spawn %>%
+    pivot_longer(
+      cols = c(Surface, Dive), names_to = "Survey", values_to = "Spawn"
+    )
+ggplot(data = spawn_plot, mapping = aes(x = Year, y = Spawn, fill = Survey)) +
+  geom_col() +
+  scale_colour_viridis_d() +
+  labs(y = "Spawn index (1,000 t)") +
+  facet_grid(Stock ~ .) +
+  theme_bw() +
+theme(legend.position = "top")
 ```
