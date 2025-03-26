@@ -473,7 +473,7 @@ load_spawn <- function(
     widths = bar_width, years = year_start:year(Sys.time()), quiet = quiet
   )
   # Progress message
-  cat("\tmacrocystis...\n")
+  if(!quiet) cat("\tmacrocystis...\n")
   # Access and calculate macrocystis spawn
   macrocystis <- calc_macro_index(
     db = db_info$herring_conn, where = db_info$macro_loc, areas = areas,

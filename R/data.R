@@ -74,7 +74,7 @@
 #'
 #' Database information: connection, schemas, tables, and column names.
 #'
-#' @format List with database information: databaseconnection and information
+#' @format List with database information: database connection and information
 #' for tables: location, biosamples, catch, widths, surface spawn, macrocystis
 #' spawn, understory spawn, and all spawn.
 #' @docType data

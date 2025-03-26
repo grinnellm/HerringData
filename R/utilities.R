@@ -27,7 +27,7 @@ mean_na <- function(x, omit_na = TRUE) {
 #' @param x Numeric. Values to mean.
 #' @param n Numeric. Number of values in rolling window (maximum). Default is 5.
 #' @importFrom Rdpack reprompt
-#' @return Numberic rolling mean.
+#' @return Numeric rolling mean.
 #' @family utility
 mean_na_roll <- function(x, n = 5) {
   # Update the NAs in a vector with the mean of the previous values. The number
@@ -58,7 +58,7 @@ mean_na_roll <- function(x, n = 5) {
 #' @template param-omit_na
 #' @importFrom Rdpack reprompt
 #' @importFrom stats weighted.mean
-#' @return Numberic weighted mean.
+#' @return Numeric weighted mean.
 #' @family utility
 mean_na_weight <- function(x, w, omit_na = TRUE) {
   # An alternate version to weighted.mean(x, w, na.rm=TRUE), which returns 0 if
