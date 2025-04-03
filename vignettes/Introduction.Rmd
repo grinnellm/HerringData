@@ -131,6 +131,8 @@ spawn
 
 # Figures
 
+Example figures to display biological, catch, and spawn data.
+
 ## Biological data
 
 <!-- TODO: Plots -->
@@ -141,30 +143,40 @@ spawn
 
 ## Catch data
 
+Plot annual catch data for each stock and period.
+
 ```{r catch_plot, fig.width = 8, fig.height = 5}
-catch_plot <- catch %>%
+catch_dat <- catch %>%
     mutate(Period = as.character(Gear))
-ggplot(data = catch_plot, mapping = aes(x = Year, y = Catch, fill = Period)) +
+catch_plot <- ggplot(
+  data = catch_dat, mapping = aes(x = Year, y = Catch, fill = Period)
+) +
   geom_col() +
-  scale_colour_viridis_d() +
+  scale_fill_viridis_d() +
   labs(y = "Catch (1,000 t)") +
-  facet_grid(Stock ~ .) +
+  facet_grid(Stock ~ ., scales = "free_y") +
   theme_bw() +
   theme(legend.position = "top")
+catch_plot
 ```
 
 ## Spawn data
 
+Plot annual spawn index data for each stock and survey type.
+
 ```{r spawn_plot, fig.width = 8, fig.height = 5}
-spawn_plot <- spawn %>%
+spawn_dat <- spawn %>%
     pivot_longer(
       cols = c(Surface, Dive), names_to = "Survey", values_to = "Spawn"
     )
-ggplot(data = spawn_plot, mapping = aes(x = Year, y = Spawn, fill = Survey)) +
+spawn_plot <- ggplot(
+  data = spawn_dat, mapping = aes(x = Year, y = Spawn, fill = Survey)
+) +
   geom_col() +
-  scale_colour_viridis_d() +
+  scale_fill_viridis_d() +
   labs(y = "Spawn index (1,000 t)") +
-  facet_grid(Stock ~ .) +
+  facet_grid(Stock ~ ., scales = "free_y") +
   theme_bw() +
-theme(legend.position = "top")
+  theme(legend.position = "top")
+spawn_plot
 ```
