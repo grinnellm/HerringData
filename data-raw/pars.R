@@ -28,7 +28,7 @@ save(codes_group, file = here("data", "codes_group.RData"), version = 2)
 # Period codes
 codes_period <- read_csv(
   file = here("data-raw", "Period.csv"),
-  col_types = cols("c", "c")
+  col_types = cols("i", "c")
 )
 save(codes_period, file = here("data", "codes_period.RData"), version = 2)
 
