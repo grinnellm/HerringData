@@ -30,6 +30,7 @@ Load required data.
 ```{r data}
 data(pars)
 data(codes_group)
+data(codes_period)
 data(conv_factors)
 data(database_info)
 ```
@@ -47,7 +48,8 @@ via the respective function in the `SISCAH` family.
 
 First, load and wrangle biological data: number- and weight-at-age.
 Then, filter to only include data from the PRD SAR.
-Finally, aggregate the data by year, gear, and stock to input into SISCAH.
+Finally, aggregate the data by year, gear (i.e., period), and stock
+to input into SISCAH.
 Note that the `structure` argument (set to Statistical Area in this example)
 indicates the implied sub-stock structure.
 
@@ -57,7 +59,7 @@ bio <- load_bio(db_info = database_info, quiet = TRUE) %>%
   siscah_bio(structure = "StatArea")
 ```
 
-Number-at-age by stock, gear, and year for fish aged
+Number-at-age by stock, period, and year for fish aged
 `r formals(siscah_bio)$age_min_number`
 (i.e., column 'a`r formals(siscah_bio)$age_min_number`') to
 `r formals(siscah_bio)$age_max`.
@@ -65,11 +67,18 @@ The 'Stock' column is the sub-stock name
 and indicates the Statistical Area number (e.g., "StatArea03").
 The 'Area' column is a number that increments from 1
 to the number of sub-stocks.
-<!-- TODO: What is period? -->
-The 'Gear' column indicates the period (see XXX).
+Note that Gear and Period are synonymous.
+The 'Period' column indicates the fishery type:
+'Other' is the reduction, the food and bait, as well as the special use fishery;
+'RoeSN' is the roe seine fishery; and
+'RoeGN' is the roe gillnet fishery.
 
-```{r bio_num}
-bio$number_age
+```{r bio_num_age}
+bio_num_age <- bio$number_age  %>%
+  left_join(y = codes_period, by = "Gear") %>%
+  select(Stock, Area, Period, Year, starts_with("a", ignore.case = FALSE)) %>%
+  mutate(Period = factor(Period, levels = codes_period$Period))
+bio_num_age
 ```
 
 Weight-at-age in kilograms for fish aged
@@ -77,12 +86,19 @@ Weight-at-age in kilograms for fish aged
 `r formals(siscah_bio)$age_max`.
 Note that table layout is similar to the number-at-age table.
 There are two weight-at-age tables:
-weight-at-age by year, gear, and stock, as well as
+weight-at-age by year, period, and stock, as well as
 weight-at-age by year and stock for seine gear only.
 
-```{r bio_wt}
-bio$weight_age
-bio$weight_age_seine
+```{r bio_wt_age}
+bio_wt_age <- bio$weight_age %>%
+  left_join(y = codes_period, by = "Gear") %>%
+  select(Stock, Area, Period, Year, starts_with("a", ignore.case = FALSE))
+bio_wt_age
+```
+
+```{r bio_wt_age_sn}
+bio_wt_age_sn <- bio$weight_age_seine
+bio_wt_age_sn
 ```
 
 ## Catch data
@@ -90,15 +106,17 @@ bio$weight_age_seine
 Like biological data above,
 load and wrangle catch data,
 filter to only include data from the PRD SAR, and
-aggregate the data by year, gear, and stock to input into SISCAH.
+aggregate the data by year, period, and stock to input into SISCAH.
 
 ```{r catch}
 catch <- load_catch(db_info = database_info, quiet = TRUE) %>%
   filter(Region == "PRD") %>%
-  siscah_catch(structure = "StatArea")
+  siscah_catch(structure = "StatArea") %>%
+  left_join(y = codes_period, by = "Gear") %>%
+  select(Stock, Area, Period, Year, Catch)
 ```
 
-Catch by stock, gear, and year in thousands of tonnes.
+Catch by stock, period, and year in thousands of tonnes.
 Note that table layout is similar to the biological data tables.
 
 ```{r catch_catch}
@@ -113,8 +131,9 @@ filter to only include data from the PRD SAR, and
 aggregate the data by year and stock to input into SISCAH.
 Note that the spawn index is calculated when the data is loaded
 using functions in the `SpawnIndex` package.
-For SISCAH, there are two types of spawn index data:
-data from surface surveys and data from dive surveys.
+SISCAH accounts for two types of spawn index data:
+data from surface survey observationss and
+data from dive survey observations.
 
 ```{r spawn}
 spawn <- load_spawn(db_info = database_info, quiet = TRUE) %>%
@@ -131,25 +150,36 @@ spawn
 
 # Figures
 
-Example figures to display biological, catch, and spawn data.
+Example figures to display biological, catch, and spawn index data.
 
-## Biological data
+## Display biological data
+
+Plot annual number-at-age for each stock and period.
 
 <!-- TODO: Plots -->
-
-```{r bio_plot}
+```{r bio_num_age_plot}
 # ggplot(data = bio, mapping = aes(x = ))
 ```
 
-## Catch data
+Plot annual weight-at-age for each stock and period.
 
-Plot annual catch data for each stock and period.
+```{r bio_wt_age_plot}
+# ggplot(data = bio, mapping = aes(x = ))
+```
+
+Plot annual weight-at-age for each stock (seine gear only).
+
+```{r bio_wt_age_sn_plot}
+# ggplot(data = bio, mapping = aes(x = ))
+```
+
+## Display catch data
+
+Plot annual catch for each stock and period.
 
 ```{r catch_plot, fig.width = 8, fig.height = 5}
-catch_dat <- catch %>%
-    mutate(Period = as.character(Gear))
 catch_plot <- ggplot(
-  data = catch_dat, mapping = aes(x = Year, y = Catch, fill = Period)
+  data = catch, mapping = aes(x = Year, y = Catch, fill = Period)
 ) +
   geom_col() +
   scale_fill_viridis_d() +
@@ -160,17 +190,19 @@ catch_plot <- ggplot(
 catch_plot
 ```
 
-## Spawn data
+## Display spawn index data
 
-Plot annual spawn index data for each stock and survey type.
+Pivot the spawn data to facilitate plotting and then 
+plot annual spawn index for each stock and survey type.
 
 ```{r spawn_plot, fig.width = 8, fig.height = 5}
-spawn_dat <- spawn %>%
+spawn_long <- spawn %>%
     pivot_longer(
       cols = c(Surface, Dive), names_to = "Survey", values_to = "Spawn"
-    )
+    ) %>%
+  mutate(Survey = factor(Survey, levels = c("Surface", "Dive")))
 spawn_plot <- ggplot(
-  data = spawn_dat, mapping = aes(x = Year, y = Spawn, fill = Survey)
+  data = spawn_long, mapping = aes(x = Year, y = Spawn, fill = Survey)
 ) +
   geom_col() +
   scale_fill_viridis_d() +
