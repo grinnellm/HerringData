@@ -49,7 +49,7 @@ siscah_bio <- function(
   # Determine stocks
   stocks <- bio %>% pull({{structure}}) %>% unique
   # Determine prefix
-  stock_prefix <- bio %>% select({{structure}}) %>% names()
+  stock_prefix <- bio %>% select(all_of(structure)) %>% names()
   # Get number of groups in structure and stock names
   stock_info <- tibble(
     Name = stocks[order(stocks)],
@@ -62,7 +62,7 @@ siscah_bio <- function(
   # Number-at-age (SampWt fixes unrepresentative sampling if identified)
   number_age <- bio %>%
     filter(Age >= age_min_number) %>%
-    select(Period, Year, {{structure}}, Age, SampWt) %>%
+    select(Period, Year, all_of(structure), Age, SampWt) %>%
     na.omit() %>%
     group_by(Period, Year, across(structure), Age) %>%
     summarise(Number = round(sum_na(SampWt))) %>%
@@ -80,7 +80,7 @@ siscah_bio <- function(
   # Weight-at-age (SampWt fixes unrepresentative sampling if identified)
   weight_age <- bio %>%
     filter(Age >= age_min_weight) %>%
-    select(Period, Year, {{structure}}, Age, Weight, SampWt) %>%
+    select(Period, Year, all_of(structure), Age, Weight, SampWt) %>%
     na.omit() %>%
     group_by(Period, Year, across(structure), Age) %>%
     summarise(
@@ -119,7 +119,7 @@ siscah_bio <- function(
   # Weight-at-age (seine; SampWt fixes unrepresentative sampling if identified)
   weight_age_seine <- bio %>%
     filter(Age >= age_min_weight, GearCode == 29) %>%
-    select(Year, {{structure}}, Age, Weight, SampWt) %>%
+    select(Year, all_of(structure), Age, Weight, SampWt) %>%
     na.omit() %>%
     group_by(Year, across(structure), Age) %>%
     summarise(
@@ -201,7 +201,7 @@ siscah_catch <- function(
   # Determine stocks
   stocks <- catch %>% pull({{structure}}) %>% unique
   # Determine prefix for stock name
-  stock_prefix <- catch %>% select({{structure}}) %>% names()
+  stock_prefix <- catch %>% select(all_of(structure)) %>% names()
   # Get number of groups in structure and stock names
   stock_info <- tibble(
     Name = stocks[order(stocks)],
@@ -265,7 +265,7 @@ siscah_spawn <- function(
   # Determine stocks
   stocks <- spawn %>% pull({{structure}}) %>% unique
   # Determine prefix for stock name
-  stock_prefix <- spawn %>% select({{structure}}) %>% names()
+  stock_prefix <- spawn %>% select(all_of(structure)) %>% names()
   # Get number of groups in structure and stock names
   stock_info <- tibble(
     Name = stocks[order(stocks)],
