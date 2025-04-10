@@ -4,11 +4,12 @@
 \name{HerringData-package}
 \alias{HerringData}
 \alias{HerringData-package}
-\title{HerringData: Load and wrangle Pacific Herring data.}
+\title{HerringData: Load and wrangle Pacific Herring (\emph{Clupea pallasii}) data.}
 \description{
-Load Pacific Herring data from databases and wrangle for data
-summary reports and input to statistical catch-age models. Data includes
-biological (number- and weight-at-age), catch, and spawn index data.
+Load Pacific Herring (\emph{Clupea pallasii}) data from databases and
+wrangle for data summary reports and input to statistical catch-age models.
+Data includes biological (number- and weight-at-age), catch, and spawn
+index data.
 }
 \details{
 The HerringData package provides data, as well as three families of
