@@ -1,10 +1,19 @@
 ---
-title: "Introduction"
-output: rmarkdown::html_vignette
+title: Introduction to `HerringData`
+subtitle: '`r read.dcf(file = "../DESCRIPTION", fields = "Title")`'
+author: Matthew Grinnell
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output:
+      rmarkdown::html_vignette:
+        fig_caption: yes
+        toc: true
+        number_sections: true
 vignette: >
   %\VignetteIndexEntry{Introduction}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+---
+
 ---
 
 ```{r options, include = FALSE}
@@ -13,6 +22,10 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+
+# Background
+
+`r read.dcf(file = "../DESCRIPTION", fields = "Description")`
 
 # Set up
 
@@ -23,6 +36,7 @@ library(HerringData)
 library(SpawnIndex)
 library(tidyverse)
 library(DBI)
+library(scales)
 ```
 
 Load required data.
@@ -35,36 +49,50 @@ data(conv_factors)
 data(database_info)
 ```
 
+Set parameters.
+
+```{r pars}
+region <- "PRD"
+substock <- "StatArea"
+yrs_plot <- c(pars$years$assess, 2024)
+```
+
+This introduction shows an example workflow in the
+`r region` stock assessment region (SAR) using
+`r substock` for sub-stock structure.
+
 # Data
 
 The following process for the three data types is similar.
 First, load the data and wrangle it into a user-friendly format
 via the respective function in the `loaders` family.
-Then, filter to the Prince Rupert District (PRD) stock assessment region (SAR).
+Then, filter to the `r region` SAR.
 Finally, aggregate and wrangle the data to use in SISCAH
 via the respective function in the `SISCAH` family.
 
 ## Biological data
 
 First, load and wrangle biological data: number- and weight-at-age.
-Then, filter to only include data from the PRD SAR.
+Then, filter to only include data from the `r region` SAR.
 Finally, aggregate the data by year, gear (i.e., period), and stock
 to input into SISCAH.
-Note that the `structure` argument (set to Statistical Area in this example)
-indicates the implied sub-stock structure.
+Note that the `structure` argument (set to `r substock` in this example)
+indicates the implied stock structure.
 
 ```{r bio}
 bio <- load_bio(db_info = database_info, quiet = TRUE) %>%
-  filter(Region == "PRD") %>%
-  siscah_bio(structure = "StatArea")
+  filter(Region == region) %>%
+  siscah_bio(structure = substock)
 ```
+
+### Number-at-age data
 
 Number-at-age by stock, period, and year for fish aged
 `r formals(siscah_bio)$age_min_number`
 (i.e., column 'a`r formals(siscah_bio)$age_min_number`') to
 `r formals(siscah_bio)$age_max`.
-The 'Stock' column is the sub-stock name
-and indicates the Statistical Area number (e.g., "StatArea03").
+The 'Stock' column is the sub-stock name;
+in this case it indicates the Statistical Area (e.g., "StatArea03").
 The 'Area' column is a number that increments from 1
 to the number of sub-stocks.
 Note that Gear and Period are synonymous.
@@ -73,13 +101,15 @@ The 'Period' column indicates the fishery type:
 'RoeSN' is the roe seine fishery; and
 'RoeGN' is the roe gillnet fishery.
 
-```{r bio_num_age}
-bio_num_age <- bio$number_age  %>%
+```{r num_age}
+num_age <- bio$number_age  %>%
   left_join(y = codes_period, by = "Gear") %>%
   select(Stock, Area, Period, Year, starts_with("a", ignore.case = FALSE)) %>%
   mutate(Period = factor(Period, levels = codes_period$Period))
-bio_num_age
+num_age
 ```
+
+### Weight-at-age data
 
 Weight-at-age in kilograms for fish aged
 `r formals(siscah_bio)$age_min_weight` to
@@ -89,31 +119,33 @@ There are two weight-at-age tables:
 weight-at-age by year, period, and stock, as well as
 weight-at-age by year and stock for seine gear only.
 
-```{r bio_wt_age}
-bio_wt_age <- bio$weight_age %>%
+```{r wt_age}
+wt_age <- bio$weight_age %>%
   left_join(y = codes_period, by = "Gear") %>%
-  select(Stock, Area, Period, Year, starts_with("a", ignore.case = FALSE))
-bio_wt_age
+  select(Stock, Area, Period, Year, starts_with("a", ignore.case = FALSE)) %>%
+  mutate(Period = factor(Period, levels = codes_period$Period))
+wt_age
 ```
 
-```{r bio_wt_age_sn}
-bio_wt_age_sn <- bio$weight_age_seine
-bio_wt_age_sn
+```{r wt_age_sn}
+wt_age_sn <- bio$weight_age_seine
+wt_age_sn
 ```
 
 ## Catch data
 
 Like biological data above,
 load and wrangle catch data,
-filter to only include data from the PRD SAR, and
+filter to only include data from the `r region` SAR, and
 aggregate the data by year, period, and stock to input into SISCAH.
 
 ```{r catch}
 catch <- load_catch(db_info = database_info, quiet = TRUE) %>%
-  filter(Region == "PRD") %>%
-  siscah_catch(structure = "StatArea") %>%
+  filter(Region == region) %>%
+  siscah_catch(structure = substock) %>%
   left_join(y = codes_period, by = "Gear") %>%
-  select(Stock, Area, Period, Year, Catch)
+  select(Stock, Area, Period, Year, Catch) %>%
+  mutate(Period = factor(Period, levels = codes_period$Period))
 ```
 
 Catch by stock, period, and year in thousands of tonnes.
@@ -127,7 +159,7 @@ catch
 
 Like biological and catch data above,
 load and wrangle spawn index data,
-filter to only include data from the PRD SAR, and
+filter to only include data from the `r region` SAR, and
 aggregate the data by year and stock to input into SISCAH.
 Note that the spawn index is calculated when the data is loaded
 using functions in the `SpawnIndex` package.
@@ -137,8 +169,8 @@ data from dive survey observations.
 
 ```{r spawn}
 spawn <- load_spawn(db_info = database_info, quiet = TRUE) %>%
-  filter(Region == "PRD") %>%
-  siscah_spawn(structure = "StatArea")
+  filter(Region == region) %>%
+  siscah_spawn(structure = substock)
 ```
 
 Spawn index by stock and year in thousands of tonnes.
@@ -154,23 +186,100 @@ Example figures to display biological, catch, and spawn index data.
 
 ## Display biological data
 
-Plot annual number-at-age for each stock and period.
+Biological data includes number- and weight-at-age.
 
-<!-- TODO: Plots -->
-```{r bio_num_age_plot}
-# ggplot(data = bio, mapping = aes(x = ))
+### Display number-at-age data
+
+Plot annual number of fish sampled for each stock and period.
+
+```{r num_age_plot, fig.width = 8, fig.height = 5}
+num_age_long <- num_age %>%
+  pivot_longer(
+      cols = starts_with("a", ignore.case = FALSE), names_to = "Age",
+      values_to = "Number"
+    ) %>%
+  mutate(Age = parse_number(Age)) 
+num_age_plot <- ggplot(
+  data = num_age_long, mapping = aes(x = Year, y = Number)
+) +
+  geom_col() +
+  scale_y_continuous(labels = label_comma()) +
+  labs(y = "Number of fish") +
+  expand_limits(x = yrs_plot) +
+  facet_grid(Stock ~ Period) +
+  theme_bw()
+num_age_plot
 ```
+
+Plot annual proportion-at-age for each stock and period.
+Note: the age-10 class is a 'plus group' which includes fish ages 10 and older.
+
+```{r prop_age_plot, fig.width = 8, fig.height = 5}
+prop_age_long <- num_age_long %>%
+  group_by(Stock, Area, Period, Year) %>%
+  mutate(Total = sum(Number)) %>%
+  ungroup() %>%
+  mutate(Proportion = Number / Total) %>%
+  filter(Proportion != 0)
+prop_age_plot <- ggplot(
+  data = prop_age_long, mapping = aes(x = Year, y = Age, size = Proportion)
+) +
+  geom_point(alpha = 0.6, shape = 16) +
+  scale_y_continuous(breaks = pretty_breaks()) +
+  scale_size(range = c(0.5, 3)) +
+  expand_limits(x = yrs_plot) +
+  facet_grid(Stock ~ Period) +
+  theme_bw() +
+  theme(legend.position = "top")
+prop_age_plot
+```
+
+### Display weight-at-age data
 
 Plot annual weight-at-age for each stock and period.
 
-```{r bio_wt_age_plot}
-# ggplot(data = bio, mapping = aes(x = ))
+```{r wt_age_plot, fig.width = 8, fig.height = 5}
+wt_age_long <- wt_age %>%
+  pivot_longer(
+      cols = starts_with("a", ignore.case = FALSE), names_to = "Age",
+      values_to = "Weight"
+    ) %>%
+  mutate(Age = parse_number(Age)) 
+wt_age_plot <- ggplot(
+  data = wt_age_long,
+  mapping = aes(x = Year, y = Weight, group = Age, colour = Age)
+) +
+  geom_line(linewidth = 1) +
+  scale_colour_viridis_c() +
+  labs(y = "Weight (kg)") +
+  expand_limits(x = yrs_plot) +
+  facet_grid(Stock ~ Period) +
+  theme_bw() +
+  theme(legend.position = "top")
+wt_age_plot
 ```
 
 Plot annual weight-at-age for each stock (seine gear only).
 
-```{r bio_wt_age_sn_plot}
-# ggplot(data = bio, mapping = aes(x = ))
+```{r wt_age_sn_plot, fig.width = 8, fig.height = 5}
+wt_age_sn_long <- wt_age_sn %>%
+  pivot_longer(
+      cols = starts_with("a", ignore.case = FALSE), names_to = "Age",
+      values_to = "Weight"
+    ) %>%
+  mutate(Age = parse_number(Age)) 
+wt_age_sn_plot <- ggplot(
+  data = wt_age_sn_long,
+  mapping = aes(x = Year, y = Weight, group = Age, colour = Age)
+) +
+  geom_line(linewidth = 1) +
+  scale_colour_viridis_c() +
+  labs(y = "Weight (kg)") +
+  expand_limits(x = yrs_plot) +
+  facet_grid(Stock ~ .) +
+  theme_bw() +
+  theme(legend.position = "top")
+wt_age_sn_plot
 ```
 
 ## Display catch data
@@ -184,7 +293,8 @@ catch_plot <- ggplot(
   geom_col() +
   scale_fill_viridis_d() +
   labs(y = "Catch (1,000 t)") +
-  facet_grid(Stock ~ ., scales = "free_y") +
+  expand_limits(x = yrs_plot) +
+  facet_grid(Stock ~ .) +
   theme_bw() +
   theme(legend.position = "top")
 catch_plot
@@ -207,7 +317,8 @@ spawn_plot <- ggplot(
   geom_col() +
   scale_fill_viridis_d() +
   labs(y = "Spawn index (1,000 t)") +
-  facet_grid(Stock ~ ., scales = "free_y") +
+  expand_limits(x = yrs_plot) +
+  facet_grid(Stock ~ .) +
   theme_bw() +
   theme(legend.position = "top")
 spawn_plot
