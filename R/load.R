@@ -16,6 +16,7 @@
 #' @importFrom DBI dbConnect dbGetQuery dbDisconnect
 #' @importFrom odbc odbc
 #' @importFrom lubridate date
+#' @importFrom tidyselect all_of
 #' @return Tibble with biological data (e.g., length, weight, age, sex)
 #'   including spatial and temporal information.
 #' @family loaders
@@ -257,6 +258,7 @@ load_bio <- function(
 #' @importFrom DBI dbConnect dbGetQuery dbDisconnect
 #' @importFrom odbc odbc
 #' @importFrom lubridate date
+#' @importFrom tidyselect all_of
 #' @return Tibble with catch data including spatial and temporal information.
 #' @family loaders
 #' @export
@@ -427,6 +429,7 @@ load_catch <- function(
 #' @importFrom odbc odbc
 #' @importFrom lubridate date year yday
 #' @importFrom sf st_as_sf
+#' @importFrom tidyselect all_of
 #' @return Tibble with spawn data including spatial and temporal information.
 #' @family loaders
 #' @export
