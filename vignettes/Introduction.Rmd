@@ -8,6 +8,8 @@ output:
         fig_caption: yes
         toc: true
         number_sections: true
+bibliography: ../inst/REFERENCES.bib
+csl: ../inst/csas.csl
 vignette: >
   %\VignetteIndexEntry{Introduction to `HerringData`}
   %\VignetteEngine{knitr::rmarkdown}
@@ -150,7 +152,7 @@ catch <- load_catch(db_info = database_info, quiet = TRUE) %>%
   mutate(Period = factor(Period, levels = codes_period$Period))
 ```
 
-Catch by stock, period, and year in thousands of tonnes.
+Catch in thousands of tonnes by stock, period, and year.
 Note that table layout is similar to the biological data tables.
 
 ```{r catch_catch}
@@ -163,8 +165,8 @@ Like biological and catch data above,
 load and wrangle spawn index data,
 filter to only include data from the `r region` SAR, and
 aggregate the data by year and stock to input into SISCAH.
-Note that the spawn index is calculated when the data is loaded
-using functions in the `SpawnIndex` package.
+Note that the spawn index is calculated when the data are loaded
+using functions in the `SpawnIndex` package [@GrinnellEtal2022].
 SISCAH accounts for two types of spawn index data:
 data from surface survey observations and
 data from dive survey observations.
@@ -175,7 +177,7 @@ spawn <- load_spawn(db_info = database_info, quiet = TRUE) %>%
   siscah_spawn(structure = substock)
 ```
 
-Spawn index by stock and year in thousands of tonnes.
+Spawn index in thousands of tonnes by stock and year.
 Note that table layout is similar to the biological and catch data tables.
 
 ```{r spawn_spawn}
@@ -245,7 +247,7 @@ prop_age_plot
 
 ### Weight-at-age data
 
-Plot annual weight-at-age for each stock and period.
+Plot annual weight-at-age in kilograms for each stock and period.
 
 ```{r wt_age_plot, fig.width = 8, fig.height = 6}
 wt_age_cap <- paste(
@@ -272,7 +274,7 @@ wt_age_plot <- ggplot(
 wt_age_plot
 ```
 
-Plot annual weight-at-age for each stock (seine gear only).
+Plot annual weight-at-age in kilograms for each stock (seine gear only).
 
 ```{r wt_age_sn_plot, fig.width = 8, fig.height = 6}
 wt_age_sn_cap <- paste(
@@ -301,7 +303,7 @@ wt_age_sn_plot
 
 ## Catch data
 
-Plot annual catch for each stock and period.
+Plot annual catch in thousands of tonnes for each stock and period.
 
 ```{r catch_plot, fig.width = 8, fig.height = 6}
 catch_cap <- paste(
@@ -324,7 +326,7 @@ catch_plot
 ## Spawn index data
 
 Pivot the spawn data to facilitate plotting and then 
-plot annual spawn index for each stock and survey.
+plot annual spawn index in thousands of tonnes for each stock and survey.
 
 ```{r spawn_plot, fig.width = 8, fig.height = 6}
 spawn_cap <- paste(
@@ -348,3 +350,7 @@ spawn_plot <- ggplot(
   theme(legend.position = "top")
 spawn_plot
 ```
+
+# References
+
+<div id="refs"></div>
