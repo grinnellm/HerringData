@@ -56,7 +56,7 @@ database_info <- list(
     trusted = "Yes"
   ),
   area_loc = list(
-    schema = "Location",
+    schema = "dbo",
     tables = list(sections = "Sections", locations = "Location"),
     columns = list(
       sections = c("SAR", "Section"),
@@ -98,7 +98,7 @@ database_info <- list(
     )
   ),
   width_loc = list(
-    schema = "Location",
+    schema = "dbo",
     tables = list(
       region_std = "RegionStd", section_std = "SectionStd", pool_std = "PoolStd"
     ),
@@ -109,7 +109,7 @@ database_info <- list(
     )
   ),
   surf_loc = list(
-    schema = "Spawn",
+    schema = "Spawn2025",
     tables = list(surface = "Surface", all_spawn = "AllSpawn"),
     columns = list(
       surface = c(
@@ -125,10 +125,9 @@ database_info <- list(
     )
   ),
   macro_loc = list(
-    schema = "Spawn",
+    schema = "Spawn2025",
     tables = list(
-      all_spawn = "AllSpawn", plants = "macplantNEW", transects = "MacTrans",
-      transects_2024 = "MacTrans2024"
+      all_spawn = "AllSpawn", plants = "MacPlant", transects = "Mactrans"
     ),
     columns = list(
       all_spawn = c(
@@ -143,11 +142,10 @@ database_info <- list(
     )
   ),
   under_loc = list(
-    schema = "Spawn",
+    schema = "Spawn2025",
     tables = list(
-      all_spawn = "AllSpawn", alg_trans = "vegtransNEW", stations = "Stations",
-      algae = "vegetationNEW", stations_2024 = "stations2024",
-      algae_2024 = "Vegetation2024"
+      all_spawn = "AllSpawn", alg_trans = "VegTrans", stations = "Stations",
+      algae = "vegetation"
     ),
     columns = list(
       all_spawn = c(
@@ -169,7 +167,7 @@ database_info <- list(
     )
   ),
   all_loc = list(
-    schema = "Spawn",
+    schema = "Spawn2025",
     tables = list(all_spawn = "Allspawn", stations = "Stations"),
     columns = list(
       all_spawn = c(
