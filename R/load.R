@@ -395,11 +395,12 @@ load_catch <- function(
     # TODO: Filter by year_start too
     filter(Period != 0) %>%
     select(
-      Year, Period, Region, StatArea, Section, GearCode, DisposalCode, Date,
-      Catch
+      Year, Period, Region, StatArea, Group, Section, GearCode, DisposalCode,
+      Date, Catch
     ) %>%
     arrange(
-      Year, Period, Region, StatArea, Section, GearCode, DisposalCode, Date
+      Year, Period, Region, StatArea, Group, Section, GearCode, DisposalCode,
+      Date
     )
   # Close the connection
   dbDisconnect(conn = db_connection)
