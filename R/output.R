@@ -78,7 +78,7 @@ siscah_bio <- function(
     ) %>%
     arrange(Stock, Area, Gear, Year)
   # Weight-at-age (SampWt fixes unrepresentative sampling if identified)
-  weight_age <- bio %>%
+  weight_age_gear <- bio %>%
     filter(Age >= age_min_weight) %>%
     select(Period, Year, all_of(structure), Age, Weight, SampWt) %>%
     na.omit() %>%
@@ -99,7 +99,7 @@ siscah_bio <- function(
     select(Stock, Area, Gear, Year, Age, Weight) %>%
     arrange(Stock, Area, Gear, Year, Age)
   # Weight-at-age: fill in missing values
-  weight_age_fill <- weight_age %>%
+  weight_age_gear_fill <- weight_age_gear %>%
     # pivot_longer(cols = !Year, names_to = "Age", values_to = "Weight",
     #              names_transform = as.integer) %>%
     group_by(Stock, Area, Gear, Age) %>%
@@ -110,7 +110,7 @@ siscah_bio <- function(
     ungroup() %>%
     mutate(Weight = round(Weight, digits = n_digits))
   # Weight-at-age: wide format for SISCAH
-  weight_age_siscah <- weight_age_fill %>%
+  weight_age_gear_siscah <- weight_age_gear_fill %>%
     pivot_wider(
       names_from = Age, values_from = Weight, values_fill = 0,
       names_prefix = "a"
@@ -157,7 +157,7 @@ siscah_bio <- function(
   # List of tibbles
   res <- list(
     number_age = number_age_siscah,
-    weight_age = weight_age_siscah,
+    weight_age_gear = weight_age_gear_siscah,
     weight_age_seine = weight_age_seine_siscah
   )
   # Return biodata
@@ -211,12 +211,12 @@ siscah_catch <- function(
   # Wrangle data
   res <- catch %>%
     group_by(Year, Period, across(structure)) %>%
-    summarise(Catch = sum(Catch) / ifelse(kilo, 1000, 1)) %>%
+    summarise(Value = sum(Catch) / ifelse(kilo, 1000, 1)) %>%
     ungroup() %>%
-    mutate(Catch = round(Catch, digits = n_digits)) %>%
+    mutate(Value = round(Value, digits = n_digits)) %>%
     rename(Gear = Period, Name = {{structure}}) %>%
     full_join(y = stock_info, by = "Name") %>%
-    select(Stock, Area, Gear, Year, Catch) %>%
+    select(Stock, Area, Gear, Year, Value) %>%
     arrange(Stock, Area, Gear, Year)
   # Return catch
   return(res)
