@@ -10,6 +10,7 @@ siscah_bio(
   age_min_number = 1,
   age_min_weight = 2,
   age_max = 10,
+  n_roll = 5,
   kilo_weight = TRUE,
   year_start = SpawnIndex::pars$years$assess,
   year_end = 2024,
@@ -30,6 +31,10 @@ omit younger ages. Default 2.}
 
 \item{age_max}{Integer. Plus year: aggregate ages that are greater than
 \code{age_max}. Default 10.}
+
+\item{n_roll}{Numeric. Number of years to impute missing values using a
+rolling window of the previous n_roll years (used in
+\code{\link{mean_na_roll}}). Default 5.}
 
 \item{kilo_weight}{Logical. Return values in thousands for weight. Default
 TRUE.}

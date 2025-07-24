@@ -7,6 +7,7 @@
 #' @template param-age_min_number
 #' @template param-age_min_weight
 #' @template param-age_max
+#' @template param-n_roll
 #' @template param-kilo_weight
 #' @template param-year_start
 #' @template param-year_end
@@ -41,6 +42,7 @@ siscah_bio <- function(
     age_min_number = 1,
     age_min_weight = 2,
     age_max = 10,
+    n_roll = 5,
     kilo_weight = TRUE,
     year_start = SpawnIndex::pars$years$assess,
     year_end = 2024,
@@ -54,7 +56,7 @@ siscah_bio <- function(
   stock_info <- tibble(
     Name = stocks[order(stocks)],
     Area = 1:length(stocks),
-    Stock = paste(stock_prefix, stocks[order(stocks)], sep = "")
+    Stock = paste(stock_prefix, stocks[order(stocks)], sep = ".")
   )
   # Fix ages
   bio <- bio %>%
@@ -98,13 +100,15 @@ siscah_bio <- function(
     full_join(y = stock_info, by = "Name") %>%
     select(Stock, Area, Gear, Year, Age, Weight) %>%
     arrange(Stock, Area, Gear, Year, Age)
+  weight_age_gear <- weight_age_gear %>%
+    complete(Stock, Area, Gear, Year, Age)
   # Weight-at-age: fill in missing values
   weight_age_gear_fill <- weight_age_gear %>%
     # pivot_longer(cols = !Year, names_to = "Age", values_to = "Weight",
     #              names_transform = as.integer) %>%
     group_by(Stock, Area, Gear, Age) %>%
     # Replace NAs: mean of (up to) previous n years
-    mutate(Weight = mean_na_roll(x = Weight)) %>%
+    mutate(Weight = mean_na_roll(x = Weight, n = n_roll)) %>%
     # Replace persistent NAs (i.e., at the beginning of the time series)
     mutate(Weight = na.fill(Weight, fill = c("extend", NA, NA))) %>%
     ungroup() %>%
@@ -136,13 +140,15 @@ siscah_bio <- function(
     full_join(y = stock_info, by = "Name") %>%
     select(Stock, Area, Year, Age, Weight) %>%
     arrange(Stock, Area, Year, Age)
+  weight_age_seine <- weight_age_seine %>%
+    complete(Stock, Area, Year, Age)
   # Weight-at-age (seine): fill in missing values
   weight_age_seine_fill <- weight_age_seine %>%
     # pivot_longer(cols = !Year, names_to = "Age", values_to = "Weight",
     #              names_transform = as.integer) %>%
     group_by(Stock, Area, Age) %>%
     # Replace NAs: mean of (up to) previous n years
-    mutate(Weight = mean_na_roll(x = Weight)) %>%
+    mutate(Weight = mean_na_roll(x = Weight, n = n_roll)) %>%
     # Replace persistent NAs (i.e., at the beginning of the time series)
     mutate(Weight = na.fill(Weight, fill = c("extend", NA, NA))) %>%
     ungroup() %>%
@@ -206,7 +212,7 @@ siscah_catch <- function(
   stock_info <- tibble(
     Name = stocks[order(stocks)],
     Area = 1:length(stocks),
-    Stock = paste(stock_prefix, stocks[order(stocks)], sep = "")
+    Stock = paste(stock_prefix, stocks[order(stocks)], sep = ".")
   )
   # Wrangle data
   res <- catch %>%
@@ -270,7 +276,7 @@ siscah_spawn <- function(
   stock_info <- tibble(
     Name = stocks[order(stocks)],
     Area = 1:length(stocks),
-    Stock = paste(stock_prefix, stocks[order(stocks)], sep = "")
+    Stock = paste(stock_prefix, stocks[order(stocks)], sep = ".")
   )
   # Wrangle data
   res <- spawn %>%
