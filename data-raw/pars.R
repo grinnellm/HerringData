@@ -22,7 +22,8 @@ save(codes_gear, file = here("data", "codes_gear.RData"), version = 2)
 codes_group <- read_csv(
   file = here("data-raw", "Group.csv"),
   col_types = cols("c", "c")
-)
+) %>%
+  mutate(Section = str_pad(Section, width = 3, side = "left", pad = "0"))
 save(codes_group, file = here("data", "codes_group.RData"), version = 2)
 
 # Period codes
@@ -179,3 +180,12 @@ database_info <- list(
   )
 )
 save(database_info, file = here("data", "database_info.RData"), version = 2)
+
+# Unbalanced sampling
+unbalanced_sampling <- list(
+  CC = list(structure = "Group", yrs_hist = 1994:2013, yrs_fix = c(2014, 2015))
+)
+save(
+  unbalanced_sampling, file = here("data", "unbalanced_sampling.RData"),
+  version = 2
+)

@@ -83,3 +83,18 @@
 #' data(database_info)
 #' database_info
 "database_info"
+
+#' Unbalanced sampling.
+#'
+#' Unbalanced sampling: indicates region, structure, and years where unbalanced
+#' sampling occurred.
+#'
+#' @format List of lists with one element for each region indicating the spatial
+#'   structure, year(s) to use to fix unbalanced sampling (historic), and
+#'   year(s) that were unbalanced.
+#' @docType data
+#' @family data
+#' @examples
+#' data(unbalanced_sampling)
+#' unbalanced_sampling
+"unbalanced_sampling"
