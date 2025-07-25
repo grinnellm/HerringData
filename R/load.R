@@ -7,6 +7,8 @@
 #' @template param-year_start
 #' @param rep_year_start Year indicating the start of representative samples.
 #'   Default 2014.
+#' @param unbalanced List indicating the region and time period with unbalanced
+#'   sampling (default \code{\link{unbalanced_sampling}}).
 #' @template param-quiet
 #' @importFrom Rdpack reprompt
 #' @importFrom SpawnIndex load_area_data
@@ -27,12 +29,14 @@
 #' data(pars)
 #' data(codes_group)
 #' data(database_info)
+#' data(unbalanced_sampling)
 #' bio_raw <- load_bio(db_info = database_info)
 load_bio <- function(
     db_info = database_info,
     groups = codes_group,
     year_start = SpawnIndex::pars$years$assess,
     rep_year_start = 2014,
+    unbalanced = unbalanced_sampling,
     quiet = FALSE
 ) {
   # Progress message
@@ -111,13 +115,13 @@ load_bio <- function(
     )
   )
   # Access the fish worksheet
-  fish <- dbGetQuery(conn = db_connection, statement = sql_fish)
+  fish_dat <- dbGetQuery(conn = db_connection, statement = sql_fish)
   # Error if data was not fetched
-  if (!is.data.frame(fish)) {
+  if (!is.data.frame(fish_dat)) {
     stop("Data not available: fish")
   }
   # Wrangle biosamples
-  fish <- fish %>%
+  fish <- fish_dat %>%
     rename(
       Sample = isamp, Fish = fish, Length = len, Weight = wgt, Sex = sex_alpha,
       MaturityCode = mat_code, Age = age, DualAge = dual_age,
@@ -221,16 +225,34 @@ load_bio <- function(
                       2, Period),
       # If include test gillnet, source %in% c(0, 5), else source == 0
       Period = ifelse(GearCode == 19 & SourceCode == 0,
-                      3, Period),
-      SampWt = 1
+                      3, Period)
     ) %>%
     filter(Period != 0, Year >= year_start) %>%
-    # TODO: Fix non-representative sampling here
-
     # TODO: Need a better way to do this
     # Keep all prior to rep_year_start and representative ones since then
     filter(Year < rep_year_start | Representative == 1) %>%
     select(-Representative)
+  # Get index for CC
+  ind_cc <- which(names(unbalanced) == "CC")
+  # Determine representative sampling: CC
+  cc_rep <- res %>%
+    filter(Region == names(unbalanced[ind_cc]),
+           GearCode == 29,
+           Year %in% unbalanced[[ind_cc]]$yrs_hist) %>%
+    group_by(Year, across(unbalanced[[ind_cc]]$structure)) %>%
+    summarise(Number = n_distinct(Sample)) %>%
+    mutate(Proportion = Number / sum_na(Number)) %>%
+    group_by(across(unbalanced[[ind_cc]]$structure)) %>%
+    summarise(SampWt = mean_na(Proportion)) %>%
+    ungroup()
+  # Fix non-representative sampling: CC
+  res <- res %>%
+    left_join(y = cc_rep, by = unbalanced[[ind_cc]]$structure) %>%
+    mutate(
+      SampWt = ifelse(
+        Year %in% unbalanced[[ind_cc]]$yrs_fix & Period == 2, SampWt, 1
+      )
+    )
   # Close the connection
   dbDisconnect(conn = db_connection)
   # TODO: Save data for next time

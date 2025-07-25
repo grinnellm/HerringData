@@ -9,6 +9,7 @@ load_bio(
   groups = codes_group,
   year_start = SpawnIndex::pars$years$assess,
   rep_year_start = 2014,
+  unbalanced = unbalanced_sampling,
   quiet = FALSE
 )
 }
@@ -25,6 +26,9 @@ from \code{SpawnIndex::pars$years$assess}.}
 \item{rep_year_start}{Year indicating the start of representative samples.
 Default 2014.}
 
+\item{unbalanced}{List indicating the region and time period with unbalanced
+sampling (default \code{\link{unbalanced_sampling}}).}
+
 \item{quiet}{Logical. Suppress messages; default is FALSE.}
 }
 \value{
@@ -40,6 +44,7 @@ library(DBI)
 data(pars)
 data(codes_group)
 data(database_info)
+data(unbalanced_sampling)
 bio_raw <- load_bio(db_info = database_info)
 }
 \seealso{
