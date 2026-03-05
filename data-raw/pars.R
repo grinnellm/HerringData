@@ -51,10 +51,8 @@ save(conv_factors, file = here("data", "conv_factors.RData"), version = 2)
 # Database information
 database_info <- list(
   herring_conn = list(
-    driver = "SQL Server Native Client 11.0",
-    server = "DFBCV9TWVASP001\\SQLEXPRESS16",
-    database = "Herring",
-    trusted = "Yes"
+    driver = "SQL Server", server = "DFBCV9TWVASP003", database = "Herring",
+    uid = "HerringUser", pwd = "H3rr1ngUs3r"
   ),
   area_loc = list(
     schema = "dbo",

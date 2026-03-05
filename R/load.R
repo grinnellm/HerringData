@@ -43,10 +43,10 @@ load_bio <- function(
   if(!quiet) cat("Loading biological data... ")
   # Establish database connection
   db_connection <- dbConnect(
-    odbc::odbc(), Driver = db_info$herring_conn$driver,
-    Server = db_info$herring_conn$server,
-    Database = db_info$herring_conn$database,
-    Trusted_Connection = db_info$herring_conn$trusted
+    odbc::odbc(), driver = db_info$herring_conn$driver,
+    server = db_info$herring_conn$server,
+    database = db_info$herring_conn$database,
+    uid = db_info$herring_conn$uid, pwd = db_info$herring_conn$pwd
   )
   # Wrangle areas
   areas <- load_area_data(
@@ -303,10 +303,10 @@ load_catch <- function(
   if(!quiet) cat("Loading catch data... ")
   # Establish database connection
   db_connection <- dbConnect(
-    odbc::odbc(), Driver = db_info$herring_conn$driver,
-    Server = db_info$herring_conn$server,
-    Database = db_info$herring_conn$database,
-    Trusted_Connection = db_info$herring_conn$trusted
+    odbc::odbc(), driver = db_info$herring_conn$driver,
+    server = db_info$herring_conn$server,
+    database = db_info$herring_conn$database,
+    uid = db_info$herring_conn$uid, pwd = db_info$herring_conn$pwd
   )
   # Wrangle areas
   areas <- load_area_data(
@@ -412,7 +412,8 @@ load_catch <- function(
       # If include test catch, disposal %in% c(7, 8), else disposal == 8
       Period = ifelse(Source == "Tab" & DisposalCode %in% c(7, 8) &
                         GearCode %in% c(19),
-                      3, Period)
+                      3, Period),
+      Period = ifelse(Source == "SOK", 4, Period)
     ) %>%
     # TODO: Filter by year_start too
     filter(Period != 0) %>%
@@ -475,10 +476,10 @@ load_spawn <- function(
   if(!quiet) cat("Loading and calculating spawn index data:")
   # Establish database connection
   db_connection <- dbConnect(
-    odbc::odbc(), Driver = db_info$herring_conn$driver,
-    Server = db_info$herring_conn$server,
-    Database = db_info$herring_conn$database,
-    Trusted_Connection = db_info$herring_conn$trusted
+    odbc::odbc(), driver = db_info$herring_conn$driver,
+    server = db_info$herring_conn$server,
+    database = db_info$herring_conn$database,
+    uid = db_info$herring_conn$uid, pwd = db_info$herring_conn$pwd
   )
   # Wrangle areas
   areas <- load_area_data(
