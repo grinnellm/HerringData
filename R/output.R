@@ -223,7 +223,8 @@ siscah_catch <- function(
     rename(Gear = Period, Name = {{structure}}) %>%
     full_join(y = stock_info, by = "Name") %>%
     select(Stock, Area, Gear, Year, Value) %>%
-    arrange(Stock, Area, Gear, Year)
+    arrange(Stock, Area, Gear, Year) %>%
+    filter(Value != 0)
   # Return catch
   return(res)
 } # End siscah_catch function
