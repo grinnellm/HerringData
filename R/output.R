@@ -71,14 +71,18 @@ siscah_bio <- function(
     ungroup() %>%
     rename(Gear = Period, Name = {{structure}}) %>%
     full_join(y = stock_info, by = "Name") %>%
-    select(Stock, Area, Gear, Year, Age, Number)
+    select(Stock, Area, Gear, Year, Age, Number) %>%
+    arrange(Stock, Area, Gear, Year, Age)
+  # Age names for number-at-age
+  age_names_number <- paste0("a", age_min_number:age_max)
   # Number-at-age (wide format for SISCAH)
   number_age_siscah <- number_age %>%
     pivot_wider(
       names_from = Age, values_from = Number, values_fill = 0,
       names_prefix = "a"
     ) %>%
-    arrange(Stock, Area, Gear, Year)
+    arrange(Stock, Area, Gear, Year) %>%
+    select(Stock, Area, Gear, Year, age_names_number)
   # Weight-at-age (SampWt fixes unrepresentative sampling if identified)
   weight_age_gear <- bio %>%
     filter(Age >= age_min_weight) %>%
@@ -113,13 +117,17 @@ siscah_bio <- function(
     mutate(Weight = na.fill(Weight, fill = c("extend", NA, NA))) %>%
     ungroup() %>%
     mutate(Weight = round(Weight, digits = n_digits))
+  # Age names for weight-at-age
+  age_names_weight <- paste0("a", age_min_weight:age_max)
   # Weight-at-age: wide format for SISCAH
   weight_age_gear_siscah <- weight_age_gear_fill %>%
     pivot_wider(
       names_from = Age, values_from = Weight, values_fill = 0,
       names_prefix = "a"
     ) %>%
-    arrange(Stock, Area, Gear, Year)
+    filter_at(all_of(age_names_weight), any_vars(!is.na(.))) %>%
+    arrange(Stock, Area, Gear, Year) %>%
+    select(Stock, Area, Gear, Year, age_names_weight)
   # Weight-at-age (seine; SampWt fixes unrepresentative sampling if identified)
   weight_age_seine <- bio %>%
     filter(Age >= age_min_weight, GearCode == 29) %>%
@@ -159,7 +167,9 @@ siscah_bio <- function(
       names_from = Age, values_from = Weight, values_fill = 0,
       names_prefix = "a"
     ) %>%
-    arrange(Stock, Area, Year)
+    filter_at(all_of(age_names_weight), any_vars(!is.na(.))) %>%
+    arrange(Stock, Area, Year) %>%
+    select(Stock, Area, Year, age_names_weight)
   # List of tibbles
   res <- list(
     number_age = number_age_siscah,
