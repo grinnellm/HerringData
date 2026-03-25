@@ -2,7 +2,7 @@
 % Please edit documentation in R/load.R
 \name{load_spawn}
 \alias{load_spawn}
-\title{Load spawn data.}
+\title{Load spawn index data.}
 \usage{
 load_spawn(
   db_info = database_info,
@@ -28,10 +28,12 @@ from \code{SpawnIndex::pars$years$assess}.}
 \item{quiet}{Logical. Suppress messages; default is FALSE.}
 }
 \value{
-Tibble with spawn data including spatial and temporal information.
+Tibble with spawn index data including spatial and temporal
+information. Spawn is in tonnes for surface (SurfSI), Macrocystis
+(MacroSI), and understory (UnderSI) data.
 }
 \description{
-Load and wrangle spawn data from the database.
+Load and wrangle spawn index data from the database.
 }
 \examples{
 library(SpawnIndex)

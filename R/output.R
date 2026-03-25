@@ -192,8 +192,11 @@ siscah_bio <- function(
 #' @importFrom dplyr pull group_by summarise ungroup mutate rename full_join
 #'   select
 #' @importFrom tibble tibble
-#' @return Tibble with catch data aggregated by Year, Period, and "structure",
-#'   including spatial and temporal information.
+#' @return Tibble with catch data aggregated by Year, Period, and "structure".
+#'   Catch is in tonnes for gear 1 (other; reduction, food and bait, as well as
+#'   special use), gear 2 (roe seine), and gear 3 (roe gillnet), and in pounds
+#'   for gear 4 (spawn on kelp; SOK); values are in thousands if `kilo` is
+#'   `TRUE`.
 #' @family SISCAH
 #' @export
 #' @examples
@@ -254,8 +257,9 @@ siscah_catch <- function(
 #'   select
 #' @importFrom tibble tibble
 #' @importFrom tidyr replace_na
-#' @return Tibble with catch data in thousands aggregated by Year, Period, and
-#'   "structure", including spatial and temporal information.
+#' @return Tibble with spawn index aggregated by Year and "structure". Spawn is
+#'   in tonnes for surface and dive surveys; values are in thousands if `kilo`
+#'   is `TRUE`.
 #' @family SISCAH
 #' @export
 #' @examples

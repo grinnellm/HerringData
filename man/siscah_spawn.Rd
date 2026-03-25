@@ -17,8 +17,9 @@ is "Region".}
 \item{n_digits}{Numeric. Number of decimal places for values.}
 }
 \value{
-Tibble with catch data in thousands aggregated by Year, Period, and
-"structure", including spatial and temporal information.
+Tibble with spawn index aggregated by Year and "structure". Spawn is
+in tonnes for surface and dive surveys; values are in thousands if \code{kilo}
+is \code{TRUE}.
 }
 \description{
 Make input data for SISCAH: spawn index data.

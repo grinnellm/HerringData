@@ -29,6 +29,7 @@ from \code{SpawnIndex::pars$years$assess}.}
 }
 \value{
 Tibble with catch data including spatial and temporal information.
+Catch is in tonnes except for spawn on kelp (SOK) landings in pounds.
 }
 \description{
 Load and wrangle catch data from the database.

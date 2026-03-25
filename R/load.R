@@ -282,6 +282,7 @@ load_bio <- function(
 #' @importFrom lubridate date
 #' @importFrom tidyselect all_of
 #' @return Tibble with catch data including spatial and temporal information.
+#'   Catch is in tonnes except for spawn on kelp (SOK) landings in pounds.
 #' @family loaders
 #' @export
 #' @examples
@@ -435,9 +436,9 @@ load_catch <- function(
   return(res)
 } # End load_catch function
 
-#' Load spawn data.
+#' Load spawn index data.
 #'
-#' Load and wrangle spawn data from the database.
+#' Load and wrangle spawn index data from the database.
 #'
 #' @template param-db_info
 #' @template param-groups
@@ -454,7 +455,9 @@ load_catch <- function(
 #' @importFrom lubridate date year yday
 #' @importFrom sf st_as_sf
 #' @importFrom tidyselect all_of
-#' @return Tibble with spawn data including spatial and temporal information.
+#' @return Tibble with spawn index data including spatial and temporal
+#'   information. Spawn is in tonnes for surface (SurfSI), Macrocystis
+#'   (MacroSI), and understory (UnderSI) data.
 #' @family loaders
 #' @export
 #' @examples

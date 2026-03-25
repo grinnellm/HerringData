@@ -17,8 +17,11 @@ is "Region".}
 \item{n_digits}{Numeric. Number of decimal places for values.}
 }
 \value{
-Tibble with catch data aggregated by Year, Period, and "structure",
-including spatial and temporal information.
+Tibble with catch data aggregated by Year, Period, and "structure".
+Catch is in tonnes for gear 1 (other; reduction, food and bait, as well as
+special use), gear 2 (roe seine), and gear 3 (roe gillnet), and in pounds
+for gear 4 (spawn on kelp; SOK); values are in thousands if \code{kilo} is
+\code{TRUE}.
 }
 \description{
 Make input data for SISCAH: catch data.
