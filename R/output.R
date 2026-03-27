@@ -14,7 +14,7 @@
 #' @template param-n_digits
 #' @importFrom Rdpack reprompt
 #' @importFrom dplyr pull group_by summarise ungroup mutate rename full_join
-#'   select
+#'   select filter_at any_vars
 #' @importFrom tibble tibble
 #' @importFrom tidyr pivot_wider complete
 #' @importFrom stats na.omit

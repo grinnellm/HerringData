@@ -13,7 +13,7 @@
 #' @importFrom Rdpack reprompt
 #' @importFrom SpawnIndex load_area_data
 #' @importFrom dplyr %>% distinct select mutate left_join group_by summarise
-#'   ungroup filter rename n bind_rows arrange
+#'   ungroup filter rename n bind_rows arrange n_distinct
 #' @importFrom tibble tibble as_tibble
 #' @importFrom DBI dbConnect dbGetQuery dbDisconnect
 #' @importFrom odbc odbc
