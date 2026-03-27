@@ -21,7 +21,8 @@
 #' @importFrom zoo na.fill
 #' @return List of tibbles with biological data aggregated by Year, Period, and
 #'   "structure", including spatial and temporal information. List has three
-#'   tibbles: number-at-age and two with weight-at-age in grams.
+#'   tibbles: number-at-age and two with weight-at-age in grams (or kilograms if
+#'   `kilo-weight` is `TRUE`.
 #' @family SISCAH
 #' @export
 #' @examples
@@ -35,10 +36,10 @@
 #' }
 #' dat <- bio_raw %>%
 #'   filter(Region == "PRD") %>%
-#'   siscah_bio(structure = "Region")
+#'   siscah_bio(structure = "Section")
 siscah_bio <- function(
     bio,
-    structure = "Region",
+    structure = "Section",
     age_min_number = 1,
     age_min_weight = 2,
     age_max = 10,
@@ -210,10 +211,10 @@ siscah_bio <- function(
 #' }
 #' dat <- catch_raw %>%
 #'   filter(Region == "PRD") %>%
-#'   siscah_catch(structure = "Region")
+#'   siscah_catch(structure = "Section")
 siscah_catch <- function(
     catch,
-    structure = "Region",
+    structure = "Section",
     kilo = TRUE,
     n_digits = 3
 ) {
@@ -273,10 +274,10 @@ siscah_catch <- function(
 #' }
 #' dat <- spawn_raw %>%
 #'   filter(Region == "PRD") %>%
-#'   siscah_spawn(structure = "Region")
+#'   siscah_spawn(structure = "Section")
 siscah_spawn <- function(
     spawn,
-    structure = "Region",
+    structure = "Section",
     kilo = TRUE,
     n_digits = 3
 ) {
