@@ -37,31 +37,32 @@ Load required packages.
 library(HerringData)
 library(SpawnIndex)
 library(tidyverse)
-library(DBI)
 library(scales)
+library(here)
 ```
 
 Load required data.
 
 ```{r data}
-data(pars)
 data(codes_group)
 data(codes_period)
 data(conv_factors)
 data(database_info)
+data(unbalanced_sampling)
 ```
 
 Set parameters.
 
 ```{r pars}
-region <- "PRD"
-substock <- "StatArea"
-yrs_plot <- c(pars$years$assess, 2024)
+region <- "HG"
+substock <- "Section"
+yrs_plot <- c(pars$years$assess, 2025)
 ```
 
 This introduction shows an example workflow in the
 `r region` stock assessment region (SAR) using
-`r substock` for sub-stock structure.
+`r substock` for sub-stock structure from
+`r min(yrs_plot)` to `r max(yrs_plot)`.
 
 # Data
 
@@ -122,7 +123,7 @@ There are two weight-at-age tables;
 the first one is weight-at-age by year, period, and stock
 
 ```{r wt_age}
-wt_age <- bio$weight_age %>%
+wt_age <- bio$weight_age_gear %>%
   left_join(y = codes_period, by = "Gear") %>%
   select(Stock, Area, Period, Year, starts_with("a", ignore.case = FALSE)) %>%
   mutate(Period = factor(Period, levels = codes_period$Period))
@@ -148,11 +149,12 @@ catch <- load_catch(db_info = database_info, quiet = TRUE) %>%
   filter(Region == region) %>%
   siscah_catch(structure = substock) %>%
   left_join(y = codes_period, by = "Gear") %>%
-  select(Stock, Area, Period, Year, Catch) %>%
+  select(Stock, Area, Period, Year, Value) %>%
   mutate(Period = factor(Period, levels = codes_period$Period))
 ```
 
-Catch in thousands of tonnes by stock, period, and year.
+Catch in thousands of tonnes by stock, period, and year,
+except SOK catch which is in thousands of pounds.
 Note that table layout is similar to the biological data tables.
 
 ```{r catch_catch}
@@ -303,7 +305,8 @@ wt_age_sn_plot
 
 ## Catch data
 
-Plot annual catch in thousands of tonnes for each stock and period.
+Plot annual catch in thousands of tonnes for each stock and period, 
+except SOK catch which is in thousands of pounds.
 
 ```{r catch_plot, fig.width = 8, fig.height = 6}
 catch_cap <- paste(
@@ -311,7 +314,7 @@ catch_cap <- paste(
   paste(yrs_plot, collapse = " to "), "by stock and period."
 )
 catch_plot <- ggplot(
-  data = catch, mapping = aes(x = Year, y = Catch, fill = Period)
+  data = catch, mapping = aes(x = Year, y = Value, fill = Period)
 ) +
   geom_col() +
   scale_fill_viridis_d() +
