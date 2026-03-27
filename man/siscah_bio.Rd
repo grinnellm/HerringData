@@ -6,7 +6,7 @@
 \usage{
 siscah_bio(
   bio,
-  structure = "Region",
+  structure = "Section",
   age_min_number = 1,
   age_min_weight = 2,
   age_max = 10,
@@ -21,7 +21,7 @@ siscah_bio(
 \item{bio}{Tibble. Biological data from \code{\link{load_bio}}.}
 
 \item{structure}{Character. Column name indicating stock structure. Default
-is "Region".}
+is "Section".}
 
 \item{age_min_number}{Integer. Youngest age to consider for number-at-age:
 omit younger ages. Default 1.}
@@ -50,7 +50,8 @@ from \code{SpawnIndex::pars$years$assess}.}
 \value{
 List of tibbles with biological data aggregated by Year, Period, and
 "structure", including spatial and temporal information. List has three
-tibbles: number-at-age and two with weight-at-age in grams.
+tibbles: number-at-age and two with weight-at-age in grams (or kilograms if
+\code{kilo-weight} is \code{TRUE}.
 }
 \description{
 Make input data for SISCAH: biological data (number- and weight-at-age).
@@ -66,7 +67,7 @@ if(file.exists(here("Examples", "bio_raw.rds"))){
 }
 dat <- bio_raw \%>\%
   filter(Region == "PRD") \%>\%
-  siscah_bio(structure = "Region")
+  siscah_bio(structure = "Section")
 }
 \seealso{
 Other SISCAH: 

@@ -4,13 +4,13 @@
 \alias{siscah_catch}
 \title{SISCAH input: catch data.}
 \usage{
-siscah_catch(catch, structure = "Region", kilo = TRUE, n_digits = 3)
+siscah_catch(catch, structure = "Section", kilo = TRUE, n_digits = 3)
 }
 \arguments{
 \item{catch}{Tibble. Catch data from \code{\link{load_catch}}.}
 
 \item{structure}{Character. Column name indicating stock structure. Default
-is "Region".}
+is "Section".}
 
 \item{kilo}{Logical. Return values in thousands. Default TRUE.}
 
@@ -37,7 +37,7 @@ if(file.exists(here("Examples", "catch_raw.rds"))){
 }
 dat <- catch_raw \%>\%
   filter(Region == "PRD") \%>\%
-  siscah_catch(structure = "Region")
+  siscah_catch(structure = "Section")
 }
 \seealso{
 Other SISCAH: 

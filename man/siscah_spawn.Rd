@@ -4,13 +4,13 @@
 \alias{siscah_spawn}
 \title{SISCAH input: spawn data.}
 \usage{
-siscah_spawn(spawn, structure = "Region", kilo = TRUE, n_digits = 3)
+siscah_spawn(spawn, structure = "Section", kilo = TRUE, n_digits = 3)
 }
 \arguments{
 \item{spawn}{Tibble. Spawn index data from \code{\link{load_spawn}}.}
 
 \item{structure}{Character. Column name indicating stock structure. Default
-is "Region".}
+is "Section".}
 
 \item{kilo}{Logical. Return values in thousands. Default TRUE.}
 
@@ -35,7 +35,7 @@ if(file.exists(here("Examples", "spawn_raw.rds"))){
 }
 dat <- spawn_raw \%>\%
   filter(Region == "PRD") \%>\%
-  siscah_spawn(structure = "Region")
+  siscah_spawn(structure = "Section")
 }
 \seealso{
 Other SISCAH: 
