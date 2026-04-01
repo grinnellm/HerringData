@@ -12,8 +12,8 @@ Data includes biological (number- and weight-at-age), catch, and spawn
 index data.
 }
 \details{
-The HerringData package provides data, as well as three families of
-functions: loaders, SISCAH, and utility.
+The HerringData package provides data, as well as four families of
+functions: loaders, SISCAH, utility, and check.
 }
 \section{Data}{
  The data are disposal codes (\code{\link{codes_disposal}}),
@@ -38,6 +38,11 @@ source codes (\code{\link{codes_source}}), conversion factors
  The utility function are \code{\link{mean_na}},
 \code{\link{mean_na_roll}}, \code{\link{mean_na_weight}},
 \code{\link{season_to_year}}, and \code{\link{sum_na}}.
+}
+
+\section{Check functions}{
+ The check functions are
+\code{\link{check_sections}}.
 }
 
 \author{

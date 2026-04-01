@@ -27,7 +27,8 @@ Other data:
 \code{\link{codes_period}},
 \code{\link{codes_source}},
 \code{\link{conv_factors}},
-\code{\link{unbalanced_sampling}}
+\code{\link{unbalanced_sampling}},
+\code{\link{undefined_sections}}
 }
 \concept{data}
 \keyword{datasets}
