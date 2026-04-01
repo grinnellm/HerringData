@@ -49,6 +49,10 @@ siscah_bio <- function(
     year_end = 2024,
     n_digits = 4
 ) {
+  # If grouping by Section, check for data in undefined Sections
+  if(structure == "Section") {
+    check_sections(dat = bio, dat_name = "Biological")
+  } # End if Section
   # Determine stocks
   stocks <- bio %>% pull({{structure}}) %>% unique
   # Determine prefix
@@ -218,6 +222,10 @@ siscah_catch <- function(
     kilo = TRUE,
     n_digits = 3
 ) {
+  # If grouping by Section, check for data in undefined Sections
+  if(structure == "Section") {
+    check_sections(dat = catch, dat_name = "Catch")
+  } # End if Section
   # Determine stocks
   stocks <- catch %>% pull({{structure}}) %>% unique
   # Determine prefix for stock name
@@ -284,6 +292,10 @@ siscah_spawn <- function(
   # Tibble
   spawn <- spawn %>%
     tibble()
+  # If grouping by Section, check for data in undefined Sections
+  if(structure == "Section") {
+    check_sections(dat = spawn, dat_name = "Spawn")
+  } # End if Section
   # Determine stocks
   stocks <- spawn %>% pull({{structure}}) %>% unique
   # Determine prefix for stock name

@@ -116,3 +116,39 @@ sum_na <- function(x, omit_na = TRUE) {
   # Return the result
   return(res)
 } # End sum_na function
+
+#' Check for undefined Sections.
+#'
+#' Check for data in undefined Sections using \code{\link{unbalanced_sampling}}.
+#'
+#' @param dat Tibble. Data to check.
+#' @param dat_name Character. Name of data (for warning message). Default
+#'   "Catch."
+#' @param secs Tibble. Undefined Sections (default
+#'   \code{\link{unbalanced_sampling}}).
+#' @importFrom Rdpack reprompt
+#' @importFrom dplyr filter
+#' @importFrom SpawnIndex paste_nicely
+#' @return Warning with list of undefined sections present in data.
+#' @family check
+#' @export
+check_sections <- function(dat, dat_name, secs = undefined_sections) {
+  # Filter data in undefined Sections
+  dat_undefined <- dat %>%
+    filter(Section %in% secs$Section)
+  # If data
+  if(nrow(dat_undefined) > 0) {
+    # Get Sections
+    sec_undefined <- dat_undefined %>%
+      arrange(Section) %>%
+      pull(Section) %>%
+      unique()
+    # Warning
+    warning(
+      dat_name, " data in undefined Sections (", nrow(dat_undefined), " rows): ",
+      paste_nicely(sec_undefined), call. = FALSE
+    )
+  } # End if data
+  # Return data
+  return(dat_undefined)
+} # End check_sections function
