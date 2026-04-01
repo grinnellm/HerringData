@@ -13,12 +13,12 @@ check_sections(dat, dat_name, secs = undefined_sections)
 "Catch."}
 
 \item{secs}{Tibble. Undefined Sections (default
-\code{\link{unbalanced_sampling}}).}
+\code{\link{undefined_sections}}).}
 }
 \value{
 Warning with list of undefined sections present in data.
 }
 \description{
-Check for data in undefined Sections using \code{\link{unbalanced_sampling}}.
+Check for data in undefined Sections using \code{\link{undefined_sections}}.
 }
 \concept{check}

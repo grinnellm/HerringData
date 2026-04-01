@@ -48,7 +48,7 @@ data(codes_group)
 data(codes_period)
 data(conv_factors)
 data(database_info)
-data(unbalanced_sampling)
+data(undefined_sections)
 ```
 
 Set parameters.

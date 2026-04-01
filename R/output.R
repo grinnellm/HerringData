@@ -53,6 +53,13 @@ siscah_bio <- function(
   if(structure == "Section") {
     check_sections(dat = bio, dat_name = "Biological")
   } # End if Section
+  # If CC by Region, warning about unbalanced samples
+  if("CC" %in% bio$Region & structure == "Region") {
+    warning(
+      "Check for unbalanced biosampling in CC (see `?unbalanced_sampling`)",
+      call. = FALSE
+    )
+  } # End if CC by Region
   # Determine stocks
   stocks <- bio %>% pull({{structure}}) %>% unique
   # Determine prefix
@@ -66,13 +73,13 @@ siscah_bio <- function(
   # Fix ages
   bio <- bio %>%
     mutate(Age = ifelse(Age > age_max, age_max, Age))  # Plus group
-  # Number-at-age (SampWt fixes unrepresentative sampling if identified)
+  # Number-at-age
   number_age <- bio %>%
     filter(Age >= age_min_number) %>%
-    select(Period, Year, all_of(structure), Age, SampWt) %>%
+    select(Period, Year, all_of(structure), Age) %>%
     na.omit() %>%
     group_by(Period, Year, across(structure), Age) %>%
-    summarise(Number = round(sum_na(SampWt))) %>%
+    summarise(Number = n()) %>%
     ungroup() %>%
     rename(Gear = Period, Name = {{structure}}) %>%
     full_join(y = stock_info, by = "Name") %>%
@@ -88,16 +95,13 @@ siscah_bio <- function(
     ) %>%
     arrange(Stock, Area, Gear, Year) %>%
     select(Stock, Area, Gear, Year, age_names_number)
-  # Weight-at-age (SampWt fixes unrepresentative sampling if identified)
+  # Weight-at-age
   weight_age_gear <- bio %>%
     filter(Age >= age_min_weight) %>%
-    select(Period, Year, all_of(structure), Age, Weight, SampWt) %>%
+    select(Period, Year, all_of(structure), Age, Weight) %>%
     na.omit() %>%
     group_by(Period, Year, across(structure), Age) %>%
-    summarise(
-      Weight = mean_na_weight(x = Weight, w = SampWt) /
-        ifelse(kilo_weight, 1000, 1)
-    ) %>%
+    summarise(Weight = mean_na(x = Weight) / ifelse(kilo_weight, 1000, 1)) %>%
     ungroup() %>%
     rename(Gear = Period, Name = {{structure}}) %>%
     complete(
@@ -133,16 +137,13 @@ siscah_bio <- function(
     filter_at(all_of(age_names_weight), any_vars(!is.na(.))) %>%
     arrange(Stock, Area, Gear, Year) %>%
     select(Stock, Area, Gear, Year, age_names_weight)
-  # Weight-at-age (seine; SampWt fixes unrepresentative sampling if identified)
+  # Weight-at-age (seine)
   weight_age_seine <- bio %>%
     filter(Age >= age_min_weight, GearCode == 29) %>%
-    select(Year, all_of(structure), Age, Weight, SampWt) %>%
+    select(Year, all_of(structure), Age, Weight) %>%
     na.omit() %>%
     group_by(Year, across(structure), Age) %>%
-    summarise(
-      Weight = mean_na_weight(x = Weight, w = SampWt) /
-        ifelse(kilo_weight, 1000, 1)
-    ) %>%
+    summarise(Weight = mean_na(x = Weight) / ifelse(kilo_weight, 1000, 1)) %>%
     ungroup() %>%
     rename(Name = {{structure}}) %>%
     complete(

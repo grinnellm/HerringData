@@ -13,6 +13,6 @@ utils::globalVariables(
     "na.omit", "season", "sex_alpha", "source_code", "wgt", "Depth", "Dive",
     "End", "Macro", "MacroLyrs", "MacroSI", "Method", "pars", "SpawnNumber",
     "Start", "SurfLyrs", "SurfSI", "Surface", "Survey", "unbalanced_sampling",
-    "Under", "UnderLyrs", "UnderSI", "Width", "."
+    "undefined_sections", "Under", "UnderLyrs", "UnderSI", "Width", "."
   )
 )

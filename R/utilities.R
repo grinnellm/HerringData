@@ -119,13 +119,13 @@ sum_na <- function(x, omit_na = TRUE) {
 
 #' Check for undefined Sections.
 #'
-#' Check for data in undefined Sections using \code{\link{unbalanced_sampling}}.
+#' Check for data in undefined Sections using \code{\link{undefined_sections}}.
 #'
 #' @param dat Tibble. Data to check.
 #' @param dat_name Character. Name of data (for warning message). Default
 #'   "Catch."
 #' @param secs Tibble. Undefined Sections (default
-#'   \code{\link{unbalanced_sampling}}).
+#'   \code{\link{undefined_sections}}).
 #' @importFrom Rdpack reprompt
 #' @importFrom dplyr filter
 #' @importFrom SpawnIndex paste_nicely
