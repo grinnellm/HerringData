@@ -232,27 +232,33 @@ load_bio <- function(
     # Keep all prior to rep_year_start and representative ones since then
     filter(Year < rep_year_start | Representative == 1) %>%
     select(-Representative)
-  # Get index for CC
-  ind_cc <- which(names(unbalanced) == "CC")
-  # Determine representative sampling: CC
-  cc_rep <- res %>%
-    filter(Region == names(unbalanced[ind_cc]),
-           GearCode == 29,
-           Year %in% unbalanced[[ind_cc]]$yrs_hist) %>%
-    group_by(Year, across(unbalanced[[ind_cc]]$structure)) %>%
-    summarise(Number = n_distinct(Sample)) %>%
-    mutate(Proportion = Number / sum_na(Number)) %>%
-    group_by(across(unbalanced[[ind_cc]]$structure)) %>%
-    summarise(SampWt = mean_na(Proportion)) %>%
-    ungroup()
-  # Fix non-representative sampling: CC
+
+  # # Get index for CC
+  # ind_cc <- which(names(unbalanced) == "CC")
+  # # Determine representative sampling: CC
+  # cc_rep <- res %>%
+  #   filter(Region == names(unbalanced[ind_cc]),
+  #          GearCode == 29,
+  #          Year %in% unbalanced[[ind_cc]]$yrs_hist) %>%
+  #   group_by(Year, across(unbalanced[[ind_cc]]$structure)) %>%
+  #   summarise(Number = n_distinct(Sample)) %>%
+  #   mutate(Proportion = Number / sum_na(Number)) %>%
+  #   group_by(across(unbalanced[[ind_cc]]$structure)) %>%
+  #   summarise(SampWt = mean_na(Proportion)) %>%
+  #   ungroup()
+  # # Fix non-representative sampling: CC
+  # res <- res %>%
+  #   left_join(y = cc_rep, by = unbalanced[[ind_cc]]$structure) %>%
+  #   mutate(
+  #     SampWt = ifelse(
+  #       Year %in% unbalanced[[ind_cc]]$yrs_fix & Period == 2, SampWt, 1
+  #     )
+  #   )
+
+  # Leave sampling as is
   res <- res %>%
-    left_join(y = cc_rep, by = unbalanced[[ind_cc]]$structure) %>%
-    mutate(
-      SampWt = ifelse(
-        Year %in% unbalanced[[ind_cc]]$yrs_fix & Period == 2, SampWt, 1
-      )
-    )
+    mutate(SampWt = 1)
+
   # Close the connection
   dbDisconnect(conn = db_connection)
   # TODO: Save data for next time
