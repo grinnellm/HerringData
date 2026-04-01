@@ -84,17 +84,41 @@
 #' database_info
 "database_info"
 
-#' Unbalanced sampling.
+#' Unbalanced biosampling effort.
 #'
-#' Unbalanced sampling: indicates region, structure, and years where unbalanced
-#' sampling occurred.
+#' Unbalanced sampling indicates the Sections and years where unbalanced
+#' biosampling occurred.
+#' 1. In the Central Coast (CC) major SAR, Pacific Herring in Statistical Area
+#' (SA) 08 tend to be smaller than fish in other areas. In addition, fewer
+#' biological samples are typically collected from SA 08 compared to the other
+#' areas. In 2014 and 2015, additional resources were available to collect
+#' biological samples in SA 08, which consequently received more sampling effort
+#' than previous years, compared to the other areas.
 #'
-#' @format List of lists with one element for each region indicating the spatial
-#'   structure, year(s) to use to fix unbalanced sampling (historic), and
-#'   year(s) that were unbalanced.
+#' @note This is currently not used in the `HerringData` package; users should
+#'   consider weighting data from the indicated Sections and years in their
+#'   analyses to ensure sampling is representative.
+#' @format List of lists with one element for each region indicating the
+#'   Sections and year(s) that received unbalanced biosampling.
 #' @docType data
 #' @family data
 #' @examples
 #' data(unbalanced_sampling)
 #' unbalanced_sampling
 "unbalanced_sampling"
+
+#' Undefined Sections.
+#'
+#' Spatially undefined Pacific Herring Sections, typically used for catch in a
+#' known Statistical Area with an unknown Section. These Section codes end in
+#' "0", for example, Section "050" indicates that catch is in Statistical Area
+#' "05". Note that there are two exceptions that are actual areas: Sections
+#' "220" and "280".
+#'
+#' @format Tibble with Statistical Areas and Sections.
+#' @docType data
+#' @family data
+#' @examples
+#' data(undefined_sections)
+#' undefined_sections
+"undefined_sections"

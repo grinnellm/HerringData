@@ -1,6 +1,7 @@
 # R packages
 library(tibble)
 library(readr)
+library(stringr)
 library(dplyr)
 library(here)
 
@@ -181,9 +182,23 @@ save(database_info, file = here("data", "database_info.RData"), version = 2)
 
 # Unbalanced sampling
 unbalanced_sampling <- list(
-  CC = list(structure = "Group", yrs_hist = 1994:2013, yrs_fix = c(2014, 2015))
+  CC = list(Sections = c("085", "086"), Years = c(2014, 2015))
 )
 save(
   unbalanced_sampling, file = here("data", "unbalanced_sampling.RData"),
+  version = 2
+)
+
+# Undefined Sections
+undefined_sections <- tibble(
+  StatArea = 0:29
+) %>%
+  mutate(
+    StatArea = str_pad(StatArea, width = 2, side = "left", pad = "0"),
+    Section = str_pad(StatArea, width = 3, side = "right", pad = "0")
+  ) %>%
+  filter(!Section %in% c("220", "280"))
+save(
+  undefined_sections, file = here("data", "undefined_sections.RData"),
   version = 2
 )

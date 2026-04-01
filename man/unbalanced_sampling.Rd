@@ -3,18 +3,30 @@
 \docType{data}
 \name{unbalanced_sampling}
 \alias{unbalanced_sampling}
-\title{Unbalanced sampling.}
+\title{Unbalanced biosampling effort.}
 \format{
-List of lists with one element for each region indicating the spatial
-structure, year(s) to use to fix unbalanced sampling (historic), and
-year(s) that were unbalanced.
+List of lists with one element for each region indicating the
+Sections and year(s) that received unbalanced biosampling.
 }
 \usage{
 unbalanced_sampling
 }
 \description{
-Unbalanced sampling: indicates region, structure, and years where unbalanced
-sampling occurred.
+Unbalanced sampling indicates the Sections and years where unbalanced
+biosampling occurred.
+\enumerate{
+\item In the Central Coast (CC) major SAR, Pacific Herring in Statistical Area
+(SA) 08 tend to be smaller than fish in other areas. In addition, fewer
+biological samples are typically collected from SA 08 compared to the other
+areas. In 2014 and 2015, additional resources were available to collect
+biological samples in SA 08, which consequently received more sampling effort
+than previous years, compared to the other areas.
+}
+}
+\note{
+This is currently not used in the \code{HerringData} package; users should
+consider weighting data from the indicated Sections and years in their
+analyses to ensure sampling is representative.
 }
 \examples{
 data(unbalanced_sampling)
@@ -28,7 +40,8 @@ Other data:
 \code{\link{codes_period}},
 \code{\link{codes_source}},
 \code{\link{conv_factors}},
-\code{\link{database_info}}
+\code{\link{database_info}},
+\code{\link{undefined_sections}}
 }
 \concept{data}
 \keyword{datasets}
