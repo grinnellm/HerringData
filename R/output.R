@@ -11,6 +11,7 @@
 #' @template param-kilo_weight
 #' @template param-year_start
 #' @template param-year_end
+#' @template param-secs
 #' @template param-n_digits
 #' @importFrom Rdpack reprompt
 #' @importFrom dplyr pull group_by summarise ungroup mutate rename full_join
@@ -29,6 +30,7 @@
 #' library(magrittr)
 #' library(here)
 #' library(dplyr)
+#' data(undefined_sections)
 #' if(file.exists(here("Examples", "bio_raw.rds"))){
 #'   bio_raw <- readRDS(file = here("Examples", "bio_raw.rds"))
 #' } else{
@@ -47,11 +49,12 @@ siscah_bio <- function(
     kilo_weight = TRUE,
     year_start = SpawnIndex::pars$years$assess,
     year_end = 2024,
+    secs = undefined_sections,
     n_digits = 4
 ) {
   # If grouping by Section, check for data in undefined Sections
   if(structure == "Section") {
-    check_sections(dat = bio, dat_name = "Biological")
+    check_sections(dat = bio, secs = secs, dat_name = "Biological")
   } # End if Section
   # If CC by Region, warning about unbalanced samples
   if("CC" %in% bio$Region & structure == "Region") {
@@ -193,6 +196,7 @@ siscah_bio <- function(
 #' @template param-catch
 #' @template param-structure
 #' @template param-kilo
+#' @template param-secs
 #' @template param-n_digits
 #' @importFrom Rdpack reprompt
 #' @importFrom dplyr pull group_by summarise ungroup mutate rename full_join
@@ -209,6 +213,7 @@ siscah_bio <- function(
 #' library(magrittr)
 #' library(here)
 #' library(dplyr)
+#' data(undefined_sections)
 #' if(file.exists(here("Examples", "catch_raw.rds"))){
 #'   catch_raw <- readRDS(file = here("Examples", "catch_raw.rds"))
 #' } else{
@@ -221,11 +226,12 @@ siscah_catch <- function(
     catch,
     structure = "Section",
     kilo = TRUE,
+    secs = undefined_sections,
     n_digits = 3
 ) {
   # If grouping by Section, check for data in undefined Sections
   if(structure == "Section") {
-    check_sections(dat = catch, dat_name = "Catch")
+    check_sections(dat = catch, secs = secs, dat_name = "Catch")
   } # End if Section
   # Determine stocks
   stocks <- catch %>% pull({{structure}}) %>% unique
@@ -259,6 +265,7 @@ siscah_catch <- function(
 #' @template param-spawn
 #' @template param-structure
 #' @template param-kilo
+#' @template param-secs
 #' @template param-n_digits
 #' @importFrom Rdpack reprompt
 #' @importFrom SpawnIndex load_width eggs_to_sb calc_surf_index calc_macro_index
@@ -276,6 +283,7 @@ siscah_catch <- function(
 #' library(magrittr)
 #' library(here)
 #' library(dplyr)
+#' data(undefined_sections)
 #' if(file.exists(here("Examples", "spawn_raw.rds"))){
 #'   spawn_raw <- readRDS(file = here("Examples", "spawn_raw.rds"))
 #' } else{
@@ -288,6 +296,7 @@ siscah_spawn <- function(
     spawn,
     structure = "Section",
     kilo = TRUE,
+    secs = undefined_sections,
     n_digits = 3
 ) {
   # Tibble
@@ -295,7 +304,7 @@ siscah_spawn <- function(
     tibble()
   # If grouping by Section, check for data in undefined Sections
   if(structure == "Section") {
-    check_sections(dat = spawn, dat_name = "Spawn")
+    check_sections(dat = spawn, secs = secs, dat_name = "Spawn")
   } # End if Section
   # Determine stocks
   stocks <- spawn %>% pull({{structure}}) %>% unique

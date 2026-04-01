@@ -4,7 +4,13 @@
 \alias{siscah_catch}
 \title{SISCAH input: catch data.}
 \usage{
-siscah_catch(catch, structure = "Section", kilo = TRUE, n_digits = 3)
+siscah_catch(
+  catch,
+  structure = "Section",
+  kilo = TRUE,
+  secs = undefined_sections,
+  n_digits = 3
+)
 }
 \arguments{
 \item{catch}{Tibble. Catch data from \code{\link{load_catch}}.}
@@ -13,6 +19,9 @@ siscah_catch(catch, structure = "Section", kilo = TRUE, n_digits = 3)
 is "Section".}
 
 \item{kilo}{Logical. Return values in thousands. Default TRUE.}
+
+\item{secs}{Tibble. Undefined Sections (default
+\code{\link{undefined_sections}}).}
 
 \item{n_digits}{Numeric. Number of decimal places for values.}
 }
@@ -30,6 +39,7 @@ Make input data for SISCAH: catch data.
 library(magrittr)
 library(here)
 library(dplyr)
+data(undefined_sections)
 if(file.exists(here("Examples", "catch_raw.rds"))){
   catch_raw <- readRDS(file = here("Examples", "catch_raw.rds"))
 } else{

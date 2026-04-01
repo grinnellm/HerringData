@@ -14,6 +14,7 @@ siscah_bio(
   kilo_weight = TRUE,
   year_start = SpawnIndex::pars$years$assess,
   year_end = 2024,
+  secs = undefined_sections,
   n_digits = 4
 )
 }
@@ -45,6 +46,9 @@ from \code{SpawnIndex::pars$years$assess}.}
 \item{year_end}{Integer. Last year to include in time series. Default is
 2024.}
 
+\item{secs}{Tibble. Undefined Sections (default
+\code{\link{undefined_sections}}).}
+
 \item{n_digits}{Numeric. Number of decimal places for values.}
 }
 \value{
@@ -60,6 +64,7 @@ Make input data for SISCAH: biological data (number- and weight-at-age).
 library(magrittr)
 library(here)
 library(dplyr)
+data(undefined_sections)
 if(file.exists(here("Examples", "bio_raw.rds"))){
   bio_raw <- readRDS(file = here("Examples", "bio_raw.rds"))
 } else{

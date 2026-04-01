@@ -4,7 +4,13 @@
 \alias{siscah_spawn}
 \title{SISCAH input: spawn data.}
 \usage{
-siscah_spawn(spawn, structure = "Section", kilo = TRUE, n_digits = 3)
+siscah_spawn(
+  spawn,
+  structure = "Section",
+  kilo = TRUE,
+  secs = undefined_sections,
+  n_digits = 3
+)
 }
 \arguments{
 \item{spawn}{Tibble. Spawn index data from \code{\link{load_spawn}}.}
@@ -13,6 +19,9 @@ siscah_spawn(spawn, structure = "Section", kilo = TRUE, n_digits = 3)
 is "Section".}
 
 \item{kilo}{Logical. Return values in thousands. Default TRUE.}
+
+\item{secs}{Tibble. Undefined Sections (default
+\code{\link{undefined_sections}}).}
 
 \item{n_digits}{Numeric. Number of decimal places for values.}
 }
@@ -28,6 +37,7 @@ Make input data for SISCAH: spawn index data.
 library(magrittr)
 library(here)
 library(dplyr)
+data(undefined_sections)
 if(file.exists(here("Examples", "spawn_raw.rds"))){
   spawn_raw <- readRDS(file = here("Examples", "spawn_raw.rds"))
 } else{

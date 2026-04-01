@@ -124,8 +124,7 @@ sum_na <- function(x, omit_na = TRUE) {
 #' @param dat Tibble. Data to check.
 #' @param dat_name Character. Name of data (for warning message). Default
 #'   "Catch."
-#' @param secs Tibble. Undefined Sections (default
-#'   \code{\link{undefined_sections}}).
+#' @template param-secs
 #' @importFrom Rdpack reprompt
 #' @importFrom dplyr filter
 #' @importFrom SpawnIndex paste_nicely
