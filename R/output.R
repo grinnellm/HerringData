@@ -32,9 +32,9 @@
 #' library(here)
 #' library(dplyr)
 #' data(undefined_sections)
-#' if(file.exists(here("Examples", "bio_raw.rds"))){
+#' if (file.exists(here("Examples", "bio_raw.rds"))) {
 #'   bio_raw <- readRDS(file = here("Examples", "bio_raw.rds"))
-#' } else{
+#' } else {
 #'   example(load_bio)
 #' }
 #' dat <- bio_raw %>%
@@ -52,32 +52,35 @@ siscah_bio <- function(
     year_start = SpawnIndex::pars$years$assess,
     year_end = 2024,
     sections = undefined_sections,
-    n_digits = 4
-) {
+    n_digits = 4) {
   # If grouping by Section, check for data in undefined Sections
-  if(structure == "Section") {
+  if (structure == "Section") {
     check_sections(dat = bio, sections = sections, dat_name = "Biological")
   } # End if Section
   # If CC by Region, warning about unbalanced samples
-  if("CC" %in% bio$Region & structure == "Region") {
+  if ("CC" %in% bio$Region && structure == "Region") {
     warning(
       "Check for unbalanced biosampling in CC (see `?unbalanced_sampling`)",
       call. = FALSE
     )
   } # End if CC by Region
   # Determine stocks
-  stocks <- bio %>% pull({{structure}}) %>% unique
+  stocks <- bio %>%
+    pull({{ structure }}) %>%
+    unique()
   # Determine prefix
-  stock_prefix <- bio %>% select(all_of(structure)) %>% names()
+  stock_prefix <- bio %>%
+    select(all_of(structure)) %>%
+    names()
   # Get number of groups in structure and stock names
   stock_info <- tibble(
     Name = stocks[order(stocks)],
-    Area = 1:length(stocks),
+    Area = seq_along(stocks),
     Stock = paste(stock_prefix, stocks[order(stocks)], sep = ".")
   )
-  # Fix ages
+  # Fix ages: plus group
   bio <- bio %>%
-    mutate(Age = ifelse(Age > age_max, age_max, Age))  # Plus group
+    mutate(Age = plus_group(Age, max_age = age_max))
   # Number-at-age
   number_age <- bio %>%
     filter(Age >= age_min_number) %>%
@@ -86,7 +89,7 @@ siscah_bio <- function(
     group_by(Period, Year, across(structure), Age) %>%
     summarise(Number = n()) %>%
     ungroup() %>%
-    rename(Gear = Period, Name = {{structure}}) %>%
+    rename(Gear = Period, Name = {{ structure }}) %>%
     full_join(y = stock_info, by = "Name") %>%
     select(Stock, Area, Gear, Year, Age, Number) %>%
     arrange(Stock, Area, Gear, Year, Age)
@@ -108,7 +111,7 @@ siscah_bio <- function(
     group_by(Period, Year, across(structure), Age) %>%
     summarise(Weight = mean_na(x = Weight) / ifelse(kilo_weight, 1000, 1)) %>%
     ungroup() %>%
-    rename(Gear = Period, Name = {{structure}}) %>%
+    rename(Gear = Period, Name = {{ structure }}) %>%
     complete(
       Gear = unique(bio$Period),
       Year = year_start:year_end,
@@ -120,7 +123,7 @@ siscah_bio <- function(
     complete(Stock, Area, Gear, Year, Age) %>%
     arrange(Stock, Area, Gear, Year, Age)
   # Weight-at-age: fill in missing values if requested
-  if(fill_missing){
+  if (fill_missing) {
     # Fill missing values
     weight_age_gear_fill <- weight_age_gear %>%
       group_by(Stock, Area, Gear, Age) %>%
@@ -154,7 +157,7 @@ siscah_bio <- function(
     group_by(Year, across(structure), Age) %>%
     summarise(Weight = mean_na(x = Weight) / ifelse(kilo_weight, 1000, 1)) %>%
     ungroup() %>%
-    rename(Name = {{structure}}) %>%
+    rename(Name = {{ structure }}) %>%
     complete(
       Year = year_start:year_end,
       Name = stock_info$Name,
@@ -165,7 +168,7 @@ siscah_bio <- function(
     complete(Stock, Area, Year, Age) %>%
     arrange(Stock, Area, Year, Age)
   # Weight-at-age (seine): fill in missing values if requested
-  if(fill_missing){
+  if (fill_missing) {
     # Fill missing values
     weight_age_seine_fill <- weight_age_seine %>%
       group_by(Stock, Area, Age) %>%
@@ -224,9 +227,9 @@ siscah_bio <- function(
 #' library(here)
 #' library(dplyr)
 #' data(undefined_sections)
-#' if(file.exists(here("Examples", "catch_raw.rds"))){
+#' if (file.exists(here("Examples", "catch_raw.rds"))) {
 #'   catch_raw <- readRDS(file = here("Examples", "catch_raw.rds"))
-#' } else{
+#' } else {
 #'   example(load_catch)
 #' }
 #' dat <- catch_raw %>%
@@ -237,20 +240,23 @@ siscah_catch <- function(
     structure = "Section",
     kilo = TRUE,
     sections = undefined_sections,
-    n_digits = 3
-) {
+    n_digits = 3) {
   # If grouping by Section, check for data in undefined Sections
-  if(structure == "Section") {
+  if (structure == "Section") {
     check_sections(dat = catch, sections = sections, dat_name = "Catch")
   } # End if Section
   # Determine stocks
-  stocks <- catch %>% pull({{structure}}) %>% unique
+  stocks <- catch %>%
+    pull({{ structure }}) %>%
+    unique()
   # Determine prefix for stock name
-  stock_prefix <- catch %>% select(all_of(structure)) %>% names()
+  stock_prefix <- catch %>%
+    select(all_of(structure)) %>%
+    names()
   # Get number of groups in structure and stock names
   stock_info <- tibble(
     Name = stocks[order(stocks)],
-    Area = 1:length(stocks),
+    Area = seq_along(stocks),
     Stock = paste(stock_prefix, stocks[order(stocks)], sep = ".")
   )
   # Wrangle data
@@ -259,7 +265,7 @@ siscah_catch <- function(
     summarise(Value = sum(Catch) / ifelse(kilo, 1000, 1)) %>%
     ungroup() %>%
     mutate(Value = round(Value, digits = n_digits)) %>%
-    rename(Gear = Period, Name = {{structure}}) %>%
+    rename(Gear = Period, Name = {{ structure }}) %>%
     full_join(y = stock_info, by = "Name") %>%
     select(Stock, Area, Gear, Year, Value) %>%
     arrange(Stock, Area, Gear, Year) %>%
@@ -294,9 +300,9 @@ siscah_catch <- function(
 #' library(here)
 #' library(dplyr)
 #' data(undefined_sections)
-#' if(file.exists(here("Examples", "spawn_raw.rds"))){
+#' if (file.exists(here("Examples", "spawn_raw.rds"))) {
 #'   spawn_raw <- readRDS(file = here("Examples", "spawn_raw.rds"))
-#' } else{
+#' } else {
 #'   example(load_spawn)
 #' }
 #' dat <- spawn_raw %>%
@@ -307,23 +313,26 @@ siscah_spawn <- function(
     structure = "Section",
     kilo = TRUE,
     sections = undefined_sections,
-    n_digits = 3
-) {
+    n_digits = 3) {
   # Tibble
   spawn <- spawn %>%
     tibble()
   # If grouping by Section, check for data in undefined Sections
-  if(structure == "Section") {
+  if (structure == "Section") {
     check_sections(dat = spawn, sections = sections, dat_name = "Spawn")
   } # End if Section
   # Determine stocks
-  stocks <- spawn %>% pull({{structure}}) %>% unique
+  stocks <- spawn %>%
+    pull({{ structure }}) %>%
+    unique()
   # Determine prefix for stock name
-  stock_prefix <- spawn %>% select(all_of(structure)) %>% names()
+  stock_prefix <- spawn %>%
+    select(all_of(structure)) %>%
+    names()
   # Get number of groups in structure and stock names
   stock_info <- tibble(
     Name = stocks[order(stocks)],
-    Area = 1:length(stocks),
+    Area = seq_along(stocks),
     Stock = paste(stock_prefix, stocks[order(stocks)], sep = ".")
   )
   # Wrangle data
@@ -333,14 +342,14 @@ siscah_spawn <- function(
       Surface = sum_na(SurfSI) / ifelse(kilo, 1000, 1),
       Macro = sum_na(MacroSI) / ifelse(kilo, 1000, 1),
       Under = sum_na(UnderSI) / ifelse(kilo, 1000, 1)
-      ) %>%
+    ) %>%
     ungroup() %>%
     replace_na(replace = list(Surface = 0, Macro = 0, Under = 0)) %>%
     mutate(
       Surface = round(Surface, digits = n_digits),
       Dive = round(Macro + Under, digits = n_digits)
-      ) %>%
-    rename(Name = {{structure}}) %>%
+    ) %>%
+    rename(Name = {{ structure }}) %>%
     full_join(y = stock_info, by = "Name") %>%
     select(Stock, Area, Year, Surface, Dive) %>%
     arrange(Stock, Area, Year)

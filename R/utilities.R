@@ -13,8 +13,8 @@ mean_na <- function(x, omit_na = TRUE) {
   # This version retuns NA if x is all NA, otherwise it returns the mean.
   # If all NA, NA; otherwise, mean
   ifelse(all(is.na(x)),
-         res <- NA,
-         res <- mean(x, na.rm = omit_na)
+    res <- NA,
+    res <- mean(x, na.rm = omit_na)
   )
   # Return the result
   return(res)
@@ -66,8 +66,8 @@ mean_na_weight <- function(x, w, omit_na = TRUE) {
   # weighted mean.
   # If all NA, NA; otherwise, weighted mean
   ifelse(all(is.na(x)),
-         res <- NA,
-         res <- weighted.mean(x, w, na.rm = omit_na)
+    res <- NA,
+    res <- weighted.mean(x, w, na.rm = omit_na)
   )
   # Return the result
   return(res)
@@ -95,6 +95,23 @@ season_to_year <- function(dat) {
   return(as.integer(res))
 } # End season_to_year function
 
+#' Wrangle age into plus group.
+#'
+#' Combine ages above oldest age into a plus group.
+#'
+#' @param x Numeric. Ages to wrangle.
+#' @param max_age Numeric. Maximum age; combine older into plus group.
+#'   Default 10.
+#' @importFrom Rdpack reprompt
+#' @return Numeric age.
+#' @family utility
+plus_group <- function(x, max_age = 10) {
+  # Plus group
+  res <- ifelse(x >= max_age, max_age, x)
+  # Return age
+  return(as.integer(res))
+} # End plus_group function
+
 #' Calculate sum.
 #'
 #' Calculate sum if there are non-NA values, return NA if all values are NA.
@@ -110,8 +127,8 @@ sum_na <- function(x, omit_na = TRUE) {
   # This version retuns NA if x is all NA, otherwise it returns the sum.
   # If all NA, NA; otherwise, sum
   ifelse(all(is.na(x)),
-         res <- NA,
-         res <- sum(x, na.rm = omit_na)
+    res <- NA,
+    res <- sum(x, na.rm = omit_na)
   )
   # Return the result
   return(res)
@@ -136,7 +153,7 @@ check_sections <- function(dat, dat_name, sections = undefined_sections) {
   dat_undefined <- dat %>%
     filter(Section %in% sections$Section)
   # If data
-  if(nrow(dat_undefined) > 0) {
+  if (nrow(dat_undefined) > 0) {
     # Get Sections
     sec_undefined <- dat_undefined %>%
       arrange(Section) %>%
@@ -144,8 +161,9 @@ check_sections <- function(dat, dat_name, sections = undefined_sections) {
       unique()
     # Warning
     warning(
-      dat_name, " data in undefined Sections (", nrow(dat_undefined), " rows): ",
-      paste_nicely(sec_undefined), call. = FALSE
+      dat_name, " data in undefined Sections (", nrow(dat_undefined),
+      " rows): ", paste_nicely(sec_undefined),
+      call. = FALSE
     )
   } # End if data
   # Return data

@@ -20,7 +20,8 @@
 #'
 #' @section Utility functions: The utility function are \code{\link{mean_na}},
 #'   \code{\link{mean_na_roll}}, \code{\link{mean_na_weight}},
-#'   \code{\link{season_to_year}}, and \code{\link{sum_na}}.
+#'   \code{\link{season_to_year}}, \code{\link{plus_group}}, and
+#'   \code{\link{sum_na}}.
 #'
 #' @section Check functions: The check functions are
 #'   \code{\link{check_sections}}.

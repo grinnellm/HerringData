@@ -38,9 +38,9 @@ library(magrittr)
 library(here)
 library(dplyr)
 data(undefined_sections)
-if(file.exists(here("Examples", "spawn_raw.rds"))){
+if (file.exists(here("Examples", "spawn_raw.rds"))) {
   spawn_raw <- readRDS(file = here("Examples", "spawn_raw.rds"))
-} else{
+} else {
   example(load_spawn)
 }
 dat <- spawn_raw \%>\%

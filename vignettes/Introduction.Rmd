@@ -106,7 +106,7 @@ The 'Period' column indicates the fishery type:
 'RoeGN' is the roe gillnet fishery.
 
 ```{r num_age}
-num_age <- bio$number_age  %>%
+num_age <- bio$number_age %>%
   left_join(y = codes_period, by = "Gear") %>%
   select(Stock, Area, Period, Year, starts_with("a", ignore.case = FALSE)) %>%
   mutate(Period = factor(Period, levels = codes_period$Period))
@@ -205,10 +205,10 @@ num_age_cap <- paste(
 )
 num_age_long <- num_age %>%
   pivot_longer(
-      cols = starts_with("a", ignore.case = FALSE), names_to = "Age",
-      values_to = "Number"
-    ) %>%
-  mutate(Age = parse_number(Age)) 
+    cols = starts_with("a", ignore.case = FALSE), names_to = "Age",
+    values_to = "Number"
+  ) %>%
+  mutate(Age = parse_number(Age))
 num_age_plot <- ggplot(
   data = num_age_long, mapping = aes(x = Year, y = Number)
 ) +
@@ -258,10 +258,10 @@ wt_age_cap <- paste(
 )
 wt_age_long <- wt_age %>%
   pivot_longer(
-      cols = starts_with("a", ignore.case = FALSE), names_to = "Age",
-      values_to = "Weight"
-    ) %>%
-  mutate(Age = parse_number(Age)) 
+    cols = starts_with("a", ignore.case = FALSE), names_to = "Age",
+    values_to = "Weight"
+  ) %>%
+  mutate(Age = parse_number(Age))
 wt_age_plot <- ggplot(
   data = wt_age_long,
   mapping = aes(x = Year, y = Weight, group = Age, colour = Age)
@@ -285,10 +285,10 @@ wt_age_sn_cap <- paste(
 )
 wt_age_sn_long <- wt_age_sn %>%
   pivot_longer(
-      cols = starts_with("a", ignore.case = FALSE), names_to = "Age",
-      values_to = "Weight"
-    ) %>%
-  mutate(Age = parse_number(Age)) 
+    cols = starts_with("a", ignore.case = FALSE), names_to = "Age",
+    values_to = "Weight"
+  ) %>%
+  mutate(Age = parse_number(Age))
 wt_age_sn_plot <- ggplot(
   data = wt_age_sn_long,
   mapping = aes(x = Year, y = Weight, group = Age, colour = Age)
@@ -337,9 +337,9 @@ spawn_cap <- paste(
   paste(yrs_plot, collapse = " to "), "by stock and survey."
 )
 spawn_long <- spawn %>%
-    pivot_longer(
-      cols = c(Surface, Dive), names_to = "Survey", values_to = "Spawn"
-    ) %>%
+  pivot_longer(
+    cols = c(Surface, Dive), names_to = "Survey", values_to = "Spawn"
+  ) %>%
   mutate(Survey = factor(Survey, levels = c("Surface", "Dive")))
 spawn_plot <- ggplot(
   data = spawn_long, mapping = aes(x = Year, y = Spawn, fill = Survey)

@@ -21,6 +21,7 @@ Calculate rolling mean of previous values.
 Other utility: 
 \code{\link{mean_na}()},
 \code{\link{mean_na_weight}()},
+\code{\link{plus_group}()},
 \code{\link{season_to_year}()},
 \code{\link{sum_na}()}
 }

@@ -24,6 +24,7 @@ are NA. This does not fail when groups have no values to summarise.
 Other utility: 
 \code{\link{mean_na}()},
 \code{\link{mean_na_roll}()},
+\code{\link{plus_group}()},
 \code{\link{season_to_year}()},
 \code{\link{sum_na}()}
 }

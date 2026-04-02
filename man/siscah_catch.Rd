@@ -40,9 +40,9 @@ library(magrittr)
 library(here)
 library(dplyr)
 data(undefined_sections)
-if(file.exists(here("Examples", "catch_raw.rds"))){
+if (file.exists(here("Examples", "catch_raw.rds"))) {
   catch_raw <- readRDS(file = here("Examples", "catch_raw.rds"))
-} else{
+} else {
   example(load_catch)
 }
 dat <- catch_raw \%>\%

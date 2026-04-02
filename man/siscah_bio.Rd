@@ -31,8 +31,8 @@ omit younger ages. Default 1.}
 \item{age_min_weight}{Integer. Youngest age to consider for weight-at-age:
 omit younger ages. Default 2.}
 
-\item{age_max}{Integer. Plus year: aggregate ages that are greater than
-\code{age_max}. Default 10.}
+\item{age_max}{Integer. Plus year: aggregate ages greater than \code{age_max}
+using \code{\link{plus_group}}. Default 10.}
 
 \item{fill_missing}{Logical. Fill missing weight-at-age data: missing values
 are imputed as the mean of the previous \code{n_roll} years; missing values at
@@ -71,9 +71,9 @@ library(magrittr)
 library(here)
 library(dplyr)
 data(undefined_sections)
-if(file.exists(here("Examples", "bio_raw.rds"))){
+if (file.exists(here("Examples", "bio_raw.rds"))) {
   bio_raw <- readRDS(file = here("Examples", "bio_raw.rds"))
-} else{
+} else {
   example(load_bio)
 }
 dat <- bio_raw \%>\%

@@ -62,7 +62,8 @@ database_info <- list(
       sections = c("SAR", "Section"),
       locations = c(
         "Loc_Code", "Location", "StatArea", "Section", "Bed",
-        "Location_Latitude", "Location_Longitude")
+        "Location_Latitude", "Location_Longitude"
+      )
     )
   ),
   bio_loc = list(
@@ -87,7 +88,7 @@ database_info <- list(
     ),
     columns = list(
       tab_catch = c(
-        "Season", "LocationCode","GearCode", "DisposalCode", "Catch", "Date"
+        "Season", "LocationCode", "GearCode", "DisposalCode", "Catch", "Date"
       ),
       hail_catch = c(
         "Active", "Season", "Section", "GearCode", "DisposalCode", "CatchTons"
@@ -185,7 +186,8 @@ unbalanced_sampling <- list(
   CC = list(Sections = c("085", "086"), Years = c(2014, 2015))
 )
 save(
-  unbalanced_sampling, file = here("data", "unbalanced_sampling.RData"),
+  unbalanced_sampling,
+  file = here("data", "unbalanced_sampling.RData"),
   version = 2
 )
 
@@ -199,6 +201,7 @@ undefined_sections <- tibble(
   ) %>%
   filter(!Section %in% c("220", "280"))
 save(
-  undefined_sections, file = here("data", "undefined_sections.RData"),
+  undefined_sections,
+  file = here("data", "undefined_sections.RData"),
   version = 2
 )
