@@ -8,7 +8,7 @@ siscah_catch(
   catch,
   structure = "Section",
   kilo = TRUE,
-  secs = undefined_sections,
+  sections = undefined_sections,
   n_digits = 3
 )
 }
@@ -20,7 +20,7 @@ is "Section".}
 
 \item{kilo}{Logical. Return values in thousands. Default TRUE.}
 
-\item{secs}{Tibble. Undefined Sections (default
+\item{sections}{Tibble. Undefined Sections (default
 \code{\link{undefined_sections}}).}
 
 \item{n_digits}{Numeric. Number of decimal places for values.}

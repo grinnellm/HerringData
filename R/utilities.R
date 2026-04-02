@@ -124,17 +124,17 @@ sum_na <- function(x, omit_na = TRUE) {
 #' @param dat Tibble. Data to check.
 #' @param dat_name Character. Name of data (for warning message). Default
 #'   "Catch."
-#' @template param-secs
+#' @template param-sections
 #' @importFrom Rdpack reprompt
 #' @importFrom dplyr filter
 #' @importFrom SpawnIndex paste_nicely
 #' @return Warning with list of undefined sections present in data.
 #' @family check
 #' @export
-check_sections <- function(dat, dat_name, secs = undefined_sections) {
+check_sections <- function(dat, dat_name, sections = undefined_sections) {
   # Filter data in undefined Sections
   dat_undefined <- dat %>%
-    filter(Section %in% secs$Section)
+    filter(Section %in% sections$Section)
   # If data
   if(nrow(dat_undefined) > 0) {
     # Get Sections

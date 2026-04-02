@@ -4,7 +4,7 @@
 \alias{check_sections}
 \title{Check for undefined Sections.}
 \usage{
-check_sections(dat, dat_name, secs = undefined_sections)
+check_sections(dat, dat_name, sections = undefined_sections)
 }
 \arguments{
 \item{dat}{Tibble. Data to check.}
@@ -12,7 +12,7 @@ check_sections(dat, dat_name, secs = undefined_sections)
 \item{dat_name}{Character. Name of data (for warning message). Default
 "Catch."}
 
-\item{secs}{Tibble. Undefined Sections (default
+\item{sections}{Tibble. Undefined Sections (default
 \code{\link{undefined_sections}}).}
 }
 \value{

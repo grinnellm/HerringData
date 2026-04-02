@@ -10,11 +10,12 @@ siscah_bio(
   age_min_number = 1,
   age_min_weight = 2,
   age_max = 10,
+  fill_missing = TRUE,
   n_roll = 5,
   kilo_weight = TRUE,
   year_start = SpawnIndex::pars$years$assess,
   year_end = 2024,
-  secs = undefined_sections,
+  sections = undefined_sections,
   n_digits = 4
 )
 }
@@ -33,6 +34,11 @@ omit younger ages. Default 2.}
 \item{age_max}{Integer. Plus year: aggregate ages that are greater than
 \code{age_max}. Default 10.}
 
+\item{fill_missing}{Logical. Fill missing weight-at-age data: missing values
+are imputed as the mean of the previous \code{n_roll} years; missing values at
+the beginning of the time series are imputed by extending the first
+non-missing value backwards. Default TRUE.}
+
 \item{n_roll}{Numeric. Number of years to impute missing values using a
 rolling window of the previous n_roll years (used in
 \code{\link{mean_na_roll}}). Default 5.}
@@ -46,7 +52,7 @@ from \code{SpawnIndex::pars$years$assess}.}
 \item{year_end}{Integer. Last year to include in time series. Default is
 2024.}
 
-\item{secs}{Tibble. Undefined Sections (default
+\item{sections}{Tibble. Undefined Sections (default
 \code{\link{undefined_sections}}).}
 
 \item{n_digits}{Numeric. Number of decimal places for values.}
