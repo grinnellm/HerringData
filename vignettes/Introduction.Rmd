@@ -3,11 +3,12 @@ title: Introduction to `HerringData`
 subtitle: '`r read.dcf(file = "../DESCRIPTION", fields = "Title")`'
 author: Matthew Grinnell
 date: '`r format(Sys.Date(), "%B %d, %Y")`'
-output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-        toc: true
-        number_sections: true
+output: 
+  bookdown::html_document2:
+    base_format: rmarkdown::html_vignette
+    fig_caption: yes
+    toc: true
+    number_sections: true
 bibliography: ../inst/REFERENCES.bib
 csl: ../inst/csas.csl
 vignette: >
@@ -137,7 +138,7 @@ wt_age_sn <- bio$weight_age_seine
 wt_age_sn
 ```
 
-## Catch data
+## Catch data {#sec:load-catch-data}
 
 Like biological data above,
 load and wrangle catch data,
@@ -155,9 +156,14 @@ catch <- load_catch(db_info = database_info, quiet = TRUE) %>%
 
 Catch in thousands of tonnes by stock, period, and year,
 except SOK catch which is in thousands of pounds.
+Here we convert SOK catch to the same scale as the other fisheries.
 Note that table layout is similar to the biological data tables.
 
 ```{r catch_catch}
+catch <- catch %>%
+  mutate(
+    Value = ifelse(Period == "SOK", Value * conv_factors$lb2kg / 1000, Value)
+  )
 catch
 ```
 
@@ -305,8 +311,9 @@ wt_age_sn_plot
 
 ## Catch data
 
-Plot annual catch in thousands of tonnes for each stock and period, 
-except SOK catch which is in thousands of pounds.
+Plot annual catch in thousands of tonnes for each stock and period.
+Note that we converted SOK catch to the same scale as the other fisheries
+(see Section \@ref(sec:load-catch-data)).
 
 ```{r catch_plot, fig.width = 8, fig.height = 6}
 catch_cap <- paste(
