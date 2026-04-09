@@ -2,20 +2,20 @@ Package: HerringData
 Type: Package
 Title: Load and wrangle Pacific Herring (*Clupea pallasii*) data
 Version: 0.1.0
-Authors@R: 
-    c(person(given = c("Matthew", "H"),
-             family = "Grinnell",
-             role = c("aut", "cre"),
-             email = "matthew.grinnell@dfo-mpo.gc.ca"))
+Authors@R: person(given = c("Matthew", "H"), family = "Grinnell",
+    role = c("aut", "cre"), email = "matthew.grinnell@dfo-mpo.gc.ca")
 Maintainer: Matthew Grinnell <matthew.grinnell@dfo-mpo.gc.ca>
 Description: Load Pacific Herring (*Clupea pallasii*) data from databases and
     wrangle for data summary reports and input to statistical catch-age models.
     Data includes biological (number- and weight-at-age), catch, and spawn
     index data.
 License: MIT + file LICENSE
+URL: https://github.com/grinnellm/HerringData
+BugReports: https://github.com/grinnellm/HerringData/issues
 Language: en-CA
 ByteCompile: true
 Encoding: UTF-8
+LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Suggests: knitr, rmarkdown, tidyverse, here, magrittr, testthat, spelling,

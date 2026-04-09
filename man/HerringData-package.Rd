@@ -46,6 +46,14 @@ source codes (\code{\link{codes_source}}), conversion factors
 \code{\link{check_sections}}.
 }
 
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/grinnellm/HerringData}
+  \item Report bugs at \url{https://github.com/grinnellm/HerringData/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Matthew H Grinnell \email{matthew.grinnell@dfo-mpo.gc.ca}
 

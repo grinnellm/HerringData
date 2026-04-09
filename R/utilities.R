@@ -147,7 +147,6 @@ sum_na <- function(x, omit_na = TRUE) {
 #' @importFrom SpawnIndex paste_nicely
 #' @return Warning with list of undefined sections present in data.
 #' @family check
-#' @export
 check_sections <- function(dat, dat_name, sections = undefined_sections) {
   # Filter data in undefined Sections
   dat_undefined <- dat %>%
