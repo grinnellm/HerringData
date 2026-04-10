@@ -34,7 +34,7 @@ knitr::opts_chunk$set(
 
 Load required packages.
 
-```{r setup, message = FALSE}
+```{r setup, message = FALSE, warning = FALSE}
 library(HerringData)
 library(SpawnIndex)
 library(tidyverse)
@@ -331,6 +331,30 @@ catch_plot <- ggplot(
   theme_bw() +
   theme(legend.position = "top")
 catch_plot
+```
+
+SOK catch is quite small and hard to see relative to the other periods
+so zoom in to see SOK.
+
+```{r catch_zoom_plot, fig.width = 8, fig.height = 6}
+yrs_plot_zoom <- pars$years$dive:yrs_plot[2]
+catch_zoom <- catch %>% 
+  filter(Year %in% yrs_plot_zoom)
+catch_zoom_cap <- paste(
+  region, "catch in thousands of tonnes (t) from",
+  paste(range(yrs_plot_zoom), collapse = " to "), "by stock and period."
+)
+catch_zoom_plot <- ggplot(
+  data = catch_zoom, mapping = aes(x = Year, y = Value, fill = Period)
+) +
+  geom_col() +
+  scale_fill_viridis_d() +
+  labs(y = "Catch (1,000 t)") +
+  expand_limits(x = yrs_plot_zoom) +
+  facet_grid(Stock ~ ., scales = "free_y") +
+  theme_bw() +
+  theme(legend.position = "top")
+catch_zoom_plot
 ```
 
 ## Spawn index data
