@@ -324,7 +324,7 @@ load_catch <- function(
     filter(Period != 0, Year >= year_start) %>%
     select(
       Year, Period, Region, StatArea, Group, Section, GearCode, DisposalCode,
-      Date, Catch
+      Source, Date, Catch
     ) %>%
     arrange(
       Year, Period, Region, StatArea, Group, Section, GearCode, DisposalCode,
