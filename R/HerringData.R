@@ -18,10 +18,9 @@
 #' @section SISCAH functions: The SISCAH functions are \code{\link{siscah_bio}},
 #'   \code{\link{siscah_catch}}, and \code{\link{siscah_spawn}}.
 #'
-#' @section Utility functions: The utility function are \code{\link{mean_na}},
-#'   \code{\link{mean_na_roll}}, \code{\link{mean_na_weight}},
-#'   \code{\link{season_to_year}}, \code{\link{plus_group}}, and
-#'   \code{\link{sum_na}}.
+#' @section Utility functions: The utility function are
+#'   \code{\link{mean_na_roll}}, \code{\link{season_to_year}},
+#'   \code{\link{plus_group}}.
 #'
 #' @section Check functions: The check functions are
 #'   \code{\link{check_sections}}.

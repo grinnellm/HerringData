@@ -21,6 +21,7 @@
 #' @importFrom tidyr pivot_wider complete
 #' @importFrom stats na.omit
 #' @importFrom zoo na.fill
+#' @importFrom SpawnIndex mean_na
 #' @return List of tibbles with biological data aggregated by Year, Period, and
 #'   "structure", including spatial and temporal information. List has three
 #'   tibbles: number-at-age and two with weight-at-age in grams (or kilograms if
@@ -285,7 +286,7 @@ siscah_catch <- function(
 #' @template param-n_digits
 #' @importFrom Rdpack reprompt
 #' @importFrom SpawnIndex load_width eggs_to_sb calc_surf_index calc_macro_index
-#'   calc_under_index load_all_spawn
+#'   calc_under_index load_all_spawn sum_na
 #' @importFrom dplyr pull group_by summarise ungroup mutate rename full_join
 #'   select
 #' @importFrom tibble tibble

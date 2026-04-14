@@ -20,10 +20,7 @@ second (i.e., later) year, 2013.
 }
 \seealso{
 Other utility: 
-\code{\link{mean_na}()},
 \code{\link{mean_na_roll}()},
-\code{\link{mean_na_weight}()},
-\code{\link{plus_group}()},
-\code{\link{sum_na}()}
+\code{\link{plus_group}()}
 }
 \concept{utility}

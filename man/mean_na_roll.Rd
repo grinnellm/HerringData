@@ -9,7 +9,8 @@ mean_na_roll(x, n = 5)
 \arguments{
 \item{x}{Numeric. Values to mean.}
 
-\item{n}{Numeric. Number of values in rolling window (maximum). Default is 5.}
+\item{n}{Numeric. Number of prior values in rolling window (maximum). Default
+is 5.}
 }
 \value{
 Numeric rolling mean.
@@ -19,10 +20,7 @@ Calculate rolling mean of previous values.
 }
 \seealso{
 Other utility: 
-\code{\link{mean_na}()},
-\code{\link{mean_na_weight}()},
 \code{\link{plus_group}()},
-\code{\link{season_to_year}()},
-\code{\link{sum_na}()}
+\code{\link{season_to_year}()}
 }
 \concept{utility}

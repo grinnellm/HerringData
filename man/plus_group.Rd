@@ -20,10 +20,7 @@ Combine ages above oldest age into a plus group.
 }
 \seealso{
 Other utility: 
-\code{\link{mean_na}()},
 \code{\link{mean_na_roll}()},
-\code{\link{mean_na_weight}()},
-\code{\link{season_to_year}()},
-\code{\link{sum_na}()}
+\code{\link{season_to_year}()}
 }
 \concept{utility}

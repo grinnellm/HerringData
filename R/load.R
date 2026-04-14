@@ -168,7 +168,7 @@ load_bio <- function(
 #' @template param-year_start
 #' @template param-quiet
 #' @importFrom Rdpack reprompt
-#' @importFrom SpawnIndex load_area_data
+#' @importFrom SpawnIndex load_area_data sum_na
 #' @importFrom dplyr %>% distinct select mutate left_join group_by summarise
 #'   ungroup filter rename n bind_rows arrange
 #' @importFrom tibble tibble

@@ -3,7 +3,7 @@ utils::globalVariables(
     "Active", "Catch", "CatchTons", "codes_group", "database_info", "Date",
     "DisposalCode", "GearCode", "geometry", "Group", "LocationCode",
     "LocationName", "ProductLanded", "Region", "RegionName", "SAR", "Season",
-    "Section", "Source", "StatArea", "Year", "conv_factors", "sum_na", "Area",
+    "Section", "Source", "StatArea", "Year", "conv_factors", "Area",
     "Gear", "Period", "Stock", "Type", "Value", "Age", "DualAge", "Fish",
     "GonadLength", "GonadWeight", "Latitude", "Length", "Longitude",
     "MaturityCode", "Month", "Number", "Proportion", "Representative",
