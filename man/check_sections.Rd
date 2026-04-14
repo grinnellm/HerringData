@@ -21,4 +21,8 @@ Warning with list of undefined sections present in data.
 \description{
 Check for data in undefined Sections using \code{\link{undefined_sections}}.
 }
+\examples{
+data(codes_group)
+undefined <- check_sections(dat = codes_group, dat_name = "Groups")
+}
 \concept{check}

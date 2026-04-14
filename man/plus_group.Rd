@@ -18,6 +18,10 @@ Numeric age.
 \description{
 Combine ages above oldest age into a plus group.
 }
+\examples{
+vec <- c(9, 10, 11)
+ages <- plus_group(x = vec)
+}
 \seealso{
 Other utility: 
 \code{\link{mean_na_roll}()},

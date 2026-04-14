@@ -18,6 +18,10 @@ Numeric rolling mean.
 \description{
 Calculate rolling mean of previous values.
 }
+\examples{
+vec <- c(1, 2, NA, 4, 5, 6, NA, NA, NA, 10)
+vec_no_na <- mean_na_roll(x = vec)
+}
 \seealso{
 Other utility: 
 \code{\link{plus_group}()},

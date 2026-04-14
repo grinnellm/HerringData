@@ -9,6 +9,10 @@
 #' @importFrom SpawnIndex mean_na
 #' @return Numeric rolling mean.
 #' @family utility
+#' @export
+#' @examples
+#' vec <- c(1, 2, NA, 4, 5, 6, NA, NA, NA, 10)
+#' vec_no_na <- mean_na_roll(x = vec)
 mean_na_roll <- function(x, n = 5) {
   # Update the NAs in a vector with the mean of the previous values. The number
   # of values used can be less than n for NAs near the start of the vector, and
@@ -39,7 +43,17 @@ mean_na_roll <- function(x, n = 5) {
 #' @importFrom Rdpack reprompt
 #' @return Numeric year.
 #' @family utility
+#' @export
+#' @examples
+#' vec <- c(20123, 20134, 20145)
+#' seasons <- season_to_year(dat = vec)
 season_to_year <- function(dat) {
+  # Warning if x is not 5 characters
+  if (any(nchar(dat) != 5)){
+    warning(
+      "Only first 5 digits are considered in `season_to_year`.", call. = FALSE
+    )
+  }
   # Grab the first 4 characters
   chars <- substr(x = dat, start = 1, stop = 4)
   # Convert to numeric
@@ -60,6 +74,10 @@ season_to_year <- function(dat) {
 #' @importFrom Rdpack reprompt
 #' @return Numeric age.
 #' @family utility
+#' @export
+#' @examples
+#' vec <- c(9, 10, 11)
+#' ages <- plus_group(x = vec)
 plus_group <- function(x, max_age = 10) {
   # Plus group
   res <- ifelse(x >= max_age, max_age, x)
@@ -80,6 +98,10 @@ plus_group <- function(x, max_age = 10) {
 #' @importFrom SpawnIndex paste_nicely
 #' @return Warning with list of undefined sections present in data.
 #' @family check
+#' @export
+#' @examples
+#' data(codes_group)
+#' undefined <- check_sections(dat = codes_group, dat_name = "Groups")
 check_sections <- function(dat, dat_name, sections = undefined_sections) {
   # Filter data in undefined Sections
   dat_undefined <- dat %>%

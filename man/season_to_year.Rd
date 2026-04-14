@@ -18,6 +18,10 @@ fishery years. For example, season '20123' indicates 2012 and 2013. The input
 file for the stock assessment requires an actual year which we define as the
 second (i.e., later) year, 2013.
 }
+\examples{
+vec <- c(20123, 20134, 20145)
+seasons <- season_to_year(dat = vec)
+}
 \seealso{
 Other utility: 
 \code{\link{mean_na_roll}()},
