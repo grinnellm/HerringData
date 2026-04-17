@@ -87,4 +87,7 @@ test_that("Undefined Sections", {
   expect_named(undefined_sections, c("StatArea", "Section"))
   expect_type(undefined_sections$StatArea, "character")
   expect_type(undefined_sections$Section, "character")
+  expect_equal(sum(as.numeric(undefined_sections$StatArea)), 385)
+  expect_equal(sum(as.numeric(undefined_sections$Section)), 3850)
+
 })

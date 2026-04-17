@@ -42,7 +42,7 @@ data(pars)
 data(codes_group)
 data(conv_factors)
 data(database_info)
-spawn_raw <- load_spawn(db_info = database_info)
+spawn_raw <- load_spawn()
 }
 \seealso{
 Other loaders: 

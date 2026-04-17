@@ -40,7 +40,7 @@ library(DBI)
 data(pars)
 data(codes_group)
 data(database_info)
-bio_raw <- load_bio(db_info = database_info)
+bio_raw <- load_bio()
 }
 \seealso{
 Other loaders: 

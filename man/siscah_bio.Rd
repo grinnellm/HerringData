@@ -76,7 +76,7 @@ if (file.exists(here("Examples", "bio_raw.rds"))) {
 } else {
   example(load_bio)
 }
-dat <- bio_raw \%>\%
+bio <- bio_raw \%>\%
   filter(Region == "PRD") \%>\%
   siscah_bio(structure = "Section")
 }

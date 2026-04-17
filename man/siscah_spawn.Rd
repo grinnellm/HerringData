@@ -43,7 +43,7 @@ if (file.exists(here("Examples", "spawn_raw.rds"))) {
 } else {
   example(load_spawn)
 }
-dat <- spawn_raw \%>\%
+spawn <- spawn_raw \%>\%
   filter(Region == "PRD") \%>\%
   siscah_spawn(structure = "Section")
 }

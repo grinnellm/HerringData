@@ -28,22 +28,15 @@ test_that("Plus group", {
 })
 
 test_that("Check sections", {
-  suppressWarnings(require(stringr))
   data(codes_group)
   codes_group_ok <- codes_group %>%
-    filter(Section %in% c("001", "002", "003"))
-  sections_not_ok <- 0:29 %>%
-    str_pad(width = 2, side = "left", pad = "0") %>%
-    str_pad(width = 3, side = "right", pad = "0")
-  codes_group_not_ok <-codes_group %>%
-    filter(Section %in% sections_not_ok)
+    filter(Section %in% c("001", "002", "003", "004", "005"))
   expect_warning(check_sections(dat = codes_group, dat_name = "Groups"))
   expect_no_warning(check_sections(dat = codes_group_ok, dat_name = "Groups"))
   expect_type(check_sections(dat = codes_group_ok, dat_name = "Groups"), "list")
   expect_warning(
     expect_equal(
-      dim(check_sections(dat = codes_group_not_ok, dat_name = "Groups")),
-      c(14, 2)
+      dim(check_sections(dat = codes_group, dat_name = "Groups")), c(14, 2)
     )
   )
 })

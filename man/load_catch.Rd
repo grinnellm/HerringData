@@ -41,7 +41,7 @@ data(pars)
 data(codes_group)
 data(conv_factors)
 data(database_info)
-catch_raw <- load_catch(db_info = database_info)
+catch_raw <- load_catch()
 }
 \seealso{
 Other loaders: 

@@ -27,7 +27,7 @@
 #' data(pars)
 #' data(codes_group)
 #' data(database_info)
-#' bio_raw <- load_bio(db_info = database_info)
+#' bio_raw <- load_bio()
 load_bio <- function(
     db_info = database_info,
     groups = codes_group,
@@ -187,7 +187,7 @@ load_bio <- function(
 #' data(codes_group)
 #' data(conv_factors)
 #' data(database_info)
-#' catch_raw <- load_catch(db_info = database_info)
+#' catch_raw <- load_catch()
 load_catch <- function(
     db_info = database_info,
     groups = codes_group,
@@ -369,7 +369,7 @@ load_catch <- function(
 #' data(codes_group)
 #' data(conv_factors)
 #' data(database_info)
-#' spawn_raw <- load_spawn(db_info = database_info)
+#' spawn_raw <- load_spawn()
 load_spawn <- function(
     db_info = database_info,
     groups = codes_group,

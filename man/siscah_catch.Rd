@@ -45,7 +45,7 @@ if (file.exists(here("Examples", "catch_raw.rds"))) {
 } else {
   example(load_catch)
 }
-dat <- catch_raw \%>\%
+catch <- catch_raw \%>\%
   filter(Region == "PRD") \%>\%
   siscah_catch(structure = "Section")
 }

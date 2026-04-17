@@ -17,6 +17,7 @@
 #' @importFrom Rdpack reprompt
 #' @importFrom dplyr pull group_by summarise ungroup mutate rename full_join
 #'   select filter_at any_vars
+#' @importFrom tidyselect all_of
 #' @importFrom tibble tibble
 #' @importFrom tidyr pivot_wider complete
 #' @importFrom stats na.omit
@@ -38,7 +39,7 @@
 #' } else {
 #'   example(load_bio)
 #' }
-#' dat <- bio_raw %>%
+#' bio <- bio_raw %>%
 #'   filter(Region == "PRD") %>%
 #'   siscah_bio(structure = "Section")
 siscah_bio <- function(
@@ -85,9 +86,9 @@ siscah_bio <- function(
   # Number-at-age
   number_age <- bio %>%
     filter(Age >= age_min_number) %>%
-    select(Period, Year, all_of(structure), Age) %>%
+    select(all_of(c("Period", "Year", structure, "Age"))) %>%
     na.omit() %>%
-    group_by(Period, Year, across(structure), Age) %>%
+    group_by(Period, Year, across(all_of(structure)), Age) %>%
     summarise(Number = n()) %>%
     ungroup() %>%
     rename(Gear = Period, Name = {{ structure }}) %>%
@@ -103,13 +104,13 @@ siscah_bio <- function(
       names_prefix = "a"
     ) %>%
     arrange(Stock, Area, Gear, Year) %>%
-    select(Stock, Area, Gear, Year, age_names_number)
+    select(all_of(c("Stock", "Area", "Gear", "Year", age_names_number)))
   # Weight-at-age
   weight_age_gear <- bio %>%
     filter(Age >= age_min_weight) %>%
-    select(Period, Year, all_of(structure), Age, Weight) %>%
+    select(all_of(c("Period", "Year", structure, "Age", "Weight"))) %>%
     na.omit() %>%
-    group_by(Period, Year, across(structure), Age) %>%
+    group_by(Period, Year, across(all_of(structure)), Age) %>%
     summarise(Weight = mean_na(x = Weight) / ifelse(kilo_weight, 1000, 1)) %>%
     ungroup() %>%
     rename(Gear = Period, Name = {{ structure }}) %>%
@@ -147,15 +148,15 @@ siscah_bio <- function(
       names_from = Age, values_from = Weight, values_fill = 0,
       names_prefix = "a"
     ) %>%
-    filter_at(all_of(age_names_weight), any_vars(!is.na(.))) %>%
+    filter_at(age_names_weight, any_vars(!is.na(.))) %>%
     arrange(Stock, Area, Gear, Year) %>%
-    select(Stock, Area, Gear, Year, age_names_weight)
+    select(all_of(c("Stock", "Area", "Gear", "Year", age_names_weight)))
   # Weight-at-age (seine)
   weight_age_seine <- bio %>%
     filter(Age >= age_min_weight, GearCode == 29) %>%
-    select(Year, all_of(structure), Age, Weight) %>%
+    select(all_of(c("Year", structure, "Age", "Weight"))) %>%
     na.omit() %>%
-    group_by(Year, across(structure), Age) %>%
+    group_by(Year, across(all_of(structure)), Age) %>%
     summarise(Weight = mean_na(x = Weight) / ifelse(kilo_weight, 1000, 1)) %>%
     ungroup() %>%
     rename(Name = {{ structure }}) %>%
@@ -190,9 +191,9 @@ siscah_bio <- function(
       names_from = Age, values_from = Weight, values_fill = 0,
       names_prefix = "a"
     ) %>%
-    filter_at(all_of(age_names_weight), any_vars(!is.na(.))) %>%
+    filter_at(age_names_weight, any_vars(!is.na(.))) %>%
     arrange(Stock, Area, Year) %>%
-    select(Stock, Area, Year, age_names_weight)
+    select(all_of(c("Stock", "Area", "Year", age_names_weight)))
   # List of tibbles
   res <- list(
     number_age = number_age_siscah,
@@ -215,6 +216,7 @@ siscah_bio <- function(
 #' @importFrom Rdpack reprompt
 #' @importFrom dplyr pull group_by summarise ungroup mutate rename full_join
 #'   select
+#' @importFrom tidyselect all_of
 #' @importFrom tibble tibble
 #' @return Tibble with catch data aggregated by Year, Period, and "structure".
 #'   Catch is in tonnes for gear 1 (other; reduction, food and bait, as well as
@@ -233,7 +235,7 @@ siscah_bio <- function(
 #' } else {
 #'   example(load_catch)
 #' }
-#' dat <- catch_raw %>%
+#' catch <- catch_raw %>%
 #'   filter(Region == "PRD") %>%
 #'   siscah_catch(structure = "Section")
 siscah_catch <- function(
@@ -262,7 +264,7 @@ siscah_catch <- function(
   )
   # Wrangle data
   res <- catch %>%
-    group_by(Year, Period, across(structure)) %>%
+    group_by(Year, Period, across(all_of(structure))) %>%
     summarise(Value = sum(Catch) / ifelse(kilo, 1000, 1)) %>%
     ungroup() %>%
     mutate(Value = round(Value, digits = n_digits)) %>%
@@ -289,6 +291,7 @@ siscah_catch <- function(
 #'   calc_under_index load_all_spawn sum_na
 #' @importFrom dplyr pull group_by summarise ungroup mutate rename full_join
 #'   select
+#' @importFrom tidyselect all_of
 #' @importFrom tibble tibble
 #' @importFrom tidyr replace_na
 #' @return Tibble with spawn index aggregated by Year and "structure". Spawn is
@@ -306,7 +309,7 @@ siscah_catch <- function(
 #' } else {
 #'   example(load_spawn)
 #' }
-#' dat <- spawn_raw %>%
+#' spawn <- spawn_raw %>%
 #'   filter(Region == "PRD") %>%
 #'   siscah_spawn(structure = "Section")
 siscah_spawn <- function(
@@ -338,7 +341,7 @@ siscah_spawn <- function(
   )
   # Wrangle data
   res <- spawn %>%
-    group_by(Year, across(structure)) %>%
+    group_by(Year, across(all_of(structure))) %>%
     summarise(
       Surface = sum_na(SurfSI) / ifelse(kilo, 1000, 1),
       Macro = sum_na(MacroSI) / ifelse(kilo, 1000, 1),
