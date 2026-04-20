@@ -59,11 +59,11 @@ siscah_bio <- function(
   if (structure == "Section") {
     check_sections(dat = bio, sections = sections, dat_name = "Biological")
   } # End if Section
-  # If CC by Region, warning about unbalanced samples
-  if ("CC" %in% bio$Region && structure == "Region") {
+  # If CC is not by Section, warning about unbalanced sampling
+  if ("CC" %in% bio$Region && structure != "Section") {
     warning(
-      "Check for unbalanced biosampling in CC (see `?unbalanced_sampling`)",
-      call. = FALSE
+      "Correct unbalanced biosampling in CC if present ",
+      "(see `?unbalanced_sampling`)", call. = FALSE
     )
   } # End if CC by Region
   # Determine stocks

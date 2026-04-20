@@ -12,7 +12,7 @@ Sections and year(s) that received unbalanced biosampling.
 unbalanced_sampling
 }
 \description{
-Unbalanced sampling indicates the Sections and years where unbalanced
+Unbalanced sampling indicates the Section(s) and year(s) where unbalanced
 biosampling occurred.
 \enumerate{
 \item In the Central Coast (CC) major SAR, Pacific Herring in Statistical Area
@@ -25,7 +25,7 @@ than previous years, compared to the other areas.
 }
 \note{
 This is currently not used in the \code{HerringData} package; users should
-consider weighting data from the indicated Sections and years in their
+consider weighting data from the indicated Section(s) and year(s) in their
 analyses to ensure sampling is representative.
 }
 \examples{

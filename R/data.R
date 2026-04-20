@@ -86,7 +86,7 @@
 
 #' Unbalanced biosampling effort.
 #'
-#' Unbalanced sampling indicates the Sections and years where unbalanced
+#' Unbalanced sampling indicates the Section(s) and year(s) where unbalanced
 #' biosampling occurred.
 #' 1. In the Central Coast (CC) major SAR, Pacific Herring in Statistical Area
 #' (SA) 08 tend to be smaller than fish in other areas. In addition, fewer
@@ -96,7 +96,7 @@
 #' than previous years, compared to the other areas.
 #'
 #' @note This is currently not used in the `HerringData` package; users should
-#'   consider weighting data from the indicated Sections and years in their
+#'   consider weighting data from the indicated Section(s) and year(s) in their
 #'   analyses to ensure sampling is representative.
 #' @format List of lists with one element for each region indicating the
 #'   Sections and year(s) that received unbalanced biosampling.
