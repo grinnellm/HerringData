@@ -106,7 +106,7 @@ The 'Period' column indicates the fishery type:
 'RoeSN' is the roe seine fishery; and
 'RoeGN' is the roe gillnet fishery.
 
-```{r num_age}
+```{r num-age}
 num_age <- bio$number_age %>%
   left_join(y = codes_period, by = "Gear") %>%
   select(Stock, Area, Period, Year, starts_with("a", ignore.case = FALSE)) %>%
@@ -123,7 +123,7 @@ Note that table layout is similar to the number-at-age table.
 There are two weight-at-age tables;
 the first one is weight-at-age by year, period, and stock
 
-```{r wt_age}
+```{r wt-age}
 wt_age <- bio$weight_age_gear %>%
   left_join(y = codes_period, by = "Gear") %>%
   select(Stock, Area, Period, Year, starts_with("a", ignore.case = FALSE)) %>%
@@ -133,7 +133,7 @@ wt_age
 
 The second one is weight-at-age by year and stock for seine gear only.
 
-```{r wt_age_sn}
+```{r wt-age-sn}
 wt_age_sn <- bio$weight_age_seine
 wt_age_sn
 ```
@@ -159,7 +159,7 @@ except SOK catch which is in thousands of pounds.
 Here we convert SOK catch to the same scale as the other fisheries.
 Note that table layout is similar to the biological data tables.
 
-```{r catch_catch}
+```{r catch-catch}
 catch <- catch %>%
   mutate(
     Value = ifelse(Period == "SOK", Value * conv_factors$lb2kg / 1000, Value)
@@ -188,7 +188,7 @@ spawn <- load_spawn(db_info = database_info, quiet = TRUE) %>%
 Spawn index in thousands of tonnes by stock and year.
 Note that table layout is similar to the biological and catch data tables.
 
-```{r spawn_spawn}
+```{r spawn-spawn}
 spawn
 ```
 
@@ -204,7 +204,7 @@ Biological data includes number- and weight-at-age.
 
 Plot annual number of fish sampled for each stock and period.
 
-```{r num_age_plot, fig.width = 8, fig.height = 5}
+```{r num-age-plot, fig.width = 8, fig.height = 5, fig.cap = num_age_cap, warning = FALSE}
 num_age_cap <- paste(
   region, "number of fish sampled from",
   paste(yrs_plot, collapse = " to "), "by stock and period."
@@ -214,13 +214,15 @@ num_age_long <- num_age %>%
     cols = starts_with("a", ignore.case = FALSE), names_to = "Age",
     values_to = "Number"
   ) %>%
-  mutate(Age = parse_number(Age))
+  mutate(
+    Age = parse_number(Age),
+    Number = Number / 1000
+    )
 num_age_plot <- ggplot(
   data = num_age_long, mapping = aes(x = Year, y = Number)
 ) +
   geom_col() +
-  scale_y_continuous(labels = label_comma()) +
-  labs(y = "Number of fish") +
+  labs(y = "Number of fish (x 1,000)") +
   expand_limits(x = yrs_plot) +
   facet_grid(Stock ~ Period) +
   theme_bw()
@@ -229,7 +231,7 @@ num_age_plot
 
 Plot annual proportion-at-age for each stock and period.
 
-```{r prop_age_plot, fig.width = 8, fig.height = 6}
+```{r prop-age-plot, fig.width = 8, fig.height = 6, fig.cap = prop_age_cap}
 prop_age_cap <- paste(
   region, "proportion-at-age from",
   paste(yrs_plot, collapse = " to "), "by stock and period."
@@ -257,7 +259,7 @@ prop_age_plot
 
 Plot annual weight-at-age in kilograms for each stock and period.
 
-```{r wt_age_plot, fig.width = 8, fig.height = 6}
+```{r wt-age-plot, fig.width = 8, fig.height = 6, fig.cap = wt_age_cap}
 wt_age_cap <- paste(
   region, "weight-at-age in kilograms (kg) from",
   paste(yrs_plot, collapse = " to "), "by stock and period."
@@ -272,7 +274,7 @@ wt_age_plot <- ggplot(
   data = wt_age_long,
   mapping = aes(x = Year, y = Weight, group = Age, colour = Age)
 ) +
-  geom_line(linewidth = 1) +
+  geom_line(linewidth = 1, na.rm = TRUE) +
   scale_colour_viridis_c() +
   labs(y = "Weight (kg)") +
   expand_limits(x = yrs_plot) +
@@ -284,7 +286,7 @@ wt_age_plot
 
 Plot annual weight-at-age in kilograms for each stock (seine gear only).
 
-```{r wt_age_sn_plot, fig.width = 8, fig.height = 6}
+```{r wt-age-sn-plot, fig.width = 8, fig.height = 6, fig.cap = wt_age_sn_cap}
 wt_age_sn_cap <- paste(
   region, "weight-at-age in kilograms (kg) from",
   paste(yrs_plot, collapse = " to "), "by stock for seine gear only."
@@ -315,7 +317,7 @@ Plot annual catch in thousands of tonnes for each stock and period.
 Note that we converted SOK catch to the same scale as the other fisheries
 (see Section \@ref(sec:load-catch-data)).
 
-```{r catch_plot, fig.width = 8, fig.height = 6}
+```{r catch-plot, fig.width = 8, fig.height = 6, fig.cap = catch_cap}
 catch_cap <- paste(
   region, "catch in thousands of tonnes (t) from",
   paste(yrs_plot, collapse = " to "), "by stock and period."
@@ -336,7 +338,7 @@ catch_plot
 SOK catch is quite small and hard to see relative to the other periods
 so zoom in to see SOK.
 
-```{r catch_zoom_plot, fig.width = 8, fig.height = 6}
+```{r catch-zoom-plot, fig.width = 8, fig.height = 6, fig.cap = catch_zoom_cap}
 yrs_plot_zoom <- pars$years$dive:yrs_plot[2]
 catch_zoom <- catch %>% 
   filter(Year %in% yrs_plot_zoom)
@@ -362,7 +364,7 @@ catch_zoom_plot
 Pivot the spawn data to facilitate plotting and then 
 plot annual spawn index in thousands of tonnes for each stock and survey.
 
-```{r spawn_plot, fig.width = 8, fig.height = 6}
+```{r spawn-plot, fig.width = 8, fig.height = 6, fig.cap = spawn_cap}
 spawn_cap <- paste(
   region, "spawn index in thousands of tonnes (t) from",
   paste(yrs_plot, collapse = " to "), "by stock and survey."
