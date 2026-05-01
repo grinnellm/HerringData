@@ -7,3 +7,5 @@
 ^doc$
 ^Meta$
 ^make.R$
+^\.positai$
+^\.claude$
