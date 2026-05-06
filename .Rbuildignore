@@ -9,3 +9,4 @@
 ^make.R$
 ^\.positai$
 ^\.claude$
+^inst\testdata$
