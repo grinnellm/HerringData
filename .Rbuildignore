@@ -4,8 +4,8 @@
 ^Examples$
 ^data-raw$
 ^man-roxygen$
-^doc$
-^Meta$
+^docs$
 ^make.R$
 ^\.positai$
 ^\.claude$
+^inst\testdata$

@@ -1,3 +1,6 @@
+# Patterns
+# https://git-scm.com/docs/gitignore
+
 # History files
 .Rhistory
 .Rapp.history
@@ -45,11 +48,8 @@ docs/
 # translation temp files
 po/*~
 
-# RStudio Connect folder
-rsconnect/
-inst/doc
-/doc/
-/Meta/
+# Test data
+inst/testdata
 
 # Temporary files
 /Examples/

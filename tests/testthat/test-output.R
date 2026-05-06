@@ -1,18 +1,12 @@
 test_that("SISCAH input: biological data", {
-  suppressMessages(suppressWarnings(library(SpawnIndex)))
-  suppressMessages(suppressWarnings(library(DBI)))
   suppressMessages(suppressWarnings(library(magrittr)))
-  suppressMessages(suppressWarnings(library(here)))
   suppressMessages(suppressWarnings(library(dplyr)))
-  data(pars)
-  data(codes_group)
-  data(database_info)
   data(undefined_sections)
-  if (file.exists(here("Examples", "bio_raw.rds"))) {
-    bio_raw <- readRDS(file = here("Examples", "bio_raw.rds"))
-  } else {
-    example(load_bio)
-  }
+  bio_raw <- readRDS(
+    file = file.path(
+      system.file("testdata", package = "HerringData"), "bio_raw.rds"
+    )
+  )
   expect_no_warning(
     bio <- bio_raw %>%
       filter(Region == "PRD") %>%
@@ -26,21 +20,14 @@ test_that("SISCAH input: biological data", {
 })
 
 test_that("SISCAH input: catch data", {
-  suppressMessages(suppressWarnings(library(SpawnIndex)))
-  suppressMessages(suppressWarnings(library(DBI)))
   suppressMessages(suppressWarnings(library(magrittr)))
-  suppressMessages(suppressWarnings(library(here)))
   suppressMessages(suppressWarnings(library(dplyr)))
-  data(pars)
-  data(codes_group)
-  data(conv_factors)
-  data(database_info)
   data(undefined_sections)
-  if (file.exists(here("Examples", "catch_raw.rds"))) {
-    catch_raw <- readRDS(file = here("Examples", "catch_raw.rds"))
-  } else {
-    example(load_catch)
-  }
+  catch_raw <- readRDS(
+    file = file.path(
+      system.file("testdata", package = "HerringData"), "catch_raw.rds"
+    )
+  )
   expect_warning(
     catch <- catch_raw %>%
       filter(Region == "PRD") %>%
@@ -51,21 +38,14 @@ test_that("SISCAH input: catch data", {
 })
 
 test_that("SISCAH input: spawn data", {
-  suppressMessages(suppressWarnings(library(SpawnIndex)))
-  suppressMessages(suppressWarnings(library(DBI)))
   suppressMessages(suppressWarnings(library(magrittr)))
-  suppressMessages(suppressWarnings(library(here)))
   suppressMessages(suppressWarnings(library(dplyr)))
-  data(pars)
-  data(codes_group)
-  data(conv_factors)
-  data(database_info)
   data(undefined_sections)
-  if (file.exists(here("Examples", "spawn_raw.rds"))) {
-    spawn_raw <- readRDS(file = here("Examples", "spawn_raw.rds"))
-  } else {
-    example(load_spawn)
-  }
+  spawn_raw <- readRDS(
+    file = file.path(
+      system.file("testdata", package = "HerringData"), "spawn_raw.rds"
+    )
+  )
   expect_no_warning(
     spawn <- spawn_raw %>%
       filter(Region == "PRD") %>%
