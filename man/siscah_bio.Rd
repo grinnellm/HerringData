@@ -71,11 +71,7 @@ library(magrittr)
 library(here)
 library(dplyr)
 data(undefined_sections)
-if (file.exists(here("Examples", "bio_raw.rds"))) {
-  bio_raw <- readRDS(file = here("Examples", "bio_raw.rds"))
-} else {
-  example(load_bio)
-}
+example(load_bio)
 bio <- bio_raw \%>\%
   filter(Region == "PRD") \%>\%
   siscah_bio(structure = "Section")

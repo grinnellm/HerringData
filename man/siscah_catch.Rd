@@ -40,11 +40,7 @@ library(magrittr)
 library(here)
 library(dplyr)
 data(undefined_sections)
-if (file.exists(here("Examples", "catch_raw.rds"))) {
-  catch_raw <- readRDS(file = here("Examples", "catch_raw.rds"))
-} else {
-  example(load_catch)
-}
+example(load_catch)
 catch <- catch_raw \%>\%
   filter(Region == "PRD") \%>\%
   siscah_catch(structure = "Section")

@@ -34,11 +34,7 @@
 #' library(here)
 #' library(dplyr)
 #' data(undefined_sections)
-#' if (file.exists(here("Examples", "bio_raw.rds"))) {
-#'   bio_raw <- readRDS(file = here("Examples", "bio_raw.rds"))
-#' } else {
-#'   example(load_bio)
-#' }
+#' example(load_bio)
 #' bio <- bio_raw %>%
 #'   filter(Region == "PRD") %>%
 #'   siscah_bio(structure = "Section")
@@ -230,11 +226,7 @@ siscah_bio <- function(
 #' library(here)
 #' library(dplyr)
 #' data(undefined_sections)
-#' if (file.exists(here("Examples", "catch_raw.rds"))) {
-#'   catch_raw <- readRDS(file = here("Examples", "catch_raw.rds"))
-#' } else {
-#'   example(load_catch)
-#' }
+#' example(load_catch)
 #' catch <- catch_raw %>%
 #'   filter(Region == "PRD") %>%
 #'   siscah_catch(structure = "Section")
@@ -304,11 +296,7 @@ siscah_catch <- function(
 #' library(here)
 #' library(dplyr)
 #' data(undefined_sections)
-#' if (file.exists(here("Examples", "spawn_raw.rds"))) {
-#'   spawn_raw <- readRDS(file = here("Examples", "spawn_raw.rds"))
-#' } else {
-#'   example(load_spawn)
-#' }
+#' example(load_spawn)
 #' spawn <- spawn_raw %>%
 #'   filter(Region == "PRD") %>%
 #'   siscah_spawn(structure = "Section")
