@@ -1,0 +1,35 @@
+---
+title: Introduction to data summaries
+subtitle: '`HerringData`: `r read.dcf(file = "../DESCRIPTION", fields = "Title")`'
+author: Matthew Grinnell
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  bookdown::html_document2:
+    base_format: rmarkdown::html_vignette
+    fig_caption: yes
+    toc: true
+    number_sections: true
+bibliography: ../inst/REFERENCES.bib
+csl: ../inst/csas.csl
+vignette: >
+  %\VignetteIndexEntry{Introduction to data summaries}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+---
+
+```{r options, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Background
+
+`r read.dcf(file = "../DESCRIPTION", fields = "Description")`
+
+# Set up
+
+<!-- TODO: Make vignette for data summary reports. -->

@@ -1,6 +1,6 @@
 ---
-title: Introduction to `HerringData`
-subtitle: '`r read.dcf(file = "../DESCRIPTION", fields = "Title")`'
+title: Introduction to SISCAH data
+subtitle: '`HerringData`: `r read.dcf(file = "../DESCRIPTION", fields = "Title")`'
 author: Matthew Grinnell
 date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output: 
@@ -12,7 +12,7 @@ output:
 bibliography: ../inst/REFERENCES.bib
 csl: ../inst/csas.csl
 vignette: >
-  %\VignetteIndexEntry{Introduction to `HerringData`}
+  %\VignetteIndexEntry{Introduction to SISCAH data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
