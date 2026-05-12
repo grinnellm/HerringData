@@ -1,7 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
-^Examples$
+^sandbox$
 ^data-raw$
 ^man-roxygen$
 ^docs$

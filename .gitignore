@@ -52,4 +52,4 @@ po/*~
 inst/testdata
 
 # Temporary files
-/Examples/
+/sandbox/
