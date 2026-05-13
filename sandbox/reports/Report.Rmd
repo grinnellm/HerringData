@@ -1,0 +1,35 @@
+---
+title: Region Year
+subtitle: Pacific Herring preliminary data summary
+region: Haida Gwaii
+major: true
+author: Matthew Grinnell
+date: "`r format(lubridate::today(), '%B %d, %Y')`"
+output:
+  pdf_document:
+    includes:
+      in_header: doc/preamble.tex
+      before_body: doc/prefix.tex
+      after_body: doc/suffix.tex
+---
+
+```{r setup, echo = FALSE, message = FALSE}
+# library(knitr)
+library(rmarkdown)
+library(lubridate)
+# theme_set(herring_theme())
+```
+
+```{r metadata, echo = FALSE}
+title_new <- paste(
+  metadata$region,
+  # ifelse(metadata$major, "major", "minor"),
+  # "stock assessment region: ",
+  year(today())
+  )
+# metadata
+```
+
+---
+title: `r title_new`
+---
