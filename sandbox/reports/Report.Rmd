@@ -33,3 +33,10 @@ title_new <- paste(
 ---
 title: `r title_new`
 ---
+
+This is the map of BC.
+
+```{r map_bc}
+
+```
+
