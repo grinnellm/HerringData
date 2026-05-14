@@ -4,11 +4,12 @@
 #   legend.key = element_blank(),
 #   legend.margin = margin(),
 #   legend.text.align = 1,
-#   panel.grid.major = element_line(colour = "grey10", size = 0.2),
-#   panel.grid.minor = element_line(colour = "grey10", size = 0.1),
+#   # panel.grid.major = element_line(colour = "grey10", size = 0.2),
+#   # panel.grid.minor = element_line(colour = "grey10", size = 0.1),
 #   axis.text = element_text(colour = "black"),
 #   legend.background = element_rect(fill = "transparent"),
-#   plot.margin = unit(c(0.1, 0.6, 0.1, 0.1), "lines")
+#   plot.margin = unit(c(0.1, 0.6, 0.1, 0.1), "lines"),
+#   panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.5)
 # )
 
 #' Map of BC.
@@ -21,7 +22,7 @@
 #' @template param-french
 #' @importFrom Rdpack reprompt
 #' @importFrom ggplot2 ggplot aes geom_sf geom_sf_label annotate labs coord_sf
-#' @importFrom sf st_buffer st_bbox st_crop
+#' @importFrom sf st_buffer st_bbox st_crop st_crs
 #' @return Map of the BC coast with Pacific Herring stock assessment regions.
 #' @family maps
 #' @export
@@ -70,8 +71,8 @@ map_bc <- function(shape_land, shape_sars, map_buffer = 25000, french = FALSE) {
     labs(x = "Longitude", y = "Latitude") +
     coord_sf(
       xlim = c(bc_bbox$xmin, bc_bbox$xmax),
-      ylim = c(bc_bbox$ymin, bc_bbox$ymax), expand = FALSE)
-    # herring_theme
+      ylim = c(bc_bbox$ymin, bc_bbox$ymax), expand = FALSE,
+      crs = st_crs(4326))
   # Return the map
   map
 }

@@ -1,0 +1,34 @@
+# Figures
+
+```{r map_bc, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = map_bc_cap}
+require(HerringData)
+require(SpawnIndex)
+require(rnaturalearth)
+data(sections)
+data(regions)
+data(database_info)
+areas <- load_area_data(
+  reg = "All", db = database_info$herring_con, where = database_info$area_loc
+)
+polys <- load_sections(sections = sections, areas = areas)
+bc_coast <- ne_countries(
+  scale = "large", returnclass = "sf",
+  country = c("Canada", "United States of America")
+)
+regions_major_long <- regions %>%
+  filter(Type == "Major") %>%
+  mutate(Region = paste0(Region, ")")) %>%
+  unite("Long", RegionName, Region, sep = " (") %>%
+  pull(Long)
+regions_minor_long <- regions %>%
+  filter(Type == "Minor") %>%
+  mutate(Region = paste0(Region, ")")) %>%
+  unite("Long", RegionName, Region, sep = " (") %>%
+  pull(Long)
+map_bc_cap <- paste(
+  "Pacific Herring stock assessment regions (SARs) in British Columbia.",
+  "The major SARs are ", paste_nicely(regions_major_long), ".",
+  "The minor SARs are ", paste_nicely(regions_minor_long), "."
+)
+map_bc(shape_land = bc_coast, shape_sars = polys$regions)
+```

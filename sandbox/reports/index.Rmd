@@ -1,0 +1,77 @@
+---
+title: Region Year
+subtitle: Pacific Herring preliminary data summary
+region: Haida Gwaii
+major: true
+author:
+  - Matthew Grinnell^[DFO science, matthew.grinnell@dfo-mpo.gc.ca]
+  - Jaclyn Cleary^[DFO science, jaclyn.cleary@dfo-mpo.gc.ca]
+date: "`r format(lubridate::today(), '%B %d, %Y')`"
+knit: bookdown::render_book
+site: bookdown::bookdown_site
+output:
+  pdf_document:
+    number_sections: true
+    includes:
+      in_header: doc/preamble.tex
+      before_body: doc/prefix.tex
+      after_body: doc/suffix.tex
+header-includes:
+  - \usepackage{float}
+---
+
+```{r setup, echo = FALSE, cache = FALSE, message = FALSE, results = 'hide', warning = FALSE}
+library(tidyverse)
+library(rmarkdown)
+library(bookdown)
+library(lubridate)
+library(knitr)
+
+theme_set(theme_bw())
+
+knitr_figs_dir <- "knitr-figs-pdf/"
+knitr_cache_dir <- "knitr-cache-pdf/"
+fig_out_type <- "pdf"
+
+fig_asp <- 0.618
+fig_width <- 6.5
+fig_out_width <- "6.5in"
+fig_dpi <- 320
+fig_align <- "center"
+fig_pos <- "ht"
+opts_chunk$set(
+  collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>",
+  fig.path = knitr_figs_dir,
+  cache.path = knitr_cache_dir,
+  fig.asp = fig_asp,
+  fig.width = fig_width,
+  out.width = fig_out_width,
+  echo = FALSE,
+  cache.comments = FALSE,
+  dev = fig_out_type,
+  dpi = fig_dpi,
+  fig.align = fig_align,
+  fig.pos = "H",
+  dev = "png"
+)
+
+options(
+  xtable.comment = FALSE,
+  kableExtra.latex.load_packages = FALSE,
+  width = 80,
+  scipen = 999,
+  dplyr.summarise.inform = FALSE,
+  ggrepel.max.overlaps = Inf
+)
+```
+
+```{r metadata, echo = FALSE}
+title_new <- paste(metadata$region, year(today()))
+```
+
+---
+title: `r title_new`
+---

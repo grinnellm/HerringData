@@ -1,0 +1,11 @@
+book_filename: "DataSummary"
+rmd_files: ["index.Rmd",
+            "sections/01_context.Rmd",
+            "sections/02_programs.Rmd",
+            "sections/03_catch.Rmd",
+            "sections/04_spawn.Rmd",
+            "sections/05_fn.Rmd",
+            "sections/06_general.Rmd",
+            "sections/07_tables.Rmd",
+            "sections/08_figures.Rmd"]
+delete_merged_file: true
