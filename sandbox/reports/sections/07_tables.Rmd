@@ -1,1 +1,17 @@
 # Tables
+
+```{r k-regions, echo = FALSE}
+dat_cap <- paste(
+  "Pacific Herring stock assessment regions (SARs) in British Columbia.",
+  "Note that formal stock assessments are only done for the ", 
+  number_to_word(regions %>% filter(Type == "Major") %>% nrow()),
+  "major SARs."
+)
+dat <- regions %>%
+  select(RegionName, Region, Type) %>%
+  rename(Name = RegionName, Code = Region) %>%
+  filter(Type %in% c("Major", "Minor"))
+kable(x = dat, caption = dat_cap, booktabs = TRUE, longtable = FALSE) # %>%
+  # kableExtra::row_spec(0, bold = TRUE)
+```
+

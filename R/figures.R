@@ -77,6 +77,26 @@ map_bc <- function(shape_land, shape_sars, map_buffer = 25000, french = FALSE) {
   map
 }
 
+#' Base map for region.
+#'
+#' Base map for region.
+#'
+#' @template param-shape_land
+#' @template param-shape_sar
+#' @template param-map_buffer
+#' @template param-french
+#' @importFrom Rdpack reprompt
+#' @importFrom ggplot2 ggplot aes geom_sf geom_sf_label annotate labs coord_sf
+#' @importFrom sf st_buffer st_bbox st_crop st_crs
+#' @return Map of the BC coast with Pacific Herring stock assessment regions.
+#' @family maps
+#' @export
+#' @examples
+#' 2 + 2
+map_base <- function(shape_land, shape_sar, map_buffer = 25000){
+
+}
+
 # # Create a base map for the region
 # BaseMap <- ggplot(data = reg_coast) +
 #   geom_sf(fill = "lightgrey", colour = "transparent") +

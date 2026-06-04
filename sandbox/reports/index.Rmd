@@ -4,13 +4,15 @@ subtitle: Pacific Herring preliminary data summary
 region: Haida Gwaii
 major: true
 author:
-  - Matthew Grinnell^[DFO science, matthew.grinnell@dfo-mpo.gc.ca]
-  - Jaclyn Cleary^[DFO science, jaclyn.cleary@dfo-mpo.gc.ca]
+  - Matthew Grinnell^[DFO Science, Pacific Biological Station (matthew.grinnell@dfo-mpo.gc.ca)]
+  - Jaclyn Cleary^[DFO Science, Pacific Biological Station (jaclyn.cleary@dfo-mpo.gc.ca)]
 date: "`r format(lubridate::today(), '%B %d, %Y')`"
 knit: bookdown::render_book
 site: bookdown::bookdown_site
+fontsize: 12pt
+toc: false
 output:
-  pdf_document:
+  bookdown::pdf_document2:
     number_sections: true
     includes:
       in_header: doc/preamble.tex
@@ -18,14 +20,27 @@ output:
       after_body: doc/suffix.tex
 header-includes:
   - \usepackage{float}
+  # - \usepackage{fancyhdr}
+  # - \usepackage{caption}
 ---
 
+<!-- \sloppy -->
+
 ```{r setup, echo = FALSE, cache = FALSE, message = FALSE, results = 'hide', warning = FALSE}
-library(tidyverse)
-library(rmarkdown)
-library(bookdown)
-library(lubridate)
 library(knitr)
+library(rmarkdown)
+# library(here)
+library(tidyverse)
+# library(bookdown)
+library(lubridate)
+library(gfutilities)
+library(HerringData)
+library(SpawnIndex)
+library(rnaturalearth)
+
+data(sections)
+data(regions)
+data(database_info)
 
 theme_set(theme_bw())
 
@@ -72,6 +87,13 @@ options(
 title_new <- paste(metadata$region, year(today()))
 ```
 
+```{r load_data, echo = FALSE}
+# TODO Make sure year(today()) matches last year of data
+```
+
 ---
 title: `r title_new`
 ---
+
+<!-- \pagestyle{fancy} -->
+<!-- \head[C]{`r title_new`} -->

@@ -1,1 +1,35 @@
 # Context
+
+Pacific Herring (*Clupea pallasii*) in British Columbia are assessed as
+`r number_to_word(regions %>% filter(Type == "Major") %>% nrow())` major and
+`r number_to_word(regions %>% filter(Type == "Minor") %>% nrow())` minor
+stock assessment regions (SARs), and
+data are collected and summarized on this scale
+(\autoref{tab:k-regions}, \autoref{fig:map-bc}).
+Note that formal stock assessments are only done for major SARs.
+The Pacific Herring data collection program includes fishery-dependent and
+-independent data from YEAR to YEAR.
+This includes annual time series of
+commercial catch data,
+biological samples
+(providing information on proportion-at-age and weight-at-age), and
+spawn index data conducted using a combination of surface and SCUBA surveys.
+In some areas, industry- and/or First Nations-operated in-season soundings
+programs are also conducted, and this information is used by
+resource managers, First Nations, and stakeholders
+to locate fish and identify areas of high and low Pacific Herring biomass
+to plan harvesting activities.
+In-season acoustic soundings are not used by stock assessment
+to inform the estimation of spawning biomass.
+
+The following is a description of data collected for Pacific Herring in YEAR
+in the REGION TYPE SAR (\autoref{fig:map-region}).
+Data collected outside the SAR boundary are not included in this summary, and
+are not used for the purposes of stock assessment.
+Although we summarise data at the scale of the SAR for stock assessments,
+we summarise data at finer spatial scales in this report:
+Locations are nested within Sections,
+Sections are nested within Statistical Areas, and
+Statistical Areas are nested within SARs (\autoref{tab:spatial}).
+Note that we refer to 'year' instead of 'herring season' in this report;
+therefore YEAR refers to the SEASON Pacific Herring season.

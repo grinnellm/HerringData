@@ -1,1 +1,18 @@
 # Catch and biological samples
+
+
+## Nearshore genetics project
+
+DFO initiated a nearshore genetics project in 2022 to
+better understand the spatial and temporal structure
+of Pacific Herring stocks in British Columbia.
+<!-- TODO: Figure -->
+First we collect actively spawning Pacific Herring.
+Then we collect biological data (e.g., length, weight, age, sex) and
+genetic data from the fish.
+Finally, we analyse the biological and genetic data to
+better understand Pacific Herring.
+<!-- Genetic samples were collected in the West Coast of Vancouver Island -->
+<!-- major SAR in 2024 (Figure 17). -->
+Results from the nearshore genetics project will be
+presented in a separate document when they are available.

@@ -1,1 +1,26 @@
 # First Nations observations
+
+## Data summary text
+
+The following observations were contributed by
+representatives of First Nations communities.
+These observations provide context and perspectives to this data report.
+In some cases we make minor edits for clarity and brevity,
+but we do not change the intent or substance of responses.
+
+## Stock assessment text
+
+Data and observations for the 2024 herring spawning season
+were contributed by representatives of First Nations communities for each SAR
+and can be found in the Pacifc Herring data summaries.
+These observations include contributions from
+the Haida Nation in Haida Gwaii;
+the Heiltsuk Nation in the Central Coast;
+the Homalko, Qualicum, and Tla’amin Nations in Strait of Georgia; and
+the Nuu-chah-nulth Nation on the West Coast of Vancouver Island.
+Observations include:
+spawn distribution and abundance,
+access,
+FSC successes and challenges,
+fish behaviour, and
+comparison with previous seasons.

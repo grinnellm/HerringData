@@ -1,12 +1,6 @@
 # Figures
 
-```{r map_bc, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = map_bc_cap}
-require(HerringData)
-require(SpawnIndex)
-require(rnaturalearth)
-data(sections)
-data(regions)
-data(database_info)
+```{r map-bc, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = map_bc_cap, fig.asp = 0.8}
 areas <- load_area_data(
   reg = "All", db = database_info$herring_con, where = database_info$area_loc
 )
@@ -25,10 +19,19 @@ regions_minor_long <- regions %>%
   mutate(Region = paste0(Region, ")")) %>%
   unite("Long", RegionName, Region, sep = " (") %>%
   pull(Long)
-map_bc_cap <- paste(
-  "Pacific Herring stock assessment regions (SARs) in British Columbia.",
-  "The major SARs are ", paste_nicely(regions_major_long), ".",
+map_bc_cap <- paste0(
+  "Pacific Herring stock assessment regions (SARs) in British Columbia. ",
+  "The major SARs are ", paste_nicely(regions_major_long), ". ",
   "The minor SARs are ", paste_nicely(regions_minor_long), "."
 )
 map_bc(shape_land = bc_coast, shape_sars = polys$regions)
+```
+
+```{r map-region, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = map_region_cap, fig.asp = 0.8}
+map_region_cap <- paste0(
+  "Pacific Herring stock assessment regions (SARs) in British Columbia. ",
+  "The major SARs are ", paste_nicely(regions_major_long), ". ",
+  "The minor SARs are ", paste_nicely(regions_minor_long), "."
+)
+# map_region(shape_land = bc_coast, shape_sars = polys$regions)
 ```
