@@ -130,20 +130,35 @@ load_bio <- function(
   res <- raw %>%
     mutate(
       Period = 0,
-      Period = ifelse(GearCode == 29 & SourceCode %in% c(1, 6, 7),
-        1, Period
+      Period = ifelse(
+        GearCode == 29 & SourceCode %in% c(1, 6, 7),
+        1,
+        Period
       ),
       # If include test seine, source %in% c(0, 5), else source == 0
-      Period = ifelse(GearCode == 29 & SourceCode %in% c(0, 5),
-        2, Period
+      Period = ifelse(
+        GearCode == 29 & SourceCode %in% c(0, 5),
+        2,
+        Period
       ),
       # SOK data
-      Period = ifelse(GearCode == 29 & SourceCode == 4 & Month %in% c(3, 4),
-        2, Period
+      Period = ifelse(
+        GearCode == 29 & SourceCode == 4 & Month %in% c(3, 4),
+        2,
+        Period
       ),
       # If include test gillnet, source %in% c(0, 5), else source == 0
-      Period = ifelse(GearCode == 19 & SourceCode == 0,
-        3, Period
+      Period = ifelse(
+        GearCode == 19 & SourceCode == 0,
+        3,
+        Period
+      ),
+      # Nearshore data
+      Period = ifelse(
+        SourceCode == 2 & GearCode == 1 |
+          SourceCode == 4 & GearCode %in% c(21, 70),
+        4,
+        Period
       )
     ) %>%
     filter(Period != 0, Year >= year_start) %>%
