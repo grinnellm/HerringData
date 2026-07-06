@@ -22,7 +22,7 @@ data(undefined_sections)
 undefined_sections
 }
 \seealso{
-Other data: 
+Other data:
 \code{\link{codes_disposal}},
 \code{\link{codes_gear}},
 \code{\link{codes_group}},

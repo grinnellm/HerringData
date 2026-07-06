@@ -18,7 +18,7 @@ data(codes_source)
 codes_source
 }
 \seealso{
-Other data: 
+Other data:
 \code{\link{codes_disposal}},
 \code{\link{codes_gear}},
 \code{\link{codes_group}},

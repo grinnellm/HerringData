@@ -20,7 +20,7 @@ data(database_info)
 database_info
 }
 \seealso{
-Other data: 
+Other data:
 \code{\link{codes_disposal}},
 \code{\link{codes_gear}},
 \code{\link{codes_group}},

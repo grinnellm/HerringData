@@ -43,8 +43,8 @@ data(database_info)
 bio_raw <- load_bio()
 }
 \seealso{
-Other loaders: 
-\code{\link{load_catch}()},
-\code{\link{load_spawn}()}
+Other loaders:
+\code{\link[=load_catch]{load_catch()}},
+\code{\link[=load_spawn]{load_spawn()}}
 }
 \concept{loaders}

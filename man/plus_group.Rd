@@ -23,8 +23,8 @@ vec <- c(9, 10, 11)
 ages <- plus_group(x = vec)
 }
 \seealso{
-Other utility: 
-\code{\link{mean_na_roll}()},
-\code{\link{season_to_year}()}
+Other utility:
+\code{\link[=mean_na_roll]{mean_na_roll()}},
+\code{\link[=season_to_year]{season_to_year()}}
 }
 \concept{utility}

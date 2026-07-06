@@ -46,8 +46,8 @@ catch <- catch_raw \%>\%
   siscah_catch(structure = "Section")
 }
 \seealso{
-Other SISCAH: 
-\code{\link{siscah_bio}()},
-\code{\link{siscah_spawn}()}
+Other SISCAH:
+\code{\link[=siscah_bio]{siscah_bio()}},
+\code{\link[=siscah_spawn]{siscah_spawn()}}
 }
 \concept{SISCAH}

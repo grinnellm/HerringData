@@ -33,7 +33,7 @@ data(unbalanced_sampling)
 unbalanced_sampling
 }
 \seealso{
-Other data: 
+Other data:
 \code{\link{codes_disposal}},
 \code{\link{codes_gear}},
 \code{\link{codes_group}},

@@ -18,7 +18,7 @@ data(conv_factors)
 conv_factors
 }
 \seealso{
-Other data: 
+Other data:
 \code{\link{codes_disposal}},
 \code{\link{codes_gear}},
 \code{\link{codes_group}},

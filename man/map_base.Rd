@@ -26,7 +26,7 @@ Base map for region.
 2 + 2
 }
 \seealso{
-Other maps: 
-\code{\link{map_bc}()}
+Other maps:
+\code{\link[=map_bc]{map_bc()}}
 }
 \concept{maps}

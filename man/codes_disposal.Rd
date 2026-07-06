@@ -18,7 +18,7 @@ data(codes_disposal)
 codes_disposal
 }
 \seealso{
-Other data: 
+Other data:
 \code{\link{codes_gear}},
 \code{\link{codes_group}},
 \code{\link{codes_period}},

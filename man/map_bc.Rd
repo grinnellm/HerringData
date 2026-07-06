@@ -37,7 +37,7 @@ bc_coast <- ne_countries(
 map_bc(shape_land = bc_coast, shape_sars = polys$regions)
 }
 \seealso{
-Other maps: 
-\code{\link{map_base}()}
+Other maps:
+\code{\link[=map_base]{map_base()}}
 }
 \concept{maps}

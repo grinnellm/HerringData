@@ -23,8 +23,8 @@ vec <- c(1, 2, NA, 4, 5, 6, NA, NA, NA, 10)
 vec_no_na <- mean_na_roll(x = vec)
 }
 \seealso{
-Other utility: 
-\code{\link{plus_group}()},
-\code{\link{season_to_year}()}
+Other utility:
+\code{\link[=plus_group]{plus_group()}},
+\code{\link[=season_to_year]{season_to_year()}}
 }
 \concept{utility}

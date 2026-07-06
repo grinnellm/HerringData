@@ -23,8 +23,8 @@ vec <- c(20123, 20134, 20145)
 seasons <- season_to_year(dat = vec)
 }
 \seealso{
-Other utility: 
-\code{\link{mean_na_roll}()},
-\code{\link{plus_group}()}
+Other utility:
+\code{\link[=mean_na_roll]{mean_na_roll()}},
+\code{\link[=plus_group]{plus_group()}}
 }
 \concept{utility}
