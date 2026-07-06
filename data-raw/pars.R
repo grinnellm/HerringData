@@ -56,7 +56,7 @@ database_info <- list(
     uid = "HerringUser", pwd = "H3rr1ngUs3r"
   ),
   area_loc = list(
-    schema = "dbo",
+    schema = "Location",
     tables = list(sections = "Sections", locations = "Location"),
     columns = list(
       sections = c("SAR", "Section"),
@@ -99,7 +99,7 @@ database_info <- list(
     )
   ),
   width_loc = list(
-    schema = "dbo",
+    schema = "Location",
     tables = list(
       region_std = "RegionStd", section_std = "SectionStd", pool_std = "PoolStd"
     ),
@@ -110,7 +110,7 @@ database_info <- list(
     )
   ),
   surf_loc = list(
-    schema = "Spawn2025",
+    schema = "Spawn",
     tables = list(surface = "Surface", all_spawn = "AllSpawn"),
     columns = list(
       surface = c(
@@ -126,7 +126,7 @@ database_info <- list(
     )
   ),
   macro_loc = list(
-    schema = "Spawn2025",
+    schema = "Spawn",
     tables = list(
       all_spawn = "AllSpawn", plants = "MacPlant", transects = "Mactrans"
     ),
@@ -143,7 +143,7 @@ database_info <- list(
     )
   ),
   under_loc = list(
-    schema = "Spawn2025",
+    schema = "Spawn",
     tables = list(
       all_spawn = "AllSpawn", alg_trans = "VegTrans", stations = "Stations",
       algae = "vegetation"
@@ -168,7 +168,7 @@ database_info <- list(
     )
   ),
   all_loc = list(
-    schema = "Spawn2025",
+    schema = "Spawn",
     tables = list(all_spawn = "Allspawn", stations = "Stations"),
     columns = list(
       all_spawn = c(
