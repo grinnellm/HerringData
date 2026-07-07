@@ -137,7 +137,7 @@ load_bio <- function(
         1,
         Period
       ),
-      # Seine: include test seine with SourceCode %in% c(0, 5)
+      # Seine: include test seine with source %in% c(0, 5) else source == 0
       Period = ifelse(
         GearCode == 29 & SourceCode %in% c(0, 5),
         2,
@@ -149,7 +149,7 @@ load_bio <- function(
         2,
         Period
       ),
-      # Gillnet: include test gillnet with SourceCode %in% c(0, 5)
+      # Gillnet: include test gillnet with source %in% c(0, 5) else source == 0
       Period = ifelse(
         GearCode == 19 & SourceCode == 0,
         3,
