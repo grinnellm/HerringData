@@ -155,16 +155,10 @@ load_bio <- function(
         3,
         Period
       ),
-      # Nearshore 1
+      # Nearshore (modern; WCVI only for now)
       Period = ifelse(
-        SourceCode == 2 & GearCode == 1,
-        4,
-        Period
-      ),
-      # Nearshore 2
-      Period = ifelse(
-        SourceCode == 4 & GearCode %in% c(21, 70),
-        4,
+        SourceCode == 2 & GearCode == 1 & Region == "WCVI",
+        5,
         Period
       )
     ) %>%
