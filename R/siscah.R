@@ -103,7 +103,7 @@ siscah_bio <- function(
     select(all_of(c("Stock", "Area", "Gear", "Year", age_names_number)))
   # Weight-at-age
   weight_age_gear <- bio %>%
-    filter(Age >= age_min_weight) %>%
+    filter(Age >= age_min_weight, Period %in% c(1:3)) %>%
     select(all_of(c("Period", "Year", structure, "Age", "Weight"))) %>%
     na.omit() %>%
     group_by(Period, Year, across(all_of(structure)), Age) %>%

@@ -32,10 +32,12 @@ test_that("Group codes", {
 test_that("Period codes", {
   data("codes_period")
   expect_type(codes_period, "list")
-  expect_equal(dim(codes_period), c(4, 2))
+  expect_equal(dim(codes_period), c(5, 2))
   expect_named(codes_period, c("Gear", "Period"))
-  expect_setequal(codes_period$Gear, 1:4)
-  expect_setequal(codes_period$Period, c("Other", "RoeSN", "RoeGN", "SOK"))
+  expect_setequal(codes_period$Gear, 1:5)
+  expect_setequal(
+    codes_period$Period, c("Other", "RoeSN", "RoeGN", "SOK", "Nearshore")
+  )
 })
 
 test_that("Source codes", {
