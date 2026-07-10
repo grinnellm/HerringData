@@ -237,6 +237,10 @@ load_catch <- function(
       LocationName
     ) %>%
     distinct()
+  # TODO: Add Section 020 to HG; temporary, make this change in the database
+  areas$SAR[areas$Section == "020"] <- 1
+  areas$Region[areas$Section == "020"] <- "HG"
+  areas$RegionName[areas$Section == "020"] <- "Haida Gwaii"
   # SQL query: tab catch
   sql_tab <- paste(
     "SELECT", paste(db_info$catch_loc$columns$tab_catch, collapse = ", "),
