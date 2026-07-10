@@ -231,6 +231,16 @@ load_catch <- function(
       LocationName
     ) %>%
     distinct()
+  # TODO 1/2: Add unknown sections; temporary, make this change in the database
+  areas$SAR[areas$Section == "020"] <- 1
+  areas$Region[areas$Section == "020"] <- "HG"
+  areas$RegionName[areas$Section == "020"] <- "Haida Gwaii"
+  areas$SAR[areas$Section == "060"] <- 3
+  areas$Region[areas$Section == "060"] <- "CC"
+  areas$RegionName[areas$Section == "060"] <- "Central Coast"
+  areas$SAR[areas$Section == "080"] <- 3
+  areas$Region[areas$Section == "080"] <- "CC"
+  areas$RegionName[areas$Section == "080"] <- "Central Coast"
   # SQL query: tab catch
   sql_tab <- paste(
     "SELECT", paste(db_info$catch_loc$columns$tab_catch, collapse = ", "),
@@ -346,6 +356,9 @@ load_catch <- function(
       Year, Period, Region, StatArea, Group, Section, GearCode, DisposalCode,
       Date
     )
+  # TODO 2/2: Remove non-SOK catch in unknown sections; change in the database
+  res <- res %>%
+    filter(!(Period %in% 1:3 & Section %in% c("020", "060", "080")))
   # Close the connection
   dbDisconnect(conn = db_connection)
   # Update progress message
