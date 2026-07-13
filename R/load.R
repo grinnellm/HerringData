@@ -143,7 +143,7 @@ load_bio <- function(
         2,
         Period
       ),
-      # SOK data
+      # SOK
       Period = ifelse(
         GearCode == 29 & SourceCode == 4 & Month %in% c(3, 4),
         2,
@@ -231,6 +231,10 @@ load_catch <- function(
       LocationName
     ) %>%
     distinct()
+  # TODO: Add Section 020 to HG; temporary, make this change in the database
+  areas$SAR[areas$Section == "020"] <- 1
+  areas$Region[areas$Section == "020"] <- "HG"
+  areas$RegionName[areas$Section == "020"] <- "Haida Gwaii"
   # SQL query: tab catch
   sql_tab <- paste(
     "SELECT", paste(db_info$catch_loc$columns$tab_catch, collapse = ", "),
