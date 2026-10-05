@@ -109,14 +109,20 @@ check_sections <- function(dat, dat_name, sections = undefined_sections) {
   # If data
   if (nrow(dat_undefined) > 0) {
     # Get Sections
-    sec_undefined <- dat_undefined %>%
+    section_undefined <- dat_undefined %>%
       arrange(Section) %>%
       pull(Section) %>%
       unique()
+    # Get Periods (i.e., catch types)
+    period_undefined <- dat_undefined %>%
+      arrange(Period) %>%
+      pull(Period) %>%
+      unique()
     # Warning
     warning(
-      dat_name, " data in undefined Sections (", nrow(dat_undefined),
-      " rows): ", paste_nicely(sec_undefined), call. = FALSE
+      dat_name, " data (Period ", paste_nicely(period_undefined),
+      ") in undefined Sections (", nrow(dat_undefined), " rows): Section ",
+      paste_nicely(section_undefined), call. = FALSE
     )
   } # End if data
   # Return data

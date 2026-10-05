@@ -29,14 +29,17 @@ test_that("Plus group", {
 
 test_that("Check sections", {
   data(codes_group)
-  codes_group_ok <- codes_group %>%
+  codes_group_period <- codes_group %>%
+    mutate(Period = rep_len(1:4, length.out = nrow(codes_group)))
+  codes_group_ok <- codes_group_period %>%
     filter(Section %in% c("001", "002", "003", "004", "005"))
-  expect_warning(check_sections(dat = codes_group, dat_name = "Groups"))
+  expect_warning(check_sections(dat = codes_group_period, dat_name = "Groups"))
   expect_no_warning(check_sections(dat = codes_group_ok, dat_name = "Groups"))
   expect_type(check_sections(dat = codes_group_ok, dat_name = "Groups"), "list")
   expect_warning(
     expect_equal(
-      dim(check_sections(dat = codes_group, dat_name = "Groups")), c(14, 2)
+      dim(check_sections(dat = codes_group_period, dat_name = "Groups")),
+      c(14, 3)
     )
   )
 })
